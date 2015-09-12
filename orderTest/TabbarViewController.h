@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TabbarViewController.h
 //  orderTest
 //
 //  Created by wangxu on 15/9/12.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TabbarViewController : UITabBarController
 
 @end
-
