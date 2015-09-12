@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YLYUser : NSObject
+@interface YLYUser : NSObject <NSCoding>
+
+@property (nonatomic, strong) NSString *deviceID;
+@property (nonatomic, strong) NSString *userID;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *depName;
+@property (nonatomic, strong) NSString *depID;
+@property (nonatomic, strong) NSString *userType;
 
 @end

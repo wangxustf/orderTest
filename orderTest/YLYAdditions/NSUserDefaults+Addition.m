@@ -27,33 +27,4 @@ static NSString *kYLYVersion = @"kYLYVersion";
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
-+ (void)saveCarTreeArray:(NSArray *)carTreeArray
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:carTreeArray];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kYLYCarTreeArray];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSArray *)carTreeArray
-{
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kYLYCarTreeArray];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
-}
-
-+ (void)saveVersion:(NSString *)version
-{
-    [[NSUserDefaults standardUserDefaults] setObject:version forKey:kYLYVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSString *)version
-{
-    NSString *version = [[NSUserDefaults standardUserDefaults] objectForKey:kYLYVersion];
-    if (!version) {
-        [self saveVersion:@"1"];
-        return @"1";
-    }
-    return version;
-}
-
 @end

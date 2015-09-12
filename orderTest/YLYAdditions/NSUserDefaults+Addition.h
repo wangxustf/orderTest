@@ -14,10 +14,4 @@
 + (void)saveUser:(YLYUser *)user;
 + (YLYUser *)user;
 
-+ (void)saveCarTreeArray:(NSArray *)carTreeArray;
-+ (NSArray *)carTreeArray;
-
-+ (void)saveVersion:(NSString *)version;
-+ (NSString *)version;
-
 @end

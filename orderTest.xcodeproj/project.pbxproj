@@ -25,6 +25,7 @@
 		7863AC361BA3B94E00499BBB /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC351BA3B94E00499BBB /* RecordViewController.m */; };
 		7863AC391BA3B96A00499BBB /* MilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC381BA3B96A00499BBB /* MilViewController.m */; };
 		7863AC3D1BA3D6AD00499BBB /* YLYTipsTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */; };
+		7863AC401BA3F48F00499BBB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3F1BA3F48F00499BBB /* Order.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		7863AC381BA3B96A00499BBB /* MilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MilViewController.m; sourceTree = "<group>"; };
 		7863AC3B1BA3D6AD00499BBB /* YLYTipsTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLYTipsTextField.h; sourceTree = "<group>"; };
 		7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLYTipsTextField.m; sourceTree = "<group>"; };
+		7863AC3E1BA3F48F00499BBB /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		7863AC3F1BA3F48F00499BBB /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +202,8 @@
 			children = (
 				7863AC2B1BA3B4C500499BBB /* YLYUser.h */,
 				7863AC2C1BA3B4C500499BBB /* YLYUser.m */,
+				7863AC3E1BA3F48F00499BBB /* Order.h */,
+				7863AC3F1BA3F48F00499BBB /* Order.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */,
 				7863ABE41BA3B10000499BBB /* main.m in Sources */,
 				7863AC1A1BA3B2C800499BBB /* HomeViewController.m in Sources */,
+				7863AC401BA3F48F00499BBB /* Order.m in Sources */,
 				7863AC121BA3B24100499BBB /* NSUserDefaults+Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
