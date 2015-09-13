@@ -9,6 +9,7 @@
 #import "TabbarViewController.h"
 #import "HomeViewController.h"
 #import "OrderViewController.h"
+#import "ServiceViewController.h"
 #import "MineViewController.h"
 #import "YLYLoginViewController.h"
 
@@ -22,22 +23,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //    self.tabBar.barTintColor = [UIColor yellowColor];
-    self.tabBar.tintColor = [UIColor greenColor];
+    self.tabBar.tintColor = RGB(kLineColor);
     
     HomeViewController *homeViewController = [[HomeViewController alloc] init];
     UITabBarItem *homeTabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:nil selectedImage:nil];
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
-    UITabBarItem *orderTabBarItem = [[UITabBarItem alloc] initWithTitle:@"管理状态" image:nil selectedImage:nil];
+    UITabBarItem *orderTabBarItem = [[UITabBarItem alloc] initWithTitle:@"订车" image:nil selectedImage:nil];
+    ServiceViewController *serviceViewController = [[ServiceViewController alloc] init];
+    UITabBarItem *serviceTabBarItem = [[UITabBarItem alloc] initWithTitle:@"客服中心" image:nil selectedImage:nil];
     MineViewController *mineViewController = [[MineViewController alloc] init];
-    UITabBarItem *mineTabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:nil selectedImage:nil];
+    UITabBarItem *mineTabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:nil selectedImage:nil];
     
-    NSArray *viewControllers = @[homeViewController, orderViewController, mineViewController];
-    NSArray *tabBarItems = @[homeTabBarItem, orderTabBarItem, mineTabBarItem];
+    NSArray *viewControllers = @[homeViewController, orderViewController, serviceViewController, mineViewController];
+    NSArray *tabBarItems = @[homeTabBarItem, orderTabBarItem, serviceTabBarItem, mineTabBarItem];
     NSMutableArray *navigationControllers = [NSMutableArray array];
     for (UIViewController *viewController in viewControllers) {
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        navigationController.navigationBar.barTintColor = [UIColor redColor];
-        navigationController.navigationBar.tintColor = [UIColor blueColor];
+        navigationController.navigationBar.barTintColor = RGB(kMainColor);
+        navigationController.navigationBar.tintColor = [UIColor blackColor];
         [navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         navigationController.tabBarItem = tabBarItems[[viewControllers indexOfObject:viewController]];
         [navigationControllers addObject:navigationController];
@@ -53,6 +56,9 @@
 //    YLYUser *user = [NSUserDefaults user];
 //    if (!user) {
 //        UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
+//        loginViewController.navigationBar.barTintColor = RGB(kMainColor);
+//        loginViewController.navigationBar.tintColor = [UIColor blueColor];
+//        [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 //        [self presentViewController:loginViewController animated:YES completion:nil];
 //    }
 }

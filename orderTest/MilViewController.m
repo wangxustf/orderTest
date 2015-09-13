@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"里程";
+    self.navigationItem.title = @"我的订车里程";
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,5 +13,10 @@
 
 #define RGB(color) [UIColor colorWithRed:(color >> 16)/255.0 green:((color >> 8) & 0x00ff)/255.0 blue:(color & 0x0000ff)/255.0 alpha:1]
 #define Font(size) [UIFont systemFontOfSize:size]
+#define BoldFont(size) [UIFont boldSystemFontOfSize:size]
+
+#define kLineHeight 0.5
+#define kLineColor 0x333333
+#define kMainColor 0x00afcc
 
 #endif

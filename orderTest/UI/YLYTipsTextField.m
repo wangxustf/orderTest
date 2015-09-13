@@ -26,7 +26,7 @@
     tipsLabel.text = tips;
     [self addSubview:tipsLabel];
     
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(tipsLabel.right, 0, self.width - tipsLabel.right, self.height)];
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(tipsLabel.right, 5, self.width - tipsLabel.right, self.height - 10)];
     _textField.font = Font(14.0);
     _textField.secureTextEntry = isPassword;
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -37,6 +37,13 @@
     _textField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
     _textField.leftViewMode = UITextFieldViewModeAlways;
     [self addSubview:_textField];
+    
+    self.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)setEditEnable:(BOOL)editEnable
+{
+    _textField.enabled = editEnable;
 }
 
 - (NSString *)text

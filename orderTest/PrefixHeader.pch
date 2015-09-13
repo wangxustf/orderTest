@@ -15,5 +15,6 @@
 #import "UIView+Addition.h"
 #import "NSUserDefaults+Addition.h"
 #import "YLYMacros.h"
+#import "NSDate+Addition.h"
 
 #endif

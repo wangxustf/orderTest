@@ -10,6 +10,7 @@
 #import "CollectViewController.h"
 #import "RecordViewController.h"
 #import "MilViewController.h"
+#import "ArrowButton.h"
 
 @interface MineViewController ()
 
@@ -20,27 +21,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"我";
+    self.navigationItem.title = @"我的";
     
-    UIButton *collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    ArrowButton *collectButton = [ArrowButton buttonWithType:UIButtonTypeCustom];
     collectButton.frame = CGRectMake(0, 0, self.view.width, 44);
     [collectButton addTarget:self action:@selector(didClickCollectButton:) forControlEvents:UIControlEventTouchUpInside];
-    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+    collectButton.text = @"收藏";
     [self.view addSubview:collectButton];
     
-    UIButton *recordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    ArrowButton *recordButton = [ArrowButton buttonWithType:UIButtonTypeCustom];
     recordButton.frame = CGRectMake(0, collectButton.bottom, self.view.width, 44);
     [recordButton addTarget:self action:@selector(didClickRecordButton:) forControlEvents:UIControlEventTouchUpInside];
-    [recordButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [recordButton setTitle:@"记录" forState:UIControlStateNormal];
+    recordButton.text = @"我的订车记录";
     [self.view addSubview:recordButton];
     
-    UIButton *milButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    ArrowButton *milButton = [ArrowButton buttonWithType:UIButtonTypeCustom];
     milButton.frame = CGRectMake(0, recordButton.bottom, self.view.width, 44);
     [milButton addTarget:self action:@selector(didClickMilButton:) forControlEvents:UIControlEventTouchUpInside];
-    [milButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [milButton setTitle:@"里程" forState:UIControlStateNormal];
+    milButton.text = @"我的订车里程";
     [self.view addSubview:milButton];
 }
 

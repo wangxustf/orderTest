@@ -11,6 +11,7 @@
 @interface YLYTipsTextField : UIView
 
 @property (nonatomic, strong) NSString *text;
+@property (nonatomic, assign) BOOL editEnable;
 
 - (void)tipsTextFieldWithTips:(NSString *)tips
                   placeholder:(NSString *)placeholder
