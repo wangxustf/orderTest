@@ -20,9 +20,7 @@
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.title = @"司机信息";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,7 +53,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (_selectBlock) {
+        _selectBlock(indexPath.row);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface DriverListViewController : UITableViewController
 
+@property (nonatomic, copy) void(^selectBlock)(NSInteger row);
+
 @end

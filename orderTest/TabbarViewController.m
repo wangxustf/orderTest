@@ -26,13 +26,13 @@
     self.tabBar.tintColor = RGB(kLineColor);
     
     HomeViewController *homeViewController = [[HomeViewController alloc] init];
-    UITabBarItem *homeTabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:nil selectedImage:nil];
+    UITabBarItem *homeTabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"icon_TabBar_Session.png"] selectedImage:nil];
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
-    UITabBarItem *orderTabBarItem = [[UITabBarItem alloc] initWithTitle:@"订车" image:nil selectedImage:nil];
+    UITabBarItem *orderTabBarItem = [[UITabBarItem alloc] initWithTitle:@"订车" image:[UIImage imageNamed:@"icon_TabBar_Plan.png"] selectedImage:nil];
     ServiceViewController *serviceViewController = [[ServiceViewController alloc] init];
-    UITabBarItem *serviceTabBarItem = [[UITabBarItem alloc] initWithTitle:@"客服中心" image:nil selectedImage:nil];
+    UITabBarItem *serviceTabBarItem = [[UITabBarItem alloc] initWithTitle:@"客服中心" image:[UIImage imageNamed:@"icon_TabBar_Forum.png"] selectedImage:nil];
     MineViewController *mineViewController = [[MineViewController alloc] init];
-    UITabBarItem *mineTabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:nil selectedImage:nil];
+    UITabBarItem *mineTabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"icon_TabBar_People.png"] selectedImage:nil];
     
     NSArray *viewControllers = @[homeViewController, orderViewController, serviceViewController, mineViewController];
     NSArray *tabBarItems = @[homeTabBarItem, orderTabBarItem, serviceTabBarItem, mineTabBarItem];

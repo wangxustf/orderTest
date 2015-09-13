@@ -7,6 +7,8 @@
 //
 
 #import "OrderViewController.h"
+#import "RecordListViewController.h"
+#import "DriverListViewController.h"
 #import "YLYTipsTextField.h"
 #import "DashView.h"
 #import "ImageButton.h"
@@ -33,6 +35,9 @@
 @property (nonatomic, strong) UITextField *currentTextField;
 @property (nonatomic, strong) NSArray *carArray;
 @property (nonatomic, assign) NSInteger selectedCarRow;
+@property (nonatomic, strong) UIButton *orderButton;
+@property (nonatomic, strong) UIButton *checkButton;
+@property (nonatomic, strong) UIButton *rejectButton;
 
 @end
 
@@ -87,7 +92,9 @@
 
 - (void)didClickRightBarButtonItem:(id)sender
 {
-    
+    RecordListViewController *recordListViewController = [[RecordListViewController alloc] init];
+    recordListViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recordListViewController animated:YES];
 }
 
 - (void)didTapGestureRecognizer:(id)sender
@@ -112,13 +119,27 @@
 
 - (void)didClickDriverButton:(id)sender
 {
-    
+    DriverListViewController *driverListViewController = [[DriverListViewController alloc] init];
+    driverListViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:driverListViewController animated:YES];
 }
 
 - (void)didClickOrderButton:(id)sender
 {
+    self.checkButton.hidden = self.rejectButton.hidden = NO;
+    self.orderButton.hidden = YES;
+}
+
+- (void)didClickCheckButton:(id)sender
+{
     
 }
+
+- (void)didClickRejectButton:(id)sender
+{
+    
+}
+
 //Code from Brett Schumann
 -(void) keyboardWillShow:(NSNotification *)note{
     // get keyboard size and loctaion
@@ -378,12 +399,33 @@
     [orderButton setTitle:@"订    车" forState:UIControlStateNormal];
     [orderButton addTarget:self action:@selector(didClickOrderButton:) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:orderButton];
+    _orderButton = orderButton;
+    
+    CGFloat buttonGap = 50;
+    CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
+    _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _checkButton.frame = CGRectMake(buttonGap, orderButton.top, buttonWidth, _cellHeight);
+    _checkButton.backgroundColor = RGB(kMainColor);
+    [_checkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_checkButton setTitle:@"审 核" forState:UIControlStateNormal];
+    [_checkButton addTarget:self action:@selector(didClickCheckButton:) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:_checkButton];
+    _checkButton.hidden = YES;
+    
+    _rejectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rejectButton.frame = CGRectMake(_checkButton.right + buttonGap, orderButton.top, buttonWidth, _cellHeight);
+    _rejectButton.backgroundColor = RGB(kMainColor);
+    [_rejectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_rejectButton setTitle:@"驳 回" forState:UIControlStateNormal];
+    [_rejectButton addTarget:self action:@selector(didClickRejectButton:) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:_rejectButton];
+    _rejectButton.hidden = YES;
     
     scrollView.contentSize = CGSizeMake(scrollView.width, MAX(scrollView.height, orderButton.bottom + 10));
     _contentSize = scrollView.contentSize;
     
     for (UIView *subView in scrollView.subviews) {
-        if (subView == orderButton) {
+        if (subView == orderButton || subView == _checkButton || subView == _rejectButton) {
             continue;
         }
         [subView addSubview:[DashView dashViewWithRect:CGRectMake(0, subView.height - 1, subView.width, 1)]];
