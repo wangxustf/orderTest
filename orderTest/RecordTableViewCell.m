@@ -24,6 +24,14 @@
     CGFloat _subHeight;
 }
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _subHeight = 22;
+    }
+    return self;
+}
+
 - (void)awakeFromNib {
     // Initialization code
     _subHeight = 22;

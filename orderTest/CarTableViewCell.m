@@ -28,6 +28,14 @@
     CGFloat _subHeight;
 }
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _subHeight = 22;
+    }
+    return self;
+}
+
 - (void)awakeFromNib {
     // Initialization code
     _subHeight = 22;
@@ -37,6 +45,20 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setCar
+{
+    self.portraitImageView.image = [UIImage imageNamed:@"phone.png"];
+    self.nameLabel.text = @"xxx";
+    self.plateNumberLabel.text = @"xxx";
+    self.typeLabel.text = @"xxx";
+    self.timeLabel.text = @"xxx";
+    self.colorLabel.text = @"xxx";
+    self.driverLabel.text = @"xxx";
+    self.sexLabel.text = @"xxx";
+    self.jialingLabel.text = @"xxx";
+    self.statusLabel.text = @"xxx";
 }
 
 - (UIImageView *)portraitImageView

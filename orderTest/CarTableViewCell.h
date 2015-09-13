@@ -10,4 +10,6 @@
 
 @interface CarTableViewCell : UITableViewCell
 
+- (void)setCar;
+
 @end

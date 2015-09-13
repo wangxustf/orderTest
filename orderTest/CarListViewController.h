@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CarListViewController : UIViewController
+@interface CarListViewController : BaseViewController
 
 @end

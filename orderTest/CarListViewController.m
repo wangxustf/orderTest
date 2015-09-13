@@ -11,6 +11,9 @@
 
 @interface CarListViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIScrollView *scrollView;
+
 @end
 
 @implementation CarListViewController
@@ -21,6 +24,26 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"车辆信息";
+    
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
+    _scrollView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:_scrollView];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - 64 - _scrollView.bottom)];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
+    
+    [_tableView reloadData];
+    CGFloat gap = 10;
+    CGFloat left = 10;
+    for(int i = 0; i < 10; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(left, 0, 44, 44)];
+        imageView.image = [UIImage imageNamed:@"phone.png"];
+        [_scrollView addSubview:imageView];
+        left = left + 44 + gap;
+    }
+    _scrollView.contentSize = CGSizeMake(MAX(_scrollView.width, left), 44);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +56,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 66;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -48,6 +76,7 @@
         carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
         carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    [carTableViewCell setCar];
     return carTableViewCell;
 }
 
