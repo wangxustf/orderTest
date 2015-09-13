@@ -59,6 +59,7 @@
 		78EA6E6E1BA58C06007A5580 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E551BA58C06007A5580 /* DejalActivityView.m */; };
 		78EA6E6F1BA58C06007A5580 /* TKAlertCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E581BA58C06007A5580 /* TKAlertCenter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		78EA6E701BA58C06007A5580 /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E5A1BA58C06007A5580 /* UIView+TKCategory.m */; };
+		78EA6E741BA58D3B007A5580 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E731BA58D3B007A5580 /* Service.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,8 @@
 		78EA6E581BA58C06007A5580 /* TKAlertCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAlertCenter.m; sourceTree = "<group>"; };
 		78EA6E591BA58C06007A5580 /* UIView+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TKCategory.h"; sourceTree = "<group>"; };
 		78EA6E5A1BA58C06007A5580 /* UIView+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKCategory.m"; sourceTree = "<group>"; };
+		78EA6E721BA58D3B007A5580 /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		78EA6E731BA58D3B007A5580 /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +222,7 @@
 		7863ABE01BA3B10000499BBB /* orderTest */ = {
 			isa = PBXGroup;
 			children = (
+				78EA6E711BA58D1F007A5580 /* Service */,
 				78EA6E291BA58C06007A5580 /* Vendors */,
 				7863AC3A1BA3D6AD00499BBB /* UI */,
 				7863AC271BA3B47B00499BBB /* Model */,
@@ -430,6 +434,15 @@
 			path = TKAlertCenter;
 			sourceTree = "<group>";
 		};
+		78EA6E711BA58D1F007A5580 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				78EA6E721BA58D3B007A5580 /* Service.h */,
+				78EA6E731BA58D3B007A5580 /* Service.m */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -556,6 +569,7 @@
 				78EA6E251BA53427007A5580 /* RecordListViewController.m in Sources */,
 				7863AC1D1BA3B2E000499BBB /* OrderViewController.m in Sources */,
 				78EA6E6B1BA58C06007A5580 /* UIProgressView+AFNetworking.m in Sources */,
+				78EA6E741BA58D3B007A5580 /* Service.m in Sources */,
 				78EA6E621BA58C06007A5580 /* AFURLResponseSerialization.m in Sources */,
 				7863AC331BA3B94300499BBB /* CollectViewController.m in Sources */,
 				78EA6E681BA58C06007A5580 /* UIAlertView+AFNetworking.m in Sources */,

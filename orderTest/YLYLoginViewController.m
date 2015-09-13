@@ -8,12 +8,14 @@
 
 #import "YLYLoginViewController.h"
 #import "YLYTipsTextField.h"
+#import "Service.h"
 
 @interface YLYLoginViewController ()
 
 @property (nonatomic, strong) YLYTipsTextField *accountTextField;
 @property (nonatomic, strong) YLYTipsTextField *passwordTextField;
 @property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, strong) Service *service;
 
 @end
 
@@ -23,6 +25,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"登录";
+    
+    _service = [[Service alloc] init];
     
     [self setupUI];
 }
@@ -34,7 +38,9 @@
 
 - (void)didClickLoginButton:(id)sender
 {
-    
+    [self.service loginWithAccount:self.accountTextField.text password:self.passwordTextField.text completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
 }
 
 - (void)setupUI

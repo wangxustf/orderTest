@@ -19,4 +19,6 @@
 #define kLineColor 0x333333
 #define kMainColor 0x00afcc
 
+#define Success 1
+
 #endif
