@@ -48,7 +48,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *kDriverTableViewCell = @"kDriverTableViewCell";
-    DriverTableViewCell *driverTableViewCell = [[DriverTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDriverTableViewCell];
+    DriverTableViewCell *driverTableViewCell = [tableView dequeueReusableCellWithIdentifier:kDriverTableViewCell];
     if (driverTableViewCell == nil) {
         driverTableViewCell = [[DriverTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDriverTableViewCell];
         driverTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -71,7 +71,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *kCarTableViewCell = @"kCarTableViewCell";
-    CarTableViewCell *carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
+    CarTableViewCell *carTableViewCell = [tableView dequeueReusableCellWithIdentifier:kCarTableViewCell];
     if (carTableViewCell == nil) {
         carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
         carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
