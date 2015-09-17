@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
 		7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE61BA3B10000499BBB /* AppDelegate.m */; };
 		7863ABEF1BA3B10000499BBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7863ABEE1BA3B10000499BBB /* Images.xcassets */; };
@@ -73,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
+		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
 		7863ABDE1BA3B10000499BBB /* orderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7863ABE21BA3B10000499BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7863ABE31BA3B10000499BBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -201,6 +204,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7842AB951BAAB0A6005DEA8D /* NetworkCheckUtil */ = {
+			isa = PBXGroup;
+			children = (
+				7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */,
+				7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */,
+			);
+			path = NetworkCheckUtil;
+			sourceTree = "<group>";
+		};
 		7863ABD51BA3B10000499BBB = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +358,7 @@
 		78EA6E291BA58C06007A5580 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				7842AB951BAAB0A6005DEA8D /* NetworkCheckUtil */,
 				78EA6E2A1BA58C06007A5580 /* AFNetworking */,
 				78EA6E531BA58C06007A5580 /* DejalActivityView */,
 				78EA6E561BA58C06007A5580 /* TKAlertCenter */,
@@ -548,6 +561,7 @@
 				78EA6E6D1BA58C06007A5580 /* UIWebView+AFNetworking.m in Sources */,
 				7863AC231BA3B3D900499BBB /* BaseViewController.m in Sources */,
 				78EA6E101BA50D9F007A5580 /* ImageButton.m in Sources */,
+				7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */,
 				78EA6E661BA58C06007A5580 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7863AC131BA3B24100499BBB /* UIView+Addition.m in Sources */,
 				78EA6E261BA53427007A5580 /* CarListViewController.m in Sources */,
@@ -712,6 +726,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -724,6 +739,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
