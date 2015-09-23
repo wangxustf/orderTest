@@ -7,7 +7,14 @@
 //
 
 #import "Order.h"
+#import "NSDictionary+NSDictionary_Addition.h"
 
 @implementation Order
+
++ (Order *)orderWithDictionary:(NSDictionary *)dictionary
+{
+    Order *order = [[Order alloc] init];
+    return order;
+}
 
 @end

@@ -29,6 +29,8 @@
 		7863AC3D1BA3D6AD00499BBB /* YLYTipsTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */; };
 		7863AC401BA3F48F00499BBB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3F1BA3F48F00499BBB /* Order.m */; };
 		788C9E811BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */; settings = {ASSET_TAGS = (); }; };
+		788C9E841BB25A0400D8D2B2 /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E831BB25A0400D8D2B2 /* Car.m */; settings = {ASSET_TAGS = (); }; };
+		788C9E871BB25A1100D8D2B2 /* Driver.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E861BB25A1100D8D2B2 /* Driver.m */; settings = {ASSET_TAGS = (); }; };
 		78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E091BA5052E007A5580 /* ServiceViewController.m */; };
 		78EA6E0D1BA5081A007A5580 /* ArrowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0C1BA5081A007A5580 /* ArrowButton.m */; };
 		78EA6E101BA50D9F007A5580 /* ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0F1BA50D9F007A5580 /* ImageButton.m */; };
@@ -121,6 +123,10 @@
 		7863AC3F1BA3F48F00499BBB /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		788C9E7F1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NSDictionary_Addition.h"; sourceTree = "<group>"; };
 		788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NSDictionary_Addition.m"; sourceTree = "<group>"; };
+		788C9E821BB25A0400D8D2B2 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
+		788C9E831BB25A0400D8D2B2 /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
+		788C9E851BB25A1100D8D2B2 /* Driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driver.h; sourceTree = "<group>"; };
+		788C9E861BB25A1100D8D2B2 /* Driver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Driver.m; sourceTree = "<group>"; };
 		78EA6E081BA5052E007A5580 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
 		78EA6E091BA5052E007A5580 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
 		78EA6E0B1BA5081A007A5580 /* ArrowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowButton.h; sourceTree = "<group>"; };
@@ -343,6 +349,10 @@
 				7863AC2C1BA3B4C500499BBB /* YLYUser.m */,
 				7863AC3E1BA3F48F00499BBB /* Order.h */,
 				7863AC3F1BA3F48F00499BBB /* Order.m */,
+				788C9E821BB25A0400D8D2B2 /* Car.h */,
+				788C9E831BB25A0400D8D2B2 /* Car.m */,
+				788C9E851BB25A1100D8D2B2 /* Driver.h */,
+				788C9E861BB25A1100D8D2B2 /* Driver.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -591,6 +601,7 @@
 				78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */,
 				7863AC361BA3B94E00499BBB /* RecordViewController.m in Sources */,
 				7863AC201BA3B30000499BBB /* MineViewController.m in Sources */,
+				788C9E871BB25A1100D8D2B2 /* Driver.m in Sources */,
 				78EA6E161BA51A9B007A5580 /* NSDate+Addition.m in Sources */,
 				78EA6E281BA53427007A5580 /* CarTableViewCell.m in Sources */,
 				78EA6E6C1BA58C06007A5580 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -603,6 +614,7 @@
 				78EA6E741BA58D3B007A5580 /* Service.m in Sources */,
 				78EA6E621BA58C06007A5580 /* AFURLResponseSerialization.m in Sources */,
 				7863AC331BA3B94300499BBB /* CollectViewController.m in Sources */,
+				788C9E841BB25A0400D8D2B2 /* Car.m in Sources */,
 				78EA6E681BA58C06007A5580 /* UIAlertView+AFNetworking.m in Sources */,
 				7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */,
 				78EA6E5B1BA58C06007A5580 /* AFHTTPRequestOperation.m in Sources */,

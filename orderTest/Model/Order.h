@@ -38,4 +38,6 @@
 @property (nonatomic, strong) NSString *facheYijian;
 @property (nonatomic, strong) NSString *bohuiYuanYin;
 
++ (Order *)orderWithDictionary:(NSDictionary *)dictionary;
+
 @end
