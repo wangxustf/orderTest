@@ -7,8 +7,22 @@
 //
 
 #import "YLYUser.h"
+#import "NSDictionary+NSDictionary_Addition.h"
 
 @implementation YLYUser
+
++ (YLYUser *)userWithDictionary:(NSDictionary *)dictionary
+{
+    YLYUser *user = [[YLYUser alloc] init];
+    user.deviceID = [dictionary strValue:@"deviceId"];
+    user.userID = [dictionary strValue:@"userId"];
+    user.username = [dictionary strValue:@"username"];
+    user.phone = [dictionary strValue:@"phone"];
+    user.depName = [dictionary strValue:@"depName"];
+    user.depID = [dictionary strValue:@"depId"];
+    user.userType = [dictionary strValue:@"userType"];
+    return user;
+}
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {

@@ -18,4 +18,6 @@
 @property (nonatomic, strong) NSString *depID;
 @property (nonatomic, strong) NSString *userType;
 
++ (YLYUser *)userWithDictionary:(NSDictionary *)dictionary;
+
 @end

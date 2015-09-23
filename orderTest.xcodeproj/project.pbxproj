@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
+		78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78446F9F1BB22F62003B8428 /* CoreTelephony.framework */; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
 		7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE61BA3B10000499BBB /* AppDelegate.m */; };
 		7863ABEF1BA3B10000499BBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7863ABEE1BA3B10000499BBB /* Images.xcassets */; };
@@ -27,6 +28,7 @@
 		7863AC391BA3B96A00499BBB /* MilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC381BA3B96A00499BBB /* MilViewController.m */; };
 		7863AC3D1BA3D6AD00499BBB /* YLYTipsTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */; };
 		7863AC401BA3F48F00499BBB /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863AC3F1BA3F48F00499BBB /* Order.m */; };
+		788C9E811BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */; settings = {ASSET_TAGS = (); }; };
 		78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E091BA5052E007A5580 /* ServiceViewController.m */; };
 		78EA6E0D1BA5081A007A5580 /* ArrowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0C1BA5081A007A5580 /* ArrowButton.m */; };
 		78EA6E101BA50D9F007A5580 /* ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0F1BA50D9F007A5580 /* ImageButton.m */; };
@@ -76,6 +78,7 @@
 /* Begin PBXFileReference section */
 		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
 		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
+		78446F9F1BB22F62003B8428 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		7863ABDE1BA3B10000499BBB /* orderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7863ABE21BA3B10000499BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7863ABE31BA3B10000499BBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 		7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLYTipsTextField.m; sourceTree = "<group>"; };
 		7863AC3E1BA3F48F00499BBB /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
 		7863AC3F1BA3F48F00499BBB /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
+		788C9E7F1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NSDictionary_Addition.h"; sourceTree = "<group>"; };
+		788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NSDictionary_Addition.m"; sourceTree = "<group>"; };
 		78EA6E081BA5052E007A5580 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
 		78EA6E091BA5052E007A5580 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
 		78EA6E0B1BA5081A007A5580 /* ArrowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowButton.h; sourceTree = "<group>"; };
@@ -191,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +222,7 @@
 		7863ABD51BA3B10000499BBB = {
 			isa = PBXGroup;
 			children = (
+				78446F9F1BB22F62003B8428 /* CoreTelephony.framework */,
 				7863ABE01BA3B10000499BBB /* orderTest */,
 				7863ABFA1BA3B10000499BBB /* orderTestTests */,
 				7863ABDF1BA3B10000499BBB /* Products */,
@@ -355,9 +362,19 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		788C9E7E1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition */ = {
+			isa = PBXGroup;
+			children = (
+				788C9E7F1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.h */,
+				788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */,
+			);
+			path = "NSDictionary+NSDictionary_Addition";
+			sourceTree = "<group>";
+		};
 		78EA6E291BA58C06007A5580 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				788C9E7E1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition */,
 				7842AB951BAAB0A6005DEA8D /* NetworkCheckUtil */,
 				78EA6E2A1BA58C06007A5580 /* AFNetworking */,
 				78EA6E531BA58C06007A5580 /* DejalActivityView */,
@@ -589,6 +606,7 @@
 				78EA6E681BA58C06007A5580 /* UIAlertView+AFNetworking.m in Sources */,
 				7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */,
 				78EA6E5B1BA58C06007A5580 /* AFHTTPRequestOperation.m in Sources */,
+				788C9E811BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m in Sources */,
 				78EA6E6F1BA58C06007A5580 /* TKAlertCenter.m in Sources */,
 				78EA6E601BA58C06007A5580 /* AFURLConnectionOperation.m in Sources */,
 				78EA6E6E1BA58C06007A5580 /* DejalActivityView.m in Sources */,
