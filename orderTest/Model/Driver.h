@@ -10,6 +10,16 @@
 
 @interface Driver : NSObject
 
+@property (nonatomic, strong) NSString *driverID;
+@property (nonatomic, strong) NSString *driverName;
+@property (nonatomic, strong) NSString *driverSex;
+@property (nonatomic, strong) NSString *driverOld;
+@property (nonatomic, strong) NSString *driverPhone;
+@property (nonatomic, strong) NSString *workTime;
+@property (nonatomic, strong) NSString *driveImage;
+@property (nonatomic, strong) NSString *idNumber;
+@property (nonatomic, strong) NSString *state;
+
 + (Driver *)driverWithDictionary:(NSDictionary *)dictionary;
 
 @end
