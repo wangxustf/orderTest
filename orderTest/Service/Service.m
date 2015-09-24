@@ -15,7 +15,7 @@
 - (void)loginWithDeviceID:(NSString *)deviceID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"deviceId":deviceID}];
     [manager GET:[NSString stringWithFormat:@"%@/mobileLogin.html", @"www"]
       parameters:parameters
@@ -37,7 +37,6 @@
              }
              //NSLog(@"Error: %@", error);
          }];
-
 }
 
 @end
