@@ -11,6 +11,6 @@
 
 @interface Service : NSObject
 
-- (void)loginWithAccount:(NSString *)account password:(NSString *)password completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion;
+- (void)loginWithDeviceID:(NSString *)deviceID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion;
 
 @end

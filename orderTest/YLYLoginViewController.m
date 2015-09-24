@@ -40,7 +40,7 @@
 
 - (void)didClickLoginButton:(id)sender
 {
-    [self.service loginWithAccount:self.accountTextField.text password:self.passwordTextField.text completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    [self.service loginWithDeviceID:nil completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
 }

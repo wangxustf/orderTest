@@ -8,22 +8,23 @@
 
 #import "Service.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "YLYUser.h"
 
 @implementation Service
 
-- (void)loginWithAccount:(NSString *)account password:(NSString *)password completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
+- (void)loginWithDeviceID:(NSString *)deviceID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"account":account,
-                                                                                      @"password":password}];
-    [manager GET:[NSString stringWithFormat:@"%@session/recommendSession", @"www"]
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"deviceId":deviceID}];
+    [manager GET:[NSString stringWithFormat:@"%@/mobileLogin.html", @"www"]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
                  if ([responseObject isKindOfClass:[NSDictionary class]]) {
                      if ([responseObject[@"status"] intValue] == Success) {
-                         completion(YES, nil, nil);
+                         YLYUser *user = [YLYUser userWithDictionary:responseObject];
+                         completion(YES, user, nil);
                      } else {
                          completion(NO, nil, nil);
                      }
