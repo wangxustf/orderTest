@@ -23,10 +23,12 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"订车纪录";
     
+    
     Service *service = [[Service alloc] init];
-//    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
+    YLYUser *user = [NSUserDefaults user];
+    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    
+    }];
 //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
 //    }];

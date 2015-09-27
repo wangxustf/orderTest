@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orderTest/OrderViewController.m"
-            timestampString = "465012681.566473"
+            timestampString = "465014858.65517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "-didClickDoneItem:"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orderTest/OrderViewController.m"
-            timestampString = "465012681.566473"
+            timestampString = "465014858.65517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "-keyboardWillShow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -51,12 +51,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orderTest/HomeViewController.m"
-            timestampString = "465011596.750748"
+            filePath = "orderTest/RecordListViewController.m"
+            timestampString = "465014858.65517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
             <Locations>
@@ -64,30 +64,78 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[HomeViewController viewDidLoad]"
+                  symbolName = "-[RecordListViewController viewDidLoad]"
                   moduleName = "orderTest"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wangxu/orderTest/orderTest/HomeViewController.m"
-                  timestampString = "465013383.924485"
+                  urlString = "file:///Users/wangxu/orderTest/orderTest/RecordListViewController.m"
+                  timestampString = "465015130.111583"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "38"
-                  endingLineNumber = "38"
-                  offsetFromSymbolStart = "609">
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "233">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__33-[HomeViewController viewDidLoad]_block_invoke"
+                  symbolName = "__39-[RecordListViewController viewDidLoad]_block_invoke"
                   moduleName = "orderTest"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wangxu/orderTest/orderTest/HomeViewController.m"
-                  timestampString = "465013383.924646"
+                  urlString = "file:///Users/wangxu/orderTest/orderTest/RecordListViewController.m"
+                  timestampString = "465015130.111739"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "38"
-                  endingLineNumber = "38"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "orderTest/RecordViewController.m"
+            timestampString = "465014858.65517"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[RecordViewController viewDidLoad]"
+                  moduleName = "orderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangxu/orderTest/orderTest/RecordViewController.m"
+                  timestampString = "465015130.112567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "233">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[RecordViewController viewDidLoad]_block_invoke"
+                  moduleName = "orderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangxu/orderTest/orderTest/RecordViewController.m"
+                  timestampString = "465015130.112727"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
                   offsetFromSymbolStart = "84">
                </Location>
             </Locations>
@@ -100,12 +148,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orderTest/Service/Service.m"
-            timestampString = "465013124.856865"
+            timestampString = "465015129.075602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-loginWithLoginName:password:completion:"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "-loadDincheWeiwanchengWithUserID:completion:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -116,12 +164,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orderTest/Service/Service.m"
-            timestampString = "465013124.856865"
+            timestampString = "465015129.075602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-loginWithLoginName:password:completion:"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-loadDincheWeiwanchengWithUserID:completion:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -132,12 +180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orderTest/Service/Service.m"
-            timestampString = "465013382.872095"
+            timestampString = "465015129.075602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-loginWithLoginName:password:completion:"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "-loadDincheWeiwanchengWithUserID:completion:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

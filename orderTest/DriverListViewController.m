@@ -24,8 +24,10 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"司机信息";
+    
     Service *service = [[Service alloc] init];
-    [service loadDriverWithDeviceID:@"" carID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    YLYUser *user = [NSUserDefaults user];
+    [service loadDriverWithDeviceID:user.userID carID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
     //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {

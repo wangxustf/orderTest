@@ -19,8 +19,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"我的订车里程";
+    
     Service *service = [[Service alloc] init];
-    [service loadMolleageUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    YLYUser *user = [NSUserDefaults user];
+    [service loadMolleageWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
     //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {

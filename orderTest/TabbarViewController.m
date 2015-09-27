@@ -53,14 +53,14 @@
 {
     [super viewDidAppear:animated];
     
-//    YLYUser *user = [NSUserDefaults user];
-//    if (!user) {
-//        UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
-//        loginViewController.navigationBar.barTintColor = RGB(kMainColor);
-//        loginViewController.navigationBar.tintColor = [UIColor blueColor];
-//        [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-//        [self presentViewController:loginViewController animated:YES completion:nil];
-//    }
+    YLYUser *user = [NSUserDefaults user];
+    if (!user) {
+        UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
+        loginViewController.navigationBar.barTintColor = RGB(kMainColor);
+        loginViewController.navigationBar.tintColor = [UIColor blueColor];
+        [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,6 +7,7 @@
 //
 
 #import "RecordViewController.h"
+#import "Service.h"
 
 @interface RecordViewController ()
 
@@ -18,6 +19,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"我的订车记录";
+    
+    Service *service = [[Service alloc] init];
+    YLYUser *user = [NSUserDefaults user];
+    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
+//    [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {

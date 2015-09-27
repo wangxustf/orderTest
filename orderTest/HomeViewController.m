@@ -34,8 +34,13 @@
     _width = (self.view.width - _gap * 3) / 3.0;
     _subHeight = (_height - _gap / 2.0) / 2.0;
     
+    
     Service *service = [[Service alloc] init];
-    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    YLYUser *user = [NSUserDefaults user];
+//    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+    [service loadCarInfoWithDeviceID:@"" carType:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
 //    [self setupUI];
