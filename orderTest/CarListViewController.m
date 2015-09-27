@@ -7,11 +7,14 @@
 //
 
 #import "CarListViewController.h"
+#import "SubCarListViewController.h"
 #import "CarTableViewCell.h"
 #import "Service.h"
 
-@interface CarListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface CarListViewController ()
 
+//@property (nonatomic, strong) RecordListViewController *unfinishedRecordListViewController;
+//@property (nonatomic, strong) RecordListViewController *finishedRecordListViewController;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *carList;

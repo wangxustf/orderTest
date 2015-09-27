@@ -23,6 +23,7 @@
 		78226D5A1BB7911600C8598D /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78226D4E1BB7911600C8598D /* whiteArrow@2x.png */; settings = {ASSET_TAGS = (); }; };
 		78226D5E1BB794DD00C8598D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D5D1BB794DD00C8598D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		78226D611BB7A20D00C8598D /* ChoiceSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
+		78226D641BB7A61500C8598D /* SubCarListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D631BB7A61500C8598D /* SubCarListViewController.m */; settings = {ASSET_TAGS = (); }; };
 		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
 		78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78446F9F1BB22F62003B8428 /* CoreTelephony.framework */; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
@@ -117,6 +118,8 @@
 		78226D5D1BB794DD00C8598D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		78226D5F1BB7A20D00C8598D /* ChoiceSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoiceSegmentedView.h; sourceTree = "<group>"; };
 		78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoiceSegmentedView.m; sourceTree = "<group>"; };
+		78226D621BB7A61500C8598D /* SubCarListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCarListViewController.h; sourceTree = "<group>"; };
+		78226D631BB7A61500C8598D /* SubCarListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCarListViewController.m; sourceTree = "<group>"; };
 		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
 		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
 		78446F9F1BB22F62003B8428 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -387,6 +390,8 @@
 				78EA6E221BA53427007A5580 /* RecordTableViewCell.m */,
 				78EA6E231BA53427007A5580 /* CarTableViewCell.h */,
 				78EA6E241BA53427007A5580 /* CarTableViewCell.m */,
+				78226D621BB7A61500C8598D /* SubCarListViewController.h */,
+				78226D631BB7A61500C8598D /* SubCarListViewController.m */,
 			);
 			path = orderTest;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 				78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */,
 				7863AC361BA3B94E00499BBB /* RecordViewController.m in Sources */,
 				7863AC201BA3B30000499BBB /* MineViewController.m in Sources */,
+				78226D641BB7A61500C8598D /* SubCarListViewController.m in Sources */,
 				788C9E871BB25A1100D8D2B2 /* Driver.m in Sources */,
 				78EA6E161BA51A9B007A5580 /* NSDate+Addition.m in Sources */,
 				78EA6E281BA53427007A5580 /* CarTableViewCell.m in Sources */,

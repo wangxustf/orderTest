@@ -140,7 +140,7 @@
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
     Order *order = [[Order alloc] init];
-    order.orderID = @"";
+    order.orderID = nil;
     order.jiecheAddress = self.startPosition.text;
     order.jingguoAddress = self.passPosition.text;
     order.realJingguoAddress = @"";
@@ -150,7 +150,7 @@
     order.realStartTime = @"";
     order.realEndTime = @"";
     order.isPublic = @"";
-    order.carType = self.carArray[_selectedCarRow];
+    order.carType = [@(_selectedCarRow) stringValue];
     order.userName = self.passengerNameTextField.text;
     order.userPhone = self.passengerPhoneTextField.text;
     order.carID = @"";
