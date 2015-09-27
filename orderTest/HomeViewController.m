@@ -37,9 +37,25 @@
     
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+//    [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+//    [service loadDriverWithCarID:@"39" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//
+//    }];
+//    [service loadHistoryDriverJijieshuWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+//    [service loadHistoryDriverJinxingzhongWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+    [service loadMolleageWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
+    
 //    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
 //    }];

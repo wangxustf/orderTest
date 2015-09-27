@@ -21,7 +21,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        _page = 1;
+        _page = 0;
     }
     return self;
 }
@@ -69,7 +69,7 @@
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               if (completion != nil) {
-                  if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                  if ([responseObject isKindOfClass:[NSArray class]]) {
                       YLYUser *user = [YLYUser userWithDictionary:responseObject];
                       completion(YES, user, nil);
                   } else {
@@ -251,7 +251,7 @@
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                 if ([responseObject isKindOfClass:[NSArray class]]) {
                      //                     if ([responseObject[@"status"] intValue] == Success) {
                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
                      completion(YES, user, nil);
@@ -275,12 +275,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":@(_page)};
-    [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisYiWanCheng.html", YLYBaseURL]
+                                 @"page":[@(_page) stringValue]};
+    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisYiWanCheng.html", YLYBaseURL]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                 if ([responseObject isKindOfClass:[NSArray class]]) {
                      //                     if ([responseObject[@"status"] intValue] == Success) {
                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
                      completion(YES, user, nil);
@@ -308,7 +308,7 @@
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                 if ([responseObject isKindOfClass:[NSArray class]]) {
                      //                     if ([responseObject[@"status"] intValue] == Success) {
                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
                      completion(YES, user, nil);
@@ -332,12 +332,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":@(_page)};
-    [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiJinxingzhong.html", YLYBaseURL]
+                                 @"page":[@(_page) stringValue]};
+    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiJinxingzhong.html", YLYBaseURL]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                 if ([responseObject isKindOfClass:[NSArray class]]) {
                      //                     if ([responseObject[@"status"] intValue] == Success) {
                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
                      completion(YES, user, nil);
@@ -361,12 +361,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":@(_page)};
-    [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiYiJieShu.html", YLYBaseURL]
+                                 @"page":[@(_page) stringValue]};
+    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiYiJieShu.html", YLYBaseURL]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                 if ([responseObject isKindOfClass:[NSArray class]]) {
                      //                     if ([responseObject[@"status"] intValue] == Success) {
                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
                      completion(YES, user, nil);
@@ -390,8 +390,8 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":@(_page)};
-    [manager GET:[NSString stringWithFormat:@"%@/mobileHis.html", YLYBaseURL]
+                                 @"page":[@(_page) stringValue]};
+    [manager POST:[NSString stringWithFormat:@"%@/mobileHis.html", YLYBaseURL]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              if (completion != nil) {
