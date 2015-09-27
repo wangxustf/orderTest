@@ -13,8 +13,13 @@
 
 @interface CarListViewController ()
 
-//@property (nonatomic, strong) RecordListViewController *unfinishedRecordListViewController;
-//@property (nonatomic, strong) RecordListViewController *finishedRecordListViewController;
+@property (nonatomic, strong) SubCarListViewController *jingjiCarListViewController;
+@property (nonatomic, strong) SubCarListViewController *shushiCarListViewController;
+@property (nonatomic, strong) SubCarListViewController *haohuaJingjiCarListViewController;
+@property (nonatomic, strong) SubCarListViewController *shangWuJingjiCarListViewController;
+@property (nonatomic, strong) SubCarListViewController *zuo16JingjiCarListViewController;
+@property (nonatomic, strong) SubCarListViewController *zuo32JingjiCarListViewController;
+@property (nonatomic, strong) UIViewController *currentViewController;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *carList;
@@ -22,6 +27,19 @@
 @end
 
 @implementation CarListViewController
+
+- (id)init
+{
+    if (self = [super init]) {
+        _jingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarTypeJingji];
+        _shushiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarTypeShushi];
+        _haohuaJingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarTypeHaohua];
+        _shangWuJingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarTypeShangwu];
+        _zuo16JingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarType16zuo];
+        _zuo32JingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarType32zuo];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,18 +58,20 @@
     _scrollView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_scrollView];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - 64 - _scrollView.bottom)];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    [self.view addSubview:_tableView];
+    _jingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+    [self addChildViewController:self.jingjiCarListViewController];
+    self.currentViewController = self.jingjiCarListViewController;
+    [self.view addSubview:self.currentViewController.view];
     
-    [_tableView reloadData];
     CGFloat gap = 10;
     CGFloat left = 10;
-    for(int i = 0; i < 10; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(left, 0, 44, 44)];
-        imageView.image = [UIImage imageNamed:@"phone.png"];
-        [_scrollView addSubview:imageView];
+    for(int i = 0; i < 6; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:@"phone.png"] forState:UIControlStateNormal];
+        button.frame = CGRectMake(left, 0, 44, 44);
+        button.tag = i;
+        [button addTarget:self action:@selector(didClickChoiceSegmentView:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:button];
         left = left + 44 + gap;
     }
     _scrollView.contentSize = CGSizeMake(MAX(_scrollView.width, left), 44);
@@ -62,39 +82,93 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)didClickChoiceSegmentView:(UIButton *)sender
 {
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 66;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 10;//[self.carList count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *kCarTableViewCell = @"kCarTableViewCell";
-    CarTableViewCell *carTableViewCell = [tableView dequeueReusableCellWithIdentifier:kCarTableViewCell];
-    if (carTableViewCell == nil) {
-        carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
-        carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSInteger index = sender.tag + 1;
+    if ((self.currentViewController == self.jingjiCarListViewController && index == 1) ||
+        (self.currentViewController == self.shushiCarListViewController && index == 2) ||
+        (self.currentViewController == self.haohuaJingjiCarListViewController && index == 3) ||
+        (self.currentViewController == self.shangWuJingjiCarListViewController && index == 4) ||
+        (self.currentViewController == self.zuo16JingjiCarListViewController && index == 5) ||
+        (self.currentViewController == self.zuo32JingjiCarListViewController && index == 6)) {
+        return;
     }
-    [carTableViewCell setCar:self.carList[indexPath.row]];
-    return carTableViewCell;
+    switch (index) {
+        case 1:
+        {
+            [self transitionFromViewController:self.currentViewController toViewController:self.jingjiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.jingjiCarListViewController;
+                }
+            }];
+        }
+            break;
+        case 2:
+        {
+            if (![self.shushiCarListViewController parentViewController]) {
+                self.shushiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+                [self addChildViewController:self.shushiCarListViewController];
+            }
+            [self transitionFromViewController:self.currentViewController toViewController:self.shushiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.shushiCarListViewController;
+                }
+            }];
+        }
+            break;
+        case 3:
+        {
+            if (![self.haohuaJingjiCarListViewController parentViewController]) {
+                self.haohuaJingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+                [self addChildViewController:self.haohuaJingjiCarListViewController];
+            }
+            [self transitionFromViewController:self.currentViewController toViewController:self.haohuaJingjiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.haohuaJingjiCarListViewController;
+                }
+            }];
+        }
+            break;
+        case 4:
+        {
+            if (![self.shangWuJingjiCarListViewController parentViewController]) {
+                self.shangWuJingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+                [self addChildViewController:self.shangWuJingjiCarListViewController];
+            }
+            [self transitionFromViewController:self.currentViewController toViewController:self.shangWuJingjiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.shangWuJingjiCarListViewController;
+                }
+            }];
+        }
+            break;
+        case 5:
+        {
+            if (![self.zuo16JingjiCarListViewController parentViewController]) {
+                self.zuo16JingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+                [self addChildViewController:self.zuo16JingjiCarListViewController];
+            }
+            [self transitionFromViewController:self.currentViewController toViewController:self.zuo16JingjiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.zuo16JingjiCarListViewController;
+                }
+            }];
+        }
+            break;
+        case 6:
+        {
+            if (![self.zuo32JingjiCarListViewController parentViewController]) {
+                self.zuo32JingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+                [self addChildViewController:self.zuo32JingjiCarListViewController];
+            }
+            [self transitionFromViewController:self.currentViewController toViewController:self.zuo32JingjiCarListViewController duration:0 options:UIViewAnimationOptionCurveEaseInOut animations:nil completion:^(BOOL finished) {
+                if (finished) {
+                    self.currentViewController = self.zuo32JingjiCarListViewController;
+                }
+            }];
+        }
+            break;
+    }
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
 
 @end
