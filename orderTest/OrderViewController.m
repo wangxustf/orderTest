@@ -7,7 +7,7 @@
 //
 
 #import "OrderViewController.h"
-#import "RecordListViewController.h"
+#import "RecordViewController.h"
 #import "DriverListViewController.h"
 #import "YLYTipsTextField.h"
 #import "DashView.h"
@@ -40,6 +40,7 @@
 @property (nonatomic, strong) UIButton *checkButton;
 @property (nonatomic, strong) UIButton *rejectButton;
 @property (nonatomic, strong) Driver *driver;
+@property (nonatomic, strong) YLYUser *user;
 
 @end
 
@@ -64,6 +65,7 @@
                                                  selector:@selector(keyboardWillHide:)
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
+        _user = [NSUserDefaults user];
     }
     return self;
 }
@@ -94,9 +96,9 @@
 
 - (void)didClickRightBarButtonItem:(id)sender
 {
-    RecordListViewController *recordListViewController = [[RecordListViewController alloc] init];
-    recordListViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:recordListViewController animated:YES];
+    RecordViewController *recordViewController = [[RecordViewController alloc] init];
+    recordViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recordViewController animated:YES];
 }
 
 - (void)didTapGestureRecognizer:(id)sender
@@ -133,35 +135,52 @@
 
 - (void)didClickOrderButton:(id)sender
 {
-    self.checkButton.hidden = self.rejectButton.hidden = NO;
-    self.orderButton.hidden = YES;
+//    self.checkButton.hidden = self.rejectButton.hidden = NO;
+//    self.orderButton.hidden = YES;
+    Service *service = [[Service alloc] init];
+    YLYUser *user = [NSUserDefaults user];
+    Order *order = [[Order alloc] init];
+    order.orderID = @"";
+    order.jiecheAddress = self.startPosition.text;
+    order.jingguoAddress = self.passPosition.text;
+    order.realJingguoAddress = @"";
+    order.yuyueTime = self.orderTime.text;
+    order.startTime = self.startTimeTextField.text;
+    order.endTime = self.endTimeTextField.text;
+    order.realStartTime = @"";
+    order.realEndTime = @"";
+    order.isPublic = @"";
+    order.carType = self.carArray[_selectedCarRow];
+    order.userName = self.passengerNameTextField.text;
+    order.userPhone = self.passengerPhoneTextField.text;
+    order.carID = @"";
+    order.dingcherenID = user.userID;
+    order.dingcherenName = user.username;
+    order.dingcherenPhone = user.phone;
+    order.dingcherenDep = user.depName;
+    order.dingcherenDepID = user.depID;
+    order.orderState = @"";
+    order.shenpirenName = @"";
+    order.shenpirenID = @"";
+    order.paicherenID = @"";
+    order.driverID = @"";//self.driver.driverID;
+    order.driverName = @"";//self.driverNameLabel.text;
+    order.driverPhone = @"";//self.driverPhoneLabel.text;
+    order.startMetre = @"";
+    order.endMetre = @"";
+    order.shenheYiJian = @"";
+    order.facheYijian = @"";
+    order.bohuiYuanYin = @"";
+    order.countMetre = @"";
+    order.pingjia = @"";
+    [service loadDingCheWithOrder:order completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
 }
 
 - (void)didClickCheckButton:(id)sender
 {
     
-    Service *service = [[Service alloc] init];
-    YLYUser *user = [NSUserDefaults user];
-    Order *order = [[Order alloc] init];
-    order.jiecheAddress = self.startPosition.text;
-    order.jingguoAddress = self.passPosition.text;
-    order.yuyueTime = self.orderTime.text;
-    order.startTime = self.startTimeTextField.text;
-    order.endTime = self.endTimeTextField.text;
-    order.carType = self.carArray[_selectedCarRow];
-    order.userName = self.passengerNameTextField.text;
-    order.userPhone = self.passengerPhoneTextField.text;
-    order.driverID = self.driver.driverID;
-    order.driverName = self.driverNameLabel.text;
-    order.driverPhone = self.driverPhoneLabel.text;
-    order.dingcherenID = user.userID;
-    order.dingcherenDep = user.depName;
-    order.dingcherenDepID = user.depID;
-    order.dingcherenName = user.username;
-    order.dingcherenPhone = user.phone;
-//    [service loadDingCheWithOrder:<#(Order *)#> completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    
-//    }];
 }
 
 - (void)didClickRejectButton:(id)sender
@@ -415,10 +434,12 @@
     _orderPersonNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, _cellHeight/2.0)];
     _orderPersonNameLabel.textAlignment = NSTextAlignmentLeft;
     _orderPersonNameLabel.textColor = [UIColor blackColor];
+    _orderPersonNameLabel.text = self.user.username;
     [orderPersonView addSubview:_orderPersonNameLabel];
     _orderPersonPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _orderPersonNameLabel.bottom, 100, _cellHeight/2.0)];
     _orderPersonPhoneLabel.textAlignment = NSTextAlignmentLeft;
     _orderPersonPhoneLabel.textColor = [UIColor blackColor];
+    _orderPersonPhoneLabel.text = self.user.phone;
     [orderPersonView addSubview:_orderPersonPhoneLabel];
     
     UIButton *orderButton = [UIButton buttonWithType:UIButtonTypeCustom];

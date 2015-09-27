@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Order.h"
 
 @interface RecordTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Order *order;
 
 @end

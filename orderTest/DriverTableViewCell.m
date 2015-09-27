@@ -43,6 +43,11 @@
     // Configure the view for the selected state
 }
 
+- (void)setDriver:(Driver *)driver
+{
+    
+}
+
 - (UIImageView *)portraitImageView
 {
     if (!_portraitImageView) {

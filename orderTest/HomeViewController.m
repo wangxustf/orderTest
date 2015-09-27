@@ -9,7 +9,7 @@
 #import "HomeViewController.h"
 #import "DriverListViewController.h"
 #import "CarListViewController.h"
-#import "RecordListViewController.h"
+#import "RecordViewController.h"
 #import "Service.h"
 
 @interface HomeViewController ()
@@ -40,9 +40,14 @@
 //    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
 //    }];
-    [service loadCarInfoWithDeviceID:@"" carType:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
-    }];
+// carType:1,2,3,4,5,6
+//    [service loadCarInfoWithDriverID:@"" carType:@"1" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+    
+//    [service loadDriverWithCarID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
 //    [self setupUI];
 }
 
@@ -67,9 +72,9 @@
 
 - (void)didClickRecordList
 {
-    RecordListViewController *recordListViewController = [[RecordListViewController alloc] init];
-    recordListViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:recordListViewController animated:YES];
+    RecordViewController *recordViewController = [[RecordViewController alloc] init];
+    recordViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recordViewController animated:YES];
 }
 
 - (void)didClickOrderCar

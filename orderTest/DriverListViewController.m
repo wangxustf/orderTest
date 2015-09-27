@@ -27,15 +27,9 @@
     
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadDriverWithDeviceID:user.userID carID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    [service loadDriverWithCarID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
-    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
-    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +51,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 10;//[self.driverList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,6 +62,7 @@
         driverTableViewCell = [[DriverTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDriverTableViewCell];
         driverTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    driverTableViewCell.driver = self.driverList[indexPath.row];
     return driverTableViewCell;
 }
 

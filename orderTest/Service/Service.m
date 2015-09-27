@@ -58,36 +58,38 @@
          }];
 }
 
-- (void)loadCarInfoWithDeviceID:(NSString *)deviceID carType:(NSString *)carType completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
+- (void)loadCarInfoWithDriverID:(NSString *)driverID carType:(NSString *)carType completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    NSDictionary *parameters = @{@"deviceId":deviceID,
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSDictionary *parameters = @{@"driverId":driverID,
                                  @"index":carType};
-    [manager GET:[NSString stringWithFormat:@"%@/mobileCarInfo.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                     YLYUser *user = [YLYUser userWithDictionary:responseObject];
-                     completion(YES, user, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
+    [manager POST:[NSString stringWithFormat:@"%@/mobileCarInfo.html", YLYBaseURL]
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              if (completion != nil) {
+                  if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
+                      completion(YES, user, nil);
+                  } else {
+                      completion(NO, nil, nil);
+                  }
+              }
+              //NSLog(@"JSON: %@", responseObject);
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              if (completion) {
+                  completion(NO, nil, nil);
+              }
+              //NSLog(@"Error: %@", error);
+          }];
 }
 
 - (void)loadDingCheWithOrder:(Order *)order completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"orderId":order.orderID,
                                  @"jiecheAddress":order.jiecheAddress,
                                  @"jingguoAddress":order.jingguoAddress,
@@ -121,30 +123,31 @@
                                  @"countMetre":order.countMetre,
                                  @"pingjia":order.pingjia,
                                  };
-    [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisWeiWanCheng.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                     YLYUser *user = [YLYUser userWithDictionary:responseObject];
-                     completion(YES, user, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
+    [manager POST:[NSString stringWithFormat:@"%@/mobileDingche.html", YLYBaseURL]
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              if (completion != nil) {
+                  if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                      YLYUser *user = [YLYUser userWithDictionary:responseObject];
+                      completion(YES, user, nil);
+                  } else {
+                      completion(NO, nil, nil);
+                  }
+              }
+              //NSLog(@"JSON: %@", responseObject);
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              if (completion) {
+                  completion(NO, nil, nil);
+              }
+              //NSLog(@"Error: %@", error);
+          }];
 }
 
 - (void)loadDincheWeiwanchengWithUserID:(NSString *)userID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":[@(_page) stringValue]};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisWeiWanCheng.html", YLYBaseURL]
@@ -173,6 +176,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":@(_page)};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisYiWanCheng.html", YLYBaseURL]
@@ -197,12 +201,12 @@
          }];
 }
 
-- (void)loadDriverWithDeviceID:(NSString *)deviceID carID:(NSString *)carID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
+- (void)loadDriverWithCarID:(NSString *)carID completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    NSDictionary *parameters = @{@"deviceId":deviceID,
-                                 @"carId":carID};
+    //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSDictionary *parameters = @{@"carId":carID};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDriverInfo.html", YLYBaseURL]
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -229,6 +233,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":@(_page)};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiJinxingzhong.html", YLYBaseURL]
@@ -257,6 +262,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":@(_page)};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiYiJieShu.html", YLYBaseURL]
@@ -285,6 +291,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":@(_page)};
     [manager GET:[NSString stringWithFormat:@"%@/mobileHis.html", YLYBaseURL]

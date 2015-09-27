@@ -47,7 +47,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setCar
+- (void)setCar:(NSString *)car
 {
     self.portraitImageView.image = [UIImage imageNamed:@"phone.png"];
     self.nameLabel.text = @"xxx";

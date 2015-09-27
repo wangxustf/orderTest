@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSArray *carList;
 
 @end
 
@@ -28,15 +29,9 @@
     
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadCarInfoWithDeviceID:user.userID carType:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    [service loadCarInfoWithDriverID:user.userID carType:@"6" completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
-    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
-    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
     _scrollView.backgroundColor = [UIColor redColor];
@@ -78,7 +73,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 10;//[self.carList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,7 +84,7 @@
         carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
         carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [carTableViewCell setCar];
+    [carTableViewCell setCar:self.carList[indexPath.row]];
     return carTableViewCell;
 }
 

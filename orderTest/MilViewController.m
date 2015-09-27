@@ -11,6 +11,8 @@
 
 @interface MilViewController ()
 
+@property (nonatomic, strong) NSArray *orderList;
+
 @end
 
 @implementation MilViewController
@@ -25,12 +27,6 @@
     [service loadMolleageWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
         
     }];
-    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
-    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    //
-    //    }];
 }
 
 - (void)didReceiveMemoryWarning {

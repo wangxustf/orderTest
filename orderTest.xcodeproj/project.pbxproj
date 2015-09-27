@@ -21,6 +21,8 @@
 		78226D581BB7911600C8598D /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78226D4C1BB7911600C8598D /* grayArrow@2x.png */; settings = {ASSET_TAGS = (); }; };
 		78226D591BB7911600C8598D /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 78226D4D1BB7911600C8598D /* whiteArrow.png */; settings = {ASSET_TAGS = (); }; };
 		78226D5A1BB7911600C8598D /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78226D4E1BB7911600C8598D /* whiteArrow@2x.png */; settings = {ASSET_TAGS = (); }; };
+		78226D5E1BB794DD00C8598D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D5D1BB794DD00C8598D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		78226D611BB7A20D00C8598D /* ChoiceSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
 		78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78446F9F1BB22F62003B8428 /* CoreTelephony.framework */; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
@@ -111,6 +113,10 @@
 		78226D4C1BB7911600C8598D /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		78226D4D1BB7911600C8598D /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		78226D4E1BB7911600C8598D /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		78226D5C1BB794DD00C8598D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		78226D5D1BB794DD00C8598D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		78226D5F1BB7A20D00C8598D /* ChoiceSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoiceSegmentedView.h; sourceTree = "<group>"; };
+		78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoiceSegmentedView.m; sourceTree = "<group>"; };
 		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
 		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
 		78446F9F1BB22F62003B8428 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -297,6 +303,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		78226D5B1BB794DD00C8598D /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				78226D5C1BB794DD00C8598D /* JSONKit.h */,
+				78226D5D1BB794DD00C8598D /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
 		7842AB951BAAB0A6005DEA8D /* NetworkCheckUtil */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,6 +457,8 @@
 		7863AC3A1BA3D6AD00499BBB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				78226D5F1BB7A20D00C8598D /* ChoiceSegmentedView.h */,
+				78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */,
 				7863AC3B1BA3D6AD00499BBB /* YLYTipsTextField.h */,
 				7863AC3C1BA3D6AD00499BBB /* YLYTipsTextField.m */,
 				78EA6E0B1BA5081A007A5580 /* ArrowButton.h */,
@@ -466,6 +483,7 @@
 		78EA6E291BA58C06007A5580 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				78226D5B1BB794DD00C8598D /* JSONKit */,
 				78226D3C1BB7911600C8598D /* EGOTableViewPullRefresh */,
 				78226D361BB78DD000C8598D /* UDID_Tools */,
 				788C9E7E1BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition */,
@@ -678,6 +696,7 @@
 			files = (
 				7863AC301BA3B4E800499BBB /* YLYLoginViewController.m in Sources */,
 				78EA6E5E1BA58C06007A5580 /* AFNetworkReachabilityManager.m in Sources */,
+				78226D611BB7A20D00C8598D /* ChoiceSegmentedView.m in Sources */,
 				78EA6E6D1BA58C06007A5580 /* UIWebView+AFNetworking.m in Sources */,
 				7863AC231BA3B3D900499BBB /* BaseViewController.m in Sources */,
 				78EA6E101BA50D9F007A5580 /* ImageButton.m in Sources */,
@@ -705,6 +724,7 @@
 				78EA6E6A1BA58C06007A5580 /* UIImageView+AFNetworking.m in Sources */,
 				7863AC2D1BA3B4C500499BBB /* YLYUser.m in Sources */,
 				78EA6E251BA53427007A5580 /* RecordListViewController.m in Sources */,
+				78226D5E1BB794DD00C8598D /* JSONKit.m in Sources */,
 				7863AC1D1BA3B2E000499BBB /* OrderViewController.m in Sources */,
 				78EA6E6B1BA58C06007A5580 /* UIProgressView+AFNetworking.m in Sources */,
 				78EA6E741BA58D3B007A5580 /* Service.m in Sources */,

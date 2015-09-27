@@ -43,6 +43,11 @@
     // Configure the view for the selected state
 }
 
+- (void)setOrder:(Order *)order
+{
+    
+}
+
 - (UIImageView *)portraitImageView
 {
     if (!_portraitImageView) {

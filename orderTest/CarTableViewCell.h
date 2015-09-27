@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Car.h"
 
 @interface CarTableViewCell : UITableViewCell
 
-- (void)setCar;
+@property (nonatomic, strong) NSString *car;
 
 @end

@@ -40,9 +40,9 @@
 
 - (void)didClickLoginButton:(id)sender
 {
-//    [self.service loginWithDeviceID:nil completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
+    [self.service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
 }
 
 - (void)setupUI

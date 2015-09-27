@@ -12,9 +12,19 @@
 
 @interface RecordListViewController ()
 
+@property (nonatomic, strong) NSArray *orderList;
+
 @end
 
 @implementation RecordListViewController
+
+- (id)initWithFinishType:(FinishType)finishType
+{
+    if (self = [super init]) {
+        _finishType = finishType;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,12 +36,15 @@
     
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-    
-    }];
-//    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
+    if (_finishType) {
+        [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+            
+        }];
+    } else {
+        [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
+            
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 10;//[self.orderList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,6 +77,7 @@
         recordTableViewCell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRecordTableViewCell];
         recordTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    recordTableViewCell.order = self.orderList[indexPath.row];
     return recordTableViewCell;
 }
 

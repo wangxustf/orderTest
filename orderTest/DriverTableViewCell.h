@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Driver.h"
 
 @interface DriverTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Driver *driver;
 
 @end
