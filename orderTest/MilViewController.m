@@ -7,6 +7,7 @@
 //
 
 #import "MilViewController.h"
+#import "Service.h"
 
 @interface MilViewController ()
 
@@ -18,6 +19,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"我的订车里程";
+    Service *service = [[Service alloc] init];
+    [service loadMolleageUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
+    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
+    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
 }
 
 - (void)didReceiveMemoryWarning {

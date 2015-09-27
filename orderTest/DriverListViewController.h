@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Driver.h"
 
 @interface DriverListViewController : UITableViewController
 
-@property (nonatomic, copy) void(^selectBlock)(NSInteger row);
+@property (nonatomic, copy) void(^selectBlock)(Driver *driver);
 
 @end

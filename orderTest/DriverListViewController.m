@@ -8,8 +8,11 @@
 
 #import "DriverListViewController.h"
 #import "DriverTableViewCell.h"
+#import "Service.h"
 
 @interface DriverListViewController ()
+
+@property (nonatomic, strong) NSArray *driverList;
 
 @end
 
@@ -21,6 +24,16 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"司机信息";
+    Service *service = [[Service alloc] init];
+    [service loadDriverWithDeviceID:@"" carID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
+    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
+    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +72,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_selectBlock) {
-        _selectBlock(indexPath.row);
+        _selectBlock(self.driverList[indexPath.row]);
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -8,6 +8,7 @@
 
 #import "CarListViewController.h"
 #import "CarTableViewCell.h"
+#import "Service.h"
 
 @interface CarListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -24,6 +25,16 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"车辆信息";
+    Service *service = [[Service alloc] init];
+    [service loadCarInfoWithDeviceID:@"" carType:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
+    //    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
+    //    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    //
+    //    }];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
     _scrollView.backgroundColor = [UIColor redColor];

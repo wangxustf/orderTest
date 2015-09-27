@@ -9,7 +9,7 @@
 #ifndef E6Business_YLYMacros_h
 #define E6Business_YLYMacros_h
 
-#define YLYBaseURL @"http://webgis.e6gps.com/App/"
+#define YLYBaseURL @"http://192.168.1.5:8080/sys"
 
 #define RGB(color) [UIColor colorWithRed:(color >> 16)/255.0 green:((color >> 8) & 0x00ff)/255.0 blue:(color & 0x0000ff)/255.0 alpha:1]
 #define Font(size) [UIFont systemFontOfSize:size]

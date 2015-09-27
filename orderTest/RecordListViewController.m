@@ -8,6 +8,7 @@
 
 #import "RecordListViewController.h"
 #import "RecordTableViewCell.h"
+#import "Service.h"
 
 @interface RecordListViewController ()
 
@@ -21,6 +22,14 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"订车纪录";
+    
+    Service *service = [[Service alloc] init];
+//    [service loadDincheWeiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
+//    [service loadDincheYiwanchengWithUserID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -12,6 +12,7 @@
 #import "YLYTipsTextField.h"
 #import "DashView.h"
 #import "ImageButton.h"
+#import "Service.h"
 
 @interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -38,6 +39,7 @@
 @property (nonatomic, strong) UIButton *orderButton;
 @property (nonatomic, strong) UIButton *checkButton;
 @property (nonatomic, strong) UIButton *rejectButton;
+@property (nonatomic, strong) Driver *driver;
 
 @end
 
@@ -120,6 +122,11 @@
 - (void)didClickDriverButton:(id)sender
 {
     DriverListViewController *driverListViewController = [[DriverListViewController alloc] init];
+    driverListViewController.selectBlock = ^(Driver *driver) {
+        self.driver = driver;
+        self.driverNameLabel.text = driver.driverName;
+        self.driverPhoneLabel.text = driver.driverPhone;
+    };
     driverListViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:driverListViewController animated:YES];
 }
@@ -132,7 +139,28 @@
 
 - (void)didClickCheckButton:(id)sender
 {
+    Service *service = [[Service alloc] init];
+    YLYUser *user = [NSUserDefaults user];
+    Order *order = [[Order alloc] init];
+    order.jiecheAddress = self.startPosition.text;
+    order.jingguoAddress = self.passPosition.text;
+    order.yuyueTime = self.orderTime.text;
+    order.startTime = self.startTimeTextField.text;
+    order.endTime = self.endTimeTextField.text;
+    order.carType = self.carArray[_selectedCarRow];
+    order.userName = self.passengerNameTextField.text;
+    order.userPhone = self.passengerPhoneTextField.text;
+    order.driverID = self.driver.driverID;
+    order.driverName = self.driverNameLabel.text;
+    order.driverPhone = self.driverPhoneLabel.text;
+    order.dingcherenID = user.userID;
+    order.dingcherenDep = user.depName;
+    order.dingcherenDepID = user.depID;
+    order.dingcherenName = user.username;
+    order.dingcherenPhone = user.phone;
+//    [service loadDingCheWithOrder:<#(Order *)#> completion:^(BOOL success, YLYUser *user, NSString *msg) {
     
+//    }];
 }
 
 - (void)didClickRejectButton:(id)sender

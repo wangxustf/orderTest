@@ -10,6 +10,7 @@
 #import "DriverListViewController.h"
 #import "CarListViewController.h"
 #import "RecordListViewController.h"
+#import "Service.h"
 
 @interface HomeViewController ()
 
@@ -33,7 +34,11 @@
     _width = (self.view.width - _gap * 3) / 3.0;
     _subHeight = (_height - _gap / 2.0) / 2.0;
     
-    [self setupUI];
+    Service *service = [[Service alloc] init];
+    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+        
+    }];
+//    [self setupUI];
 }
 
 - (void)didReceiveMemoryWarning {
