@@ -16,5 +16,7 @@
 #import "NSUserDefaults+Addition.h"
 #import "YLYMacros.h"
 #import "NSDate+Addition.h"
+#import "DejalActivityView.h"
+#import "TKAlertCenter.h"
 
 #endif

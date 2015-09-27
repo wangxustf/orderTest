@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *jialingLabel;
 @property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UIView *lineView;
 
 @end
 
@@ -59,6 +60,7 @@
     self.sexLabel.text = @"xxx";
     self.jialingLabel.text = @"xxx";
     self.statusLabel.text = @"xxx";
+    self.lineView.top = 65.5;
 }
 
 - (UIImageView *)portraitImageView
@@ -149,6 +151,16 @@
         [self.contentView addSubview:_statusLabel];
     }
     return _statusLabel;
+}
+
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0.5)];
+        _lineView.backgroundColor = RGB(0xe5e5e5);
+        [self.contentView addSubview:_lineView];
+    }
+    return _lineView;
 }
 
 @end

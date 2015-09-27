@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, UserType) {
+    UserTypeDingche = 2,
+    UserTypeShenhe,
+    UserTypePaiche,
+    UserTypeDriver
+};
+
 @interface YLYUser : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *deviceID;
@@ -16,7 +23,8 @@
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *depName;
 @property (nonatomic, strong) NSString *depID;
-@property (nonatomic, strong) NSString *userType;
+@property (nonatomic, assign) UserType userType;
+@property (nonatomic, strong) NSString *userTypeName;
 
 + (YLYUser *)userWithDictionary:(NSDictionary *)dictionary;
 

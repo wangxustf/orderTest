@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Car.h"
 
 typedef NS_ENUM(NSInteger, CarType) {
     CarTypeZero,
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSInteger, CarType) {
 @interface SubCarListViewController : UITableViewController
 
 @property (nonatomic, assign) CarType carType;
+@property (nonatomic, copy) void(^selectBlock)(Car *car);
 @property (nonatomic, strong) NSArray *carList;
 
 - (id)initWithCarType:(CarType)carType;

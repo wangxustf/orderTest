@@ -36,7 +36,8 @@
 
 - (void)didClickTelImageButton:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://13096917736"]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://13096917736"]];
+    [NSUserDefaults saveUser:nil];
 }
 
 /*

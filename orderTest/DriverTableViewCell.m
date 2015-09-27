@@ -7,6 +7,7 @@
 //
 
 #import "DriverTableViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface DriverTableViewCell ()
 
@@ -14,8 +15,9 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *jialingLabel;
-@property (nonatomic, strong) UILabel *plateNumberLabel;
-@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) UILabel *stateLabel;
+@property (nonatomic, strong) UIView *lineView;
 
 @end
 
@@ -45,7 +47,13 @@
 
 - (void)setDriver:(Driver *)driver
 {
-    
+    [self.portraitImageView setImageWithURL:[NSURL URLWithString:driver.driveImage] placeholderImage:[UIImage imageNamed:@"mine.png"]];
+    self.nameLabel.text = driver.driverName;
+    self.sexLabel.text = driver.driverSex;
+    self.jialingLabel.text = driver.driverOld;
+    self.phoneLabel.text = driver.driverPhone;
+    self.stateLabel.text = driver.state;
+    self.lineView.top = 43.5;
 }
 
 - (UIImageView *)portraitImageView
@@ -60,7 +68,8 @@
 - (UILabel *)nameLabel
 {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, 0, 60, _subHeight)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, 0, 45, _subHeight)];
+        _nameLabel.font = Font(12);
         [self.contentView addSubview:_nameLabel];
     }
     return _nameLabel;
@@ -69,7 +78,8 @@
 - (UILabel *)sexLabel
 {
     if (!_sexLabel) {
-        _sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, self.nameLabel.top, 60, _subHeight)];
+        _sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, self.nameLabel.top, 20, _subHeight)];
+        _sexLabel.font = Font(12);
         [self.contentView addSubview:_sexLabel];
     }
     return _sexLabel;
@@ -79,27 +89,42 @@
 {
     if (!_jialingLabel) {
         _jialingLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.sexLabel.right, self.nameLabel.top, 60, _subHeight)];
+        _jialingLabel.font = Font(12);
         [self.contentView addSubview:_jialingLabel];
     }
     return _jialingLabel;
 }
 
-- (UILabel *)plateNumberLabel
+- (UILabel *)phoneLabel
 {
-    if (!_plateNumberLabel) {
-        _plateNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, self.nameLabel.bottom, 60, _subHeight)];
-        [self.contentView addSubview:_plateNumberLabel];
+    if (!_phoneLabel) {
+        _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, self.nameLabel.bottom, 150, _subHeight)];
+        _phoneLabel.font = Font(12);
+        [self.contentView addSubview:_phoneLabel];
     }
-    return _plateNumberLabel;
+    return _phoneLabel;
 }
 
-- (UILabel *)statusLabel
+- (UILabel *)stateLabel
 {
-    if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.jialingLabel.right, 0, 60, _subHeight)];
-        [self.contentView addSubview:_statusLabel];
+    if (!_stateLabel) {
+        _stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 54, 0, 44, 44)];
+        _stateLabel.textColor = [UIColor redColor];
+        _stateLabel.textAlignment = NSTextAlignmentRight;
+        _stateLabel.font = Font(14);
+        [self.contentView addSubview:_stateLabel];
     }
-    return _statusLabel;
+    return _stateLabel;
+}
+
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0.5)];
+        _lineView.backgroundColor = RGB(0xe5e5e5);
+        [self.contentView addSubview:_lineView];
+    }
+    return _lineView;
 }
 
 @end

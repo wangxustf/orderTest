@@ -7,15 +7,18 @@
 //
 
 #import "RecordTableViewCell.h"
+#import "TipsLabel.h"
 
 @interface RecordTableViewCell ()
 
-@property (nonatomic, strong) UIImageView *portraitImageView;
-@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) TipsLabel *orderNameLabel;
+@property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) TipsLabel *passengerLabel;
+@property (nonatomic, strong) TipsLabel *addressLabel;
 @property (nonatomic, strong) UILabel *plateNumberLabel;
-@property (nonatomic, strong) UILabel *drvierLabel;
-@property (nonatomic, strong) UILabel *userLabel;
+@property (nonatomic, strong) TipsLabel *timeLabel;
 @property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UIView *lineView;
 
 @end
 
@@ -27,14 +30,14 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _subHeight = 22;
+        _subHeight = 15;
     }
     return self;
 }
 
 - (void)awakeFromNib {
     // Initialization code
-    _subHeight = 22;
+    _subHeight = 15;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -45,61 +48,79 @@
 
 - (void)setOrder:(Order *)order
 {
-    
+    [self.orderNameLabel setWithTip:@"订车人" value:order.dingcherenName];
+    self.phoneLabel.text = order.dingcherenPhone;
+    [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
+    [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
+    [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
+    self.lineView.top = 59.5;
 }
 
-- (UIImageView *)portraitImageView
+- (TipsLabel *)orderNameLabel
 {
-    if (!_portraitImageView) {
-        _portraitImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [self.contentView addSubview:_portraitImageView];
+    if (!_orderNameLabel) {
+        _orderNameLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(0, 0, 140, _subHeight)];
+        [self.contentView addSubview:_orderNameLabel];
     }
-    return _portraitImageView;
+    return _orderNameLabel;
 }
 
-- (UILabel *)nameLabel
+- (UILabel *)phoneLabel
 {
-    if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, 0, 60, _subHeight)];
-        [self.contentView addSubview:_nameLabel];
-    }
-    return _nameLabel;
-}
-
-- (UILabel *)plateNumberLabel
-{
-    if (!_plateNumberLabel) {
-        _plateNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, self.nameLabel.bottom, 60, _subHeight)];
-        [self.contentView addSubview:_plateNumberLabel];
+    if (!_phoneLabel) {
+        _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.right, self.orderNameLabel.top, self.orderNameLabel.width, _subHeight)];
+        _phoneLabel.font = Font(12);
+        [self.contentView addSubview:_phoneLabel];
     }
     return _plateNumberLabel;
 }
 
-- (UILabel *)drvierLabel
+- (TipsLabel *)passengerLabel
 {
-    if (!_drvierLabel) {
-        _drvierLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.left, self.nameLabel.bottom, 60, _subHeight)];
-        [self.contentView addSubview:_drvierLabel];
+    if (!_passengerLabel) {
+        _passengerLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.left, self.orderNameLabel.bottom, self.orderNameLabel.width, _subHeight)];
+        [self.contentView addSubview:_passengerLabel];
     }
-    return _drvierLabel;
+    return _passengerLabel;
 }
 
-- (UILabel *)userLabel
+- (TipsLabel *)addressLabel
 {
-    if (!_userLabel) {
-        _userLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.drvierLabel.right, self.nameLabel.top, 60, _subHeight)];
-        [self.contentView addSubview:_userLabel];
+    if (!_addressLabel) {
+        _addressLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.left, self.passengerLabel.bottom, self.width - 40, _subHeight)];
+        [self.contentView addSubview:_addressLabel];
     }
-    return _userLabel;
+    return _addressLabel;
+}
+
+- (TipsLabel *)timeLabel
+{
+    if (!_timeLabel) {
+        _timeLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.left, self.addressLabel.bottom, self.width - 40, _subHeight)];
+        [self.contentView addSubview:_timeLabel];
+    }
+    return _timeLabel;
 }
 
 - (UILabel *)statusLabel
 {
     if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.plateNumberLabel.right, 0, 60, _subHeight)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.phoneLabel.right, self.orderNameLabel.top, self.width - self.phoneLabel.right, _subHeight)];
+        _statusLabel.font = Font(14);
+        _statusLabel.textColor = [UIColor redColor];
         [self.contentView addSubview:_statusLabel];
     }
     return _statusLabel;
+}
+
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0.5)];
+        _lineView.backgroundColor = RGB(0xe5e5e5);
+        [self.contentView addSubview:_lineView];
+    }
+    return _lineView;
 }
 
 @end

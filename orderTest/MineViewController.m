@@ -24,9 +24,10 @@
     self.navigationItem.title = @"我的";
     
     ArrowButton *collectButton = [ArrowButton buttonWithType:UIButtonTypeCustom];
-    collectButton.frame = CGRectMake(0, 0, self.view.width, 44);
+    collectButton.frame = CGRectMake(0, 0, self.view.width, 0);
     [collectButton addTarget:self action:@selector(didClickCollectButton:) forControlEvents:UIControlEventTouchUpInside];
     collectButton.text = @"收藏";
+    collectButton.hidden = YES;
     [self.view addSubview:collectButton];
     
     ArrowButton *recordButton = [ArrowButton buttonWithType:UIButtonTypeCustom];

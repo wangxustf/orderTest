@@ -20,7 +20,8 @@
     car.carImage    = [dictionary strValue:@"carImage"];
     car.carColor    = [dictionary strValue:@"carColor"];
     car.carType     = [dictionary strValue:@"carType"];
-    car.carState    = [dictionary strValue:@"carState"];
+    car.carStateType    = [dictionary intValue:@"carState"];
+    car.carState    = @[@"空闲", @"已预约", @"使用中"][car.carStateType - 1];
     car.carPaiLiang = [dictionary strValue:@"carPaiLiang"];
     car.startTime   = [dictionary strValue:@"startTime"];
     car.endTime     = [dictionary strValue:@"endTime"];

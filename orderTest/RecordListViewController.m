@@ -33,16 +33,25 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"订车纪录";
     
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
     if (_finishType) {
-        [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-            
+        [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+            [DejalBezelActivityView removeView];
+            if (success) {
+                self.orderList = ordersArray;
+                [self.tableView reloadData];
+            }
         }];
     } else {
-        [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-            
+        [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+            [DejalBezelActivityView removeView];
+            if (success) {
+                self.orderList = ordersArray;
+                [self.tableView reloadData];
+            }
         }];
     }
 }
@@ -61,12 +70,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44;
+    return 60;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;//[self.orderList count];
+    return [self.orderList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

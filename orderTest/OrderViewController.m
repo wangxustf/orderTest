@@ -173,7 +173,9 @@
     order.bohuiYuanYin = @"";
     order.countMetre = @"";
     order.pingjia = @"";
-    [service loadDingCheWithOrder:order completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
+    [service loadDingCheWithOrder:order completion:^(BOOL success, NSString *msg) {
+        [DejalBezelActivityView removeView];
         
     }];
 }

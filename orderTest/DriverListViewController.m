@@ -25,10 +25,16 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"司机信息";
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadDriverWithCarID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
+    [service loadDriverWithCarID:@"" completion:^(BOOL success, NSArray *driversArray, NSString *msg) {
+        [DejalBezelActivityView removeView];
+        if (success) {
+            self.driverList = driversArray;
+            [self.tableView reloadData];
+        }
     }];
 }
 
@@ -51,7 +57,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;//[self.driverList count];
+    return [self.driverList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

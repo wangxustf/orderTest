@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "BaseInfoViewController.h"
 #import "DriverListViewController.h"
 #import "CarListViewController.h"
 #import "RecordViewController.h"
@@ -52,9 +53,8 @@
 //    [service loadHistoryDriverJinxingzhongWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
 //    }];
-    [service loadMolleageWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
-    }];
+//    [service loadMolleageWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+//    }];
     
 //    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
@@ -73,6 +73,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didClickBaseInfo
+{
+    BaseInfoViewController *baseInfoViewController = [[BaseInfoViewController alloc] init];
+    baseInfoViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:baseInfoViewController animated:YES];
 }
 
 - (void)didClickCarList
@@ -119,7 +126,7 @@
     
     NSArray *titles = @[@[@"基础\n信息", @"车辆信息", @"司机信息", @"我的收藏", @"订车记录"], @[@"订车", @"订车", @"我的订车", @"历史记录", @"客服中心"], @[@"维修•保养", @"车辆保养", @"维修预约", @"车辆保养", @"保养常识"], @[@"年检•违章", @"违章查询", @"代办违章", @"代办年检", @"会员服务"]];
     NSArray *colors = @[[UIColor blueColor], [UIColor orangeColor], [UIColor greenColor], [UIColor redColor]];
-    NSArray *selectorString = @[@[@"didClickEmpty", @"didClickCarList", @"didClickDriverList", @"didClickEmpty", @"didClickRecordList"], @[@"didClickEmpty", @"didClickOrderCar", @"didClickRecordList", @"didClickRecordList", @"didClickServerCenter"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"]];
+    NSArray *selectorString = @[@[@"didClickBaseInfo", @"didClickCarList", @"didClickDriverList", @"didClickEmpty", @"didClickRecordList"], @[@"didClickEmpty", @"didClickOrderCar", @"didClickRecordList", @"didClickRecordList", @"didClickServerCenter"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"]];
     CGFloat top = imageView.bottom + 2 * _gap;
     for (int i = 0; i < 4; i++) {
         UIButton *button0 = [UIButton buttonWithType:UIButtonTypeCustom];

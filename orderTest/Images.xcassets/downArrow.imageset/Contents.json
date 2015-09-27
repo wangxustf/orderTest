@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "downArrow.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "downArrow.png",
       "scale" : "2x"
     },
     {

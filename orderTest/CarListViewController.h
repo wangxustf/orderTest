@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Car.h"
 
 @interface CarListViewController : BaseViewController
+
+@property (nonatomic, copy) void(^selectBlock)(Car *car);
 
 @end

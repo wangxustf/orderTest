@@ -41,7 +41,9 @@
 - (void)didClickLoginButton:(id)sender
 {
     [self.service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
+        if (success) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }];
 }
 

@@ -27,10 +27,16 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"订车纪录";
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    [service loadCarInfoWithDriverID:user.userID carType:[@(_carType) stringValue] completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
+    [service loadCarInfoWithDriverID:user.userID carType:[@(_carType) stringValue] completion:^(BOOL success, NSArray *carsArray, NSString *msg) {
+        [DejalBezelActivityView removeView];
+        if (success) {
+            self.carList = carsArray;
+            [self.tableView reloadData];
+        }
     }];
 }
 
@@ -46,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;//[self.carList count];
+    return [self.carList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,7 +69,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (_selectBlock) {
+        _selectBlock(self.carList[indexPath.row]);
+    }
 }
 
 @end

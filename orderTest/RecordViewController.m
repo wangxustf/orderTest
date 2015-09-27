@@ -42,15 +42,6 @@
     [self addChildViewController:self.unfinishedRecordListViewController];
     self.currentViewController = self.unfinishedRecordListViewController;
     [self.view addSubview:self.currentViewController.view];
-   
-//    Service *service = [[Service alloc] init];
-//    YLYUser *user = [NSUserDefaults user];
-//    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-////    [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-////        
-////    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,7 +88,7 @@
 {
     if (!_segmentedView) {
         _segmentedView = [[ChoiceSegmentedView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, self.view.width, 44)];
-        _segmentedView.layer.borderColor = [UIColor redColor].CGColor;
+        _segmentedView.layer.borderColor = [UIColor whiteColor].CGColor;
         _segmentedView.layer.borderWidth = 1.0;
         _segmentedView.layer.cornerRadius = 2.5;
         _segmentedView.backgroundColor = [UIColor clearColor];

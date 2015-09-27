@@ -20,9 +20,7 @@
 @property (nonatomic, strong) SubCarListViewController *zuo16JingjiCarListViewController;
 @property (nonatomic, strong) SubCarListViewController *zuo32JingjiCarListViewController;
 @property (nonatomic, strong) UIViewController *currentViewController;
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSArray *carList;
 
 @end
 
@@ -37,6 +35,7 @@
         _shangWuJingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarTypeShangwu];
         _zuo16JingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarType16zuo];
         _zuo32JingjiCarListViewController = [[SubCarListViewController alloc] initWithCarType:CarType32zuo];
+        _jingjiCarListViewController.selectBlock = _shushiCarListViewController.selectBlock = _haohuaJingjiCarListViewController.selectBlock = _shangWuJingjiCarListViewController.selectBlock = _zuo16JingjiCarListViewController.selectBlock = _zuo32JingjiCarListViewController.selectBlock = self.selectBlock;
     }
     return self;
 }
@@ -47,12 +46,6 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"车辆信息";
-    
-    Service *service = [[Service alloc] init];
-    YLYUser *user = [NSUserDefaults user];
-    [service loadCarInfoWithDriverID:user.userID carType:@"6" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-        
-    }];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
     _scrollView.backgroundColor = [UIColor redColor];

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780BEF381BB8340500938069 /* MilTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780BEF371BB8340500938069 /* MilTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		78226D391BB78DD000C8598D /* SvUDIDTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D381BB78DD000C8598D /* SvUDIDTools.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		78226D3B1BB78DED00C8598D /* KeychainAccessGroups.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78226D3A1BB78DED00C8598D /* KeychainAccessGroups.plist */; settings = {ASSET_TAGS = (); }; };
 		78226D4F1BB7911600C8598D /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D3F1BB7911600C8598D /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -24,6 +25,8 @@
 		78226D5E1BB794DD00C8598D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D5D1BB794DD00C8598D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		78226D611BB7A20D00C8598D /* ChoiceSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		78226D641BB7A61500C8598D /* SubCarListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D631BB7A61500C8598D /* SubCarListViewController.m */; settings = {ASSET_TAGS = (); }; };
+		78226D671BB8268C00C8598D /* BaseInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D661BB8268C00C8598D /* BaseInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		78226D6A1BB826CA00C8598D /* TipsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D691BB826CA00C8598D /* TipsLabel.m */; settings = {ASSET_TAGS = (); }; };
 		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
 		78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78446F9F1BB22F62003B8428 /* CoreTelephony.framework */; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
@@ -95,6 +98,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		780BEF361BB8340500938069 /* MilTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MilTableViewCell.h; sourceTree = "<group>"; };
+		780BEF371BB8340500938069 /* MilTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MilTableViewCell.m; sourceTree = "<group>"; };
 		78226D371BB78DD000C8598D /* SvUDIDTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SvUDIDTools.h; sourceTree = "<group>"; };
 		78226D381BB78DD000C8598D /* SvUDIDTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SvUDIDTools.m; sourceTree = "<group>"; };
 		78226D3A1BB78DED00C8598D /* KeychainAccessGroups.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KeychainAccessGroups.plist; sourceTree = "<group>"; };
@@ -120,6 +125,10 @@
 		78226D601BB7A20D00C8598D /* ChoiceSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoiceSegmentedView.m; sourceTree = "<group>"; };
 		78226D621BB7A61500C8598D /* SubCarListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCarListViewController.h; sourceTree = "<group>"; };
 		78226D631BB7A61500C8598D /* SubCarListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCarListViewController.m; sourceTree = "<group>"; };
+		78226D651BB8268C00C8598D /* BaseInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseInfoViewController.h; sourceTree = "<group>"; };
+		78226D661BB8268C00C8598D /* BaseInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseInfoViewController.m; sourceTree = "<group>"; };
+		78226D681BB826CA00C8598D /* TipsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsLabel.h; sourceTree = "<group>"; };
+		78226D691BB826CA00C8598D /* TipsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipsLabel.m; sourceTree = "<group>"; };
 		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
 		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
 		78446F9F1BB22F62003B8428 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -392,6 +401,10 @@
 				78EA6E241BA53427007A5580 /* CarTableViewCell.m */,
 				78226D621BB7A61500C8598D /* SubCarListViewController.h */,
 				78226D631BB7A61500C8598D /* SubCarListViewController.m */,
+				78226D651BB8268C00C8598D /* BaseInfoViewController.h */,
+				78226D661BB8268C00C8598D /* BaseInfoViewController.m */,
+				780BEF361BB8340500938069 /* MilTableViewCell.h */,
+				780BEF371BB8340500938069 /* MilTableViewCell.m */,
 			);
 			path = orderTest;
 			sourceTree = "<group>";
@@ -472,6 +485,8 @@
 				78EA6E0F1BA50D9F007A5580 /* ImageButton.m */,
 				78EA6E111BA517CB007A5580 /* DashView.h */,
 				78EA6E121BA517CB007A5580 /* DashView.m */,
+				78226D681BB826CA00C8598D /* TipsLabel.h */,
+				78226D691BB826CA00C8598D /* TipsLabel.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -717,6 +732,7 @@
 				78226D521BB7911600C8598D /* PullTableView.m in Sources */,
 				78EA6E631BA58C06007A5580 /* AFURLSessionManager.m in Sources */,
 				78EA6E271BA53427007A5580 /* RecordTableViewCell.m in Sources */,
+				780BEF381BB8340500938069 /* MilTableViewCell.m in Sources */,
 				78EA6E671BA58C06007A5580 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */,
 				7863AC361BA3B94E00499BBB /* RecordViewController.m in Sources */,
@@ -732,8 +748,10 @@
 				78EA6E251BA53427007A5580 /* RecordListViewController.m in Sources */,
 				78226D5E1BB794DD00C8598D /* JSONKit.m in Sources */,
 				7863AC1D1BA3B2E000499BBB /* OrderViewController.m in Sources */,
+				78226D6A1BB826CA00C8598D /* TipsLabel.m in Sources */,
 				78EA6E6B1BA58C06007A5580 /* UIProgressView+AFNetworking.m in Sources */,
 				78EA6E741BA58D3B007A5580 /* Service.m in Sources */,
+				78226D671BB8268C00C8598D /* BaseInfoViewController.m in Sources */,
 				78EA6E621BA58C06007A5580 /* AFURLResponseSerialization.m in Sources */,
 				7863AC331BA3B94300499BBB /* CollectViewController.m in Sources */,
 				78226D501BB7911600C8598D /* LoadMoreTableFooterView.m in Sources */,
