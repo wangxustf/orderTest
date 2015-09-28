@@ -7,18 +7,15 @@
 //
 
 #import "CarTableViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface CarTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *portraitImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UILabel *plateNumberLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
-@property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *colorLabel;
-@property (nonatomic, strong) UILabel *driverLabel;
-@property (nonatomic, strong) UILabel *sexLabel;
-@property (nonatomic, strong) UILabel *jialingLabel;
+@property (nonatomic, strong) UILabel *plateNumberLabel;
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UIView *lineView;
 
@@ -32,14 +29,14 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _subHeight = 22;
+        _subHeight = 15;
     }
     return self;
 }
 
 - (void)awakeFromNib {
     // Initialization code
-    _subHeight = 22;
+    _subHeight = 15;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -48,25 +45,27 @@
     // Configure the view for the selected state
 }
 
-- (void)setCar:(NSString *)car
+- (void)setCar:(Car *)car
 {
-    self.portraitImageView.image = [UIImage imageNamed:@"phone.png"];
-    self.nameLabel.text = @"xxx";
-    self.plateNumberLabel.text = @"xxx";
-    self.typeLabel.text = @"xxx";
-    self.timeLabel.text = @"xxx";
-    self.colorLabel.text = @"xxx";
-    self.driverLabel.text = @"xxx";
-    self.sexLabel.text = @"xxx";
-    self.jialingLabel.text = @"xxx";
-    self.statusLabel.text = @"xxx";
-    self.lineView.top = 65.5;
+    NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
+    [self.portraitImageView setImageWithURL:[NSURL URLWithString:car.carImage] placeholderImage:[UIImage imageNamed:imageSelectedArray[self.carType - 1]]];
+    self.nameLabel.text = car.carName;
+    self.nameLabel.width = [self.nameLabel.text sizeWithFont:self.nameLabel.font].width;
+    self.colorLabel.left = self.nameLabel.right;
+    self.colorLabel.text = car.carColor;
+    self.colorLabel.width = [self.colorLabel.text sizeWithFont:self.colorLabel.font].width;
+    self.typeLabel.text = car.carType;
+    self.typeLabel.width = [self.typeLabel.text sizeWithFont:self.typeLabel.font].width;
+    self.plateNumberLabel.text = car.carCode;
+    self.plateNumberLabel.width = [self.plateNumberLabel.text sizeWithFont:self.plateNumberLabel.font].width;
+    self.statusLabel.text = car.carState;
+    self.lineView.top = 44.5;
 }
 
 - (UIImageView *)portraitImageView
 {
     if (!_portraitImageView) {
-        _portraitImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 66, 66)];
+        _portraitImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 45, 45)];
         [self.contentView addSubview:_portraitImageView];
     }
     return _portraitImageView;
@@ -76,78 +75,49 @@
 {
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, 0, 60, _subHeight)];
+        _nameLabel.font = Font(15);
         [self.contentView addSubview:_nameLabel];
     }
     return _nameLabel;
 }
 
-- (UILabel *)plateNumberLabel
-{
-    if (!_plateNumberLabel) {
-        _plateNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, self.nameLabel.top, 60, _subHeight)];
-        [self.contentView addSubview:_plateNumberLabel];
-    }
-    return _plateNumberLabel;
-}
-
-- (UILabel *)typeLabel
-{
-    if (!_typeLabel) {
-        _typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.plateNumberLabel.right, self.nameLabel.top, 60, _subHeight)];
-        [self.contentView addSubview:_typeLabel];
-    }
-    return _typeLabel;
-}
-
-- (UILabel *)timeLabel
-{
-    if (!_timeLabel) {
-        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.left, self.nameLabel.bottom, 60, _subHeight)];
-        [self.contentView addSubview:_timeLabel];
-    }
-    return _timeLabel;
-}
-
 - (UILabel *)colorLabel
 {
     if (!_colorLabel) {
-        _colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.timeLabel.right, self.timeLabel.top, 60, _subHeight)];
+        _colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, self.nameLabel.top, 60, _subHeight)];
+        _colorLabel.font = Font(15);
         [self.contentView addSubview:_colorLabel];
     }
     return _colorLabel;
 }
 
-- (UILabel *)driverLabel
+- (UILabel *)typeLabel
 {
-    if (!_driverLabel) {
-        _driverLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.left, self.timeLabel.bottom, 60, _subHeight)];
-        [self.contentView addSubview:_driverLabel];
+    if (!_typeLabel) {
+        _typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.left, self.nameLabel.bottom, 60, _subHeight)];
+        _typeLabel.font = Font(15);
+        [self.contentView addSubview:_typeLabel];
     }
-    return _driverLabel;
+    return _typeLabel;
 }
 
-- (UILabel *)sexLabel
+- (UILabel *)plateNumberLabel
 {
-    if (!_sexLabel) {
-        _sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.driverLabel.right, self.driverLabel.top, 60, _subHeight)];
-        [self.contentView addSubview:_sexLabel];
+    if (!_plateNumberLabel) {
+        _plateNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.left, self.typeLabel.bottom, 60, _subHeight)];
+        _plateNumberLabel.font = Font(15);
+        [self.contentView addSubview:_plateNumberLabel];
     }
-    return _sexLabel;
-}
-
-- (UILabel *)jialingLabel
-{
-    if (!_jialingLabel) {
-        _jialingLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.sexLabel.right, self.driverLabel.top, 60, _subHeight)];
-        [self.contentView addSubview:_jialingLabel];
-    }
-    return _jialingLabel;
+    return _plateNumberLabel;
 }
 
 - (UILabel *)statusLabel
 {
     if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.colorLabel.right, self.nameLabel.bottom, 60, _subHeight)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 70, self.nameLabel.bottom, 60, _subHeight)];
+        _statusLabel.font = Font(15);
+        _statusLabel.textColor = [UIColor redColor];
+        _statusLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_statusLabel];
     }
     return _statusLabel;

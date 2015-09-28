@@ -98,8 +98,8 @@
                      segmentedNumber:[contents count]
                             contents:contents
                               images:nil
-                    backgroundColors:@[[UIColor whiteColor], RGB(kMainColor)]
-                              colors:@[RGB(kMainColor), [UIColor whiteColor]]
+                    backgroundColors:@[RGB(kMainColor), [UIColor whiteColor]]
+                              colors:@[[UIColor whiteColor], RGB(kMainColor)]
                          selectedNum:0
                             fontSize:14];
         __weak typeof(self) weakSelf = self;

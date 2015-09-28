@@ -47,7 +47,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 66;
+    return 45;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -62,6 +62,7 @@
     if (carTableViewCell == nil) {
         carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
         carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        carTableViewCell.carType = self.carType;
     }
     carTableViewCell.car = self.carList[indexPath.row];
     return carTableViewCell;

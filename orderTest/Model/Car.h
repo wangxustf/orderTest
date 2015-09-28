@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSString *carColor;
 @property (nonatomic, strong) NSString *carType;
 @property (nonatomic, strong) NSString *carState;
-@property (nonatomic, assign) NSInteger carStateType;
 @property (nonatomic, strong) NSString *carPaiLiang;
 @property (nonatomic, strong) NSString *startTime;
 @property (nonatomic, strong) NSString *endTime;

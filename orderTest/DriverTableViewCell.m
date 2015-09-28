@@ -47,7 +47,7 @@
 
 - (void)setDriver:(Driver *)driver
 {
-    [self.portraitImageView setImageWithURL:[NSURL URLWithString:driver.driveImage] placeholderImage:[UIImage imageNamed:@"mine.png"]];
+    [self.portraitImageView setImageWithURL:[NSURL URLWithString:driver.driveImage] placeholderImage:[UIImage imageNamed:@"icon_driver.png"]];
     self.nameLabel.text = driver.driverName;
     self.sexLabel.text = driver.driverSex;
     self.jialingLabel.text = driver.driverOld;

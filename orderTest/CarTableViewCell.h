@@ -11,6 +11,7 @@
 
 @interface CarTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) NSString *car;
+@property (nonatomic, strong) Car *car;
+@property (nonatomic, assign) NSInteger carType;
 
 @end

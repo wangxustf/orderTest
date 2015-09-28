@@ -21,6 +21,7 @@
 @property (nonatomic, strong) SubCarListViewController *zuo32JingjiCarListViewController;
 @property (nonatomic, strong) UIViewController *currentViewController;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray *buttonsArray;
 
 @end
 
@@ -48,26 +49,31 @@
     self.navigationItem.title = @"车辆信息";
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
-    _scrollView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_scrollView];
+    NSArray *imageArray = @[@"icon_jingji.png", @"icon_shushi.png", @"icon_haohua.png", @"icon_shangwu.png", @"icon_16zuo.png", @"icon_32zuo.png"];
+    NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
+    self.buttonsArray = [NSMutableArray array];
+    CGFloat gap = 10;
+    CGFloat width = self.view.width / 6.0;
+    for(int i = 0; i < 6; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundImage:[UIImage imageNamed:imageArray[i]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:imageSelectedArray[i]] forState:UIControlStateSelected];
+        button.frame = CGRectMake(width * i, 0, 44, width);
+        button.tag = i;
+        if (i == 0) {
+            button.selected = YES;
+        }
+        [button addTarget:self action:@selector(didClickChoiceSegmentView:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:button];
+        [self.buttonsArray addObject:button];
+    }
+    _scrollView.contentSize = CGSizeMake(_scrollView.width, 44);
     
-    _jingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
+    _jingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - 64 - _scrollView.bottom);
     [self addChildViewController:self.jingjiCarListViewController];
     self.currentViewController = self.jingjiCarListViewController;
     [self.view addSubview:self.currentViewController.view];
-    
-    CGFloat gap = 10;
-    CGFloat left = 10;
-    for(int i = 0; i < 6; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:[UIImage imageNamed:@"phone.png"] forState:UIControlStateNormal];
-        button.frame = CGRectMake(left, 0, 44, 44);
-        button.tag = i;
-        [button addTarget:self action:@selector(didClickChoiceSegmentView:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollView addSubview:button];
-        left = left + 44 + gap;
-    }
-    _scrollView.contentSize = CGSizeMake(MAX(_scrollView.width, left), 44);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +83,9 @@
 
 - (void)didClickChoiceSegmentView:(UIButton *)sender
 {
+    for (UIButton *button in self.buttonsArray) {
+        button.selected = (button == sender) ? YES : NO;
+    }
     NSInteger index = sender.tag + 1;
     if ((self.currentViewController == self.jingjiCarListViewController && index == 1) ||
         (self.currentViewController == self.shushiCarListViewController && index == 2) ||

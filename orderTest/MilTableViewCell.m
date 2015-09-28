@@ -11,6 +11,8 @@
 @interface MilTableViewCell ()
 
 @property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *addressLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *milsLabel;
 @property (nonatomic, strong) UIView *lineView;
 
@@ -30,8 +32,11 @@
 
 - (void)setOrder:(Order *)order
 {
-    self.nameLabel.text = order.dingcherenPhone;
-    self.nameLabel.width = [self.nameLabel.text sizeWithFont:self.nameLabel.font].width;
+    self.nameLabel.text = order.dingcherenName;
+    self.addressLabel.text = [NSString stringWithFormat:@"%@ %@", order.jiecheAddress, order.jingguoAddress];
+    self.addressLabel.width = [self.addressLabel.text sizeWithFont:self.addressLabel.font].width;
+    self.timeLabel.text = order.yuyueTime;
+    self.timeLabel.width = [self.timeLabel.text sizeWithFont:self.timeLabel.font].width;
     self.milsLabel.text = @"里程：";
     self.lineView.top = 43.5;
 }
@@ -39,16 +44,38 @@
 - (UILabel *)nameLabel
 {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        _nameLabel.font = Font(16);
         [self.contentView addSubview:_nameLabel];
     }
     return _nameLabel;
 }
 
+- (UILabel *)addressLabel
+{
+    if (!_addressLabel) {
+        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, 0, 100, 22)];
+        _addressLabel.font = Font(16);
+        [self.contentView addSubview:_addressLabel];
+    }
+    return _addressLabel;
+}
+
+- (UILabel *)timeLabel
+{
+    if (!_timeLabel) {
+        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.addressLabel.left, self.addressLabel.bottom, 100, 22)];
+        _timeLabel.font = Font(16);
+        [self.contentView addSubview:_timeLabel];
+    }
+    return _timeLabel;
+}
+
 - (UILabel *)milsLabel
 {
     if (!_milsLabel) {
-        _milsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.right, 0, self.width - self.nameLabel.right, 44)];
+        _milsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 70, 0, 60, 44)];
+        _milsLabel.font = Font(16);
         _milsLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_milsLabel];
     }
