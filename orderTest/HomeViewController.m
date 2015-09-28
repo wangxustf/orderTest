@@ -35,38 +35,7 @@
     _width = (self.view.width - _gap * 3) / 3.0;
     _subHeight = (_height - _gap / 2.0) / 2.0;
     
-    
-    Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-//    [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-//    [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-//    [service loadDriverWithCarID:@"39" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//
-//    }];
-//    [service loadHistoryDriverJijieshuWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-//    [service loadHistoryDriverJinxingzhongWithUserID:user.userID completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-//    [service loadMolleageWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
-//    }];
-    
-//    [service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-// carType:1,2,3,4,5,6
-//    [service loadCarInfoWithDriverID:@"" carType:@"1" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
-    
-//    [service loadDriverWithCarID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
-//        
-//    }];
 //    [self setupUI];
 }
 

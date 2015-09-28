@@ -49,7 +49,7 @@
 {
     [self.service resetPage];
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    [self.service loadMolleageWithUserID:self.user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+    [self.service loadMolleageListWithUserID:self.user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
         [DejalActivityView removeView];
         self.tableView.pullTableIsRefreshing = NO;
         if (success) {
@@ -68,7 +68,7 @@
 
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
-    [self.service loadMolleageWithUserID:self.user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+    [self.service loadMolleageListWithUserID:self.user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
         [DejalActivityView removeView];
         self.tableView.pullTableIsLoadingMore = NO;
         if (success) {

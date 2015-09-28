@@ -59,7 +59,7 @@
          }];
 }
 
-- (void)loadCarInfoWithDriverID:(NSString *)driverID carType:(NSString *)carType completion:(void(^)(BOOL success, NSArray *carsArray, NSString *msg))completion
+- (void)loadCarListWithDriverID:(NSString *)driverID carType:(NSString *)carType completion:(void(^)(BOOL success, NSArray *carsArray, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
@@ -218,7 +218,7 @@
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":[@(_page) stringValue]};
     NSString *subURL = nil;
-    if (isDriver) {
+    if (!isDriver) {
         subURL = isFinish ? @"mobileDingCheHisYiWanCheng.html" : @"mobileDingCheHisWeiWanCheng.html";
     } else {
         subURL = isFinish ? @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisSijiJinxingzhong.html";
@@ -249,7 +249,7 @@
           }];
 }
 
-- (void)loadDriverWithCarID:(NSString *)carID completion:(void(^)(BOOL success, NSArray *driversArray, NSString *msg))completion
+- (void)loadDriverListWithCarID:(NSString *)carID completion:(void(^)(BOOL success, NSArray *driversArray, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
@@ -278,7 +278,7 @@
          }];
 }
 
-- (void)loadMolleageWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
+- (void)loadMolleageListWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
@@ -293,6 +293,9 @@
                      NSMutableArray *ordersArray = [NSMutableArray array];
                      for (NSDictionary *dictionary in responseObject) {
                          [ordersArray addObject:[Order orderWithDictionary:dictionary]];
+                     }
+                     if (ordersArray.count > 0) {
+                         _page++;
                      }
                      completion(YES, ordersArray, nil);
                  } else {

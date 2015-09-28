@@ -29,7 +29,7 @@
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    [service loadDriverWithCarID:@"" completion:^(BOOL success, NSArray *driversArray, NSString *msg) {
+    [service loadDriverListWithCarID:@"" completion:^(BOOL success, NSArray *driversArray, NSString *msg) {
         [DejalBezelActivityView removeView];
         if (success) {
             self.driverList = driversArray;
