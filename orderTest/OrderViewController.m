@@ -26,6 +26,7 @@
 @property (nonatomic, strong) ImageButton *endTimeButton;
 @property (nonatomic, strong) UITextField *carTypeTextField;
 @property (nonatomic, strong) ImageButton *carTypeButton;
+@property (nonatomic, strong) UIButton *driverButton;
 @property (nonatomic, strong) UILabel *driverNameLabel;
 @property (nonatomic, strong) UILabel *driverPhoneLabel;
 @property (nonatomic, strong) UITextField *passengerNameTextField;
@@ -411,6 +412,7 @@
     [driverButton setBackgroundImage:[UIImage imageNamed:@"addDriver.png"] forState:UIControlStateNormal];
     [driverButton addTarget:self action:@selector(didClickDriverButton:) forControlEvents:UIControlEventTouchUpInside];
     [driverView addSubview:driverButton];
+    _driverButton = driverButton;
     
     UIView *passengerView = [[UIView alloc] initWithFrame:CGRectMake(_gap, driverView.bottom, _startPosition.width, _cellHeight)];
     [scrollView addSubview:passengerView];
@@ -481,6 +483,69 @@
             continue;
         }
         [subView addSubview:[DashView dashViewWithRect:CGRectMake(0, subView.height - 1, subView.width, 1)]];
+    }
+    [self setupAuthorityWithUser:self.user];
+}
+
+- (void)setupAuthorityWithUser:(YLYUser *)user
+{
+    switch (user.userType) {
+        case UserTypeDingche:
+        {
+            self.startPosition.editEnable = YES;
+            self.passPosition.editEnable = YES;
+            self.startTimeButton.enabled = YES;
+            self.endTimeButton.enabled = YES;
+            self.carTypeButton.enabled = YES;
+            self.driverButton.enabled = NO;
+            self.orderButton.hidden = NO;
+        }
+            break;
+            
+        case UserTypeShenhe:
+        {
+            self.startPosition.editEnable = NO;
+            self.passPosition.editEnable = NO;
+            self.startTimeButton.enabled = NO;
+            self.endTimeButton.enabled = NO;
+            self.carTypeButton.enabled = NO;
+            self.driverButton.enabled = NO;
+            self.orderButton.hidden = YES;
+            self.checkButton.hidden = NO;
+            self.rejectButton.hidden = NO;
+        }
+            break;
+            
+        case UserTypePaiche:
+        {
+            self.startPosition.editEnable = NO;
+            self.passPosition.editEnable = NO;
+            self.startTimeButton.enabled = NO;
+            self.endTimeButton.enabled = NO;
+            self.carTypeButton.enabled = NO;
+            self.driverButton.enabled = YES;
+            self.orderButton.hidden = YES;
+            self.checkButton.hidden = NO;
+            self.rejectButton.hidden = NO;
+        }
+            break;
+            
+        case UserTypeDriver:
+        {
+            self.startPosition.editEnable = NO;
+            self.passPosition.editEnable = NO;
+            self.startTimeButton.enabled = NO;
+            self.endTimeButton.enabled = NO;
+            self.carTypeButton.enabled = NO;
+            self.driverButton.enabled = NO;
+            self.orderButton.hidden = YES;
+            self.checkButton.hidden = NO;
+            self.rejectButton.hidden = NO;
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 

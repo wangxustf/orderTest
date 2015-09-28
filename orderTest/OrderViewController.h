@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Order.h"
 
 @interface OrderViewController : BaseViewController
+
+@property (nonatomic, strong) Order *order;
 
 @end
