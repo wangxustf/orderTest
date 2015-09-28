@@ -89,7 +89,7 @@
           }];
 }
 
-- (void)loadDingCheWithOrder:(Order *)order completion:(void(^)(BOOL success, NSString *msg))completion
+- (void)DingCheWithOrder:(Order *)order completion:(void(^)(BOOL success, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
@@ -210,64 +210,43 @@
           }];
 }
 
-- (void)loadDincheWeiwanchengWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
+- (void)loadOrderListWithUserID:(NSString *)userID isFinish:(BOOL)isFinish isDriver:(BOOL)isDriver completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":[@(_page) stringValue]};
-    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisWeiWanCheng.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSArray class]]) {
-                     NSMutableArray *ordersArray = [NSMutableArray array];
-                     for (NSDictionary *dictionary in responseObject) {
-                         [ordersArray addObject:[Order orderWithDictionary:dictionary]];
-                     }
-                     completion(YES, ordersArray, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
-}
-
-- (void)loadDincheYiwanchengWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":[@(_page) stringValue]};
-    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisYiWanCheng.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSArray class]]) {
-                     NSMutableArray *ordersArray = [NSMutableArray array];
-                     for (NSDictionary *dictionary in responseObject) {
-                         [ordersArray addObject:[Order orderWithDictionary:dictionary]];
-                     }
-                     completion(YES, ordersArray, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
+    NSString *subURL = nil;
+    if (isDriver) {
+        subURL = isFinish ? @"mobileDingCheHisYiWanCheng.html" : @"mobileDingCheHisWeiWanCheng.html";
+    } else {
+        subURL = isFinish ? @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisSijiJinxingzhong.html";
+    }
+    [manager POST:[NSString stringWithFormat:@"%@/%@", YLYBaseURL, subURL]
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              if (completion != nil) {
+                  if ([responseObject isKindOfClass:[NSArray class]]) {
+                      NSMutableArray *ordersArray = [NSMutableArray array];
+                      for (NSDictionary *dictionary in responseObject) {
+                          [ordersArray addObject:[Order orderWithDictionary:dictionary]];
+                      }
+                      if ([ordersArray count] > 0) {
+                          _page++;
+                      }
+                      completion(YES, ordersArray, nil);
+                  } else {
+                      completion(NO, nil, nil);
+                  }
+              }
+              //NSLog(@"JSON: %@", responseObject);
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              if (completion) {
+                  completion(NO, nil, nil);
+              }
+              //NSLog(@"Error: %@", error);
+          }];
 }
 
 - (void)loadDriverWithCarID:(NSString *)carID completion:(void(^)(BOOL success, NSArray *driversArray, NSString *msg))completion
@@ -286,66 +265,6 @@
                          [driversArray addObject:[Driver driverWithDictionary:dictionary]];
                      }
                      completion(YES, driversArray, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
-}
-
-- (void)loadHistoryDriverJinxingzhongWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":[@(_page) stringValue]};
-    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiJinxingzhong.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSArray class]]) {
-                     NSMutableArray *ordersArray = [NSMutableArray array];
-                     for (NSDictionary *dictionary in responseObject) {
-                         [ordersArray addObject:[Order orderWithDictionary:dictionary]];
-                     }
-                     completion(YES, ordersArray, nil);
-                 } else {
-                     completion(NO, nil, nil);
-                 }
-             }
-             //NSLog(@"JSON: %@", responseObject);
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (completion) {
-                 completion(NO, nil, nil);
-             }
-             //NSLog(@"Error: %@", error);
-         }];
-}
-
-- (void)loadHistoryDriverJijieshuWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":[@(_page) stringValue]};
-    [manager POST:[NSString stringWithFormat:@"%@/mobileDingCheHisSijiYiJieShu.html", YLYBaseURL]
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (completion != nil) {
-                 if ([responseObject isKindOfClass:[NSArray class]]) {
-                     NSMutableArray *ordersArray = [NSMutableArray array];
-                     for (NSDictionary *dictionary in responseObject) {
-                         [ordersArray addObject:[Order orderWithDictionary:dictionary]];
-                     }
-                     completion(YES, ordersArray, nil);
                  } else {
                      completion(NO, nil, nil);
                  }
