@@ -94,234 +94,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didClickRightBarButtonItem:(id)sender
-{
-    RecordViewController *recordViewController = [[RecordViewController alloc] init];
-    recordViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:recordViewController animated:YES];
-}
 
-- (void)didTapGestureRecognizer:(id)sender
-{
-     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-}
-
-- (void)didClickStartButton:(id)sender
-{
-    [self.startTimeTextField becomeFirstResponder];
-}
-
-- (void)didClickEndButton:(id)sender
-{
-    [self.endTimeTextField becomeFirstResponder];
-}
-
-- (void)didClickTypeButton:(id)sender
-{
-    [self.carTypeTextField becomeFirstResponder];
-}
-
-- (void)didClickDriverButton:(id)sender
-{
-    DriverListViewController *driverListViewController = [[DriverListViewController alloc] init];
-    driverListViewController.selectBlock = ^(Driver *driver) {
-        self.driver = driver;
-        self.driverNameLabel.text = driver.driverName;
-        self.driverPhoneLabel.text = driver.driverPhone;
-    };
-    driverListViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:driverListViewController animated:YES];
-}
-
-- (void)didClickOrderButton:(id)sender
-{
-//    self.checkButton.hidden = self.rejectButton.hidden = NO;
-//    self.orderButton.hidden = YES;
-    Service *service = [[Service alloc] init];
-    YLYUser *user = [NSUserDefaults user];
-    Order *order = [[Order alloc] init];
-    order.orderID = nil;
-    order.jiecheAddress = self.startPosition.text;
-    order.jingguoAddress = self.passPosition.text;
-    order.realJingguoAddress = @"";
-    order.yuyueTime = self.orderTime.text;
-    order.startTime = self.startTimeTextField.text;
-    order.endTime = self.endTimeTextField.text;
-    order.realStartTime = @"";
-    order.realEndTime = @"";
-    order.isPublic = @"";
-    order.carType = [@(_selectedCarRow) stringValue];
-    order.userName = self.passengerNameTextField.text;
-    order.userPhone = self.passengerPhoneTextField.text;
-    order.carID = @"";
-    order.dingcherenID = user.userID;
-    order.dingcherenName = user.username;
-    order.dingcherenPhone = user.phone;
-    order.dingcherenDep = user.depName;
-    order.dingcherenDepID = user.depID;
-    order.orderState = @"";
-    order.shenpirenName = @"";
-    order.shenpirenID = @"";
-    order.paicherenID = @"";
-    order.driverID = @"";//self.driver.driverID;
-    order.driverName = @"";//self.driverNameLabel.text;
-    order.driverPhone = @"";//self.driverPhoneLabel.text;
-    order.startMetre = @"";
-    order.endMetre = @"";
-    order.shenheYiJian = @"";
-    order.facheYijian = @"";
-    order.bohuiYuanYin = @"";
-    order.countMetre = @"";
-    order.pingjia = @"";
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    [service loadDingCheWithOrder:order completion:^(BOOL success, NSString *msg) {
-        [DejalBezelActivityView removeView];
-        
-    }];
-}
-
-- (void)didClickCheckButton:(id)sender
-{
-    
-}
-
-- (void)didClickRejectButton:(id)sender
-{
-    
-}
-
-//Code from Brett Schumann
--(void) keyboardWillShow:(NSNotification *)note{
-    // get keyboard size and loctaion
-    CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
-    // Need to translate the bounds to account for rotation.
-    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
-    
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:[duration doubleValue]];
-    [UIView setAnimationCurve:[curve intValue]];
-    
-    // set views with new info
-    self.scrollView.height = self.view.height - keyboardBounds.size.height;
-    
-    // commit animations
-    [UIView commitAnimations];
-    self.scrollView.contentOffset = CGPointMake(0, _contentSize.height - self.scrollView.height);
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(_contentSize.height, self.scrollView.height));
-}
-
-- (void)keyboardWillHide:(NSNotification *)note
-{
-    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:[duration doubleValue]];
-    [UIView setAnimationCurve:[curve intValue]];
-    
-    // set views with new info
-    self.scrollView.height = self.view.height;
-    
-    // commit animations
-    [UIView commitAnimations];
-    self.scrollView.contentSize = _contentSize;
-}
-
-- (void)didClickCancelItem:(id)sender
-{
-    [self.currentTextField resignFirstResponder];
-}
-
-- (void)didClickDoneItem:(id)sender
-{
-    if (self.currentTextField == self.startTimeTextField) {
-        self.startTimeButton.text = [NSDate convertStringFromDate:self.datePicker.date];
-    } else if (self.currentTextField == self.endTimeTextField) {
-        self.endTimeButton.text = [NSDate convertStringFromDate:self.datePicker.date];
-    } else {
-        self.carTypeButton.text = self.carArray[self.selectedCarRow];
-    }
-    [self.currentTextField resignFirstResponder];
-}
-
-- (void)setupStartTimeTextField
-{
-    self.startTimeTextField.inputView = self.datePicker;
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
-    
-    toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.startTimeTextField.inputAccessoryView = toolbar;
-}
-
-- (void)setupEndTimeTextField
-{
-    self.endTimeTextField.inputView = self.datePicker;
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
-    
-    toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.endTimeTextField.inputAccessoryView = toolbar;
-}
-
-- (void)setupCarTypeTextField
-{
-    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
-    pickerView.dataSource = self;
-    pickerView.delegate = self;
-    self.carTypeTextField.inputView = pickerView;
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
-    
-    toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.carTypeTextField.inputAccessoryView = toolbar;
-}
-
-#pragma mark -- UIPickerViewDataSource/Delegate
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return [self.carArray count];
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [self.carArray objectAtIndex:row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    _selectedCarRow = row;
-}
-    
 - (void)setupUI
 {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
@@ -484,6 +257,233 @@
     }
 }
 
+- (void)didClickOrderButton:(id)sender
+{
+//    self.checkButton.hidden = self.rejectButton.hidden = NO;
+//    self.orderButton.hidden = YES;
+    Service *service = [[Service alloc] init];
+    YLYUser *user = [NSUserDefaults user];
+    Order *order = [[Order alloc] init];
+    order.orderID = nil;
+    order.jiecheAddress = self.startPosition.text;
+    order.jingguoAddress = self.passPosition.text;
+    order.realJingguoAddress = @"";
+    order.yuyueTime = self.orderTime.text;
+    order.startTime = self.startTimeTextField.text;
+    order.endTime = self.endTimeTextField.text;
+    order.realStartTime = @"";
+    order.realEndTime = @"";
+    order.isPublic = @"";
+    order.carType = [@(_selectedCarRow) stringValue];
+    order.userName = self.passengerNameTextField.text;
+    order.userPhone = self.passengerPhoneTextField.text;
+    order.carID = @"";
+    order.dingcherenID = user.userID;
+    order.dingcherenName = user.username;
+    order.dingcherenPhone = user.phone;
+    order.dingcherenDep = user.depName;
+    order.dingcherenDepID = user.depID;
+    order.orderState = @"";
+    order.shenpirenName = @"";
+    order.shenpirenID = @"";
+    order.paicherenID = @"";
+    order.driverID = @"";//self.driver.driverID;
+    order.driverName = @"";//self.driverNameLabel.text;
+    order.driverPhone = @"";//self.driverPhoneLabel.text;
+    order.startMetre = @"";
+    order.endMetre = @"";
+    order.shenheYiJian = @"";
+    order.facheYijian = @"";
+    order.bohuiYuanYin = @"";
+    order.countMetre = @"";
+    order.pingjia = @"";
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
+    [service loadDingCheWithOrder:order completion:^(BOOL success, NSString *msg) {
+        [DejalBezelActivityView removeView];
+        
+    }];
+}
+- (void)didClickRightBarButtonItem:(id)sender
+{
+    RecordViewController *recordViewController = [[RecordViewController alloc] init];
+    recordViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recordViewController animated:YES];
+}
+
+- (void)didTapGestureRecognizer:(id)sender
+{
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+}
+
+- (void)didClickStartButton:(id)sender
+{
+    [self.startTimeTextField becomeFirstResponder];
+}
+
+- (void)didClickEndButton:(id)sender
+{
+    [self.endTimeTextField becomeFirstResponder];
+}
+
+- (void)didClickTypeButton:(id)sender
+{
+    [self.carTypeTextField becomeFirstResponder];
+}
+
+- (void)didClickDriverButton:(id)sender
+{
+    DriverListViewController *driverListViewController = [[DriverListViewController alloc] init];
+    driverListViewController.selectBlock = ^(Driver *driver) {
+        self.driver = driver;
+        self.driverNameLabel.text = driver.driverName;
+        self.driverPhoneLabel.text = driver.driverPhone;
+    };
+    driverListViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:driverListViewController animated:YES];
+}
+
+- (void)didClickCheckButton:(id)sender
+{
+    
+}
+
+- (void)didClickRejectButton:(id)sender
+{
+    
+}
+
+//Code from Brett Schumann
+-(void) keyboardWillShow:(NSNotification *)note{
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    self.scrollView.height = self.view.height - keyboardBounds.size.height;
+    
+    // commit animations
+    [UIView commitAnimations];
+    self.scrollView.contentOffset = CGPointMake(0, _contentSize.height - self.scrollView.height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(_contentSize.height, self.scrollView.height));
+}
+
+- (void)keyboardWillHide:(NSNotification *)note
+{
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    self.scrollView.height = self.view.height;
+    
+    // commit animations
+    [UIView commitAnimations];
+    self.scrollView.contentSize = _contentSize;
+}
+
+- (void)didClickCancelItem:(id)sender
+{
+    [self.currentTextField resignFirstResponder];
+}
+
+- (void)didClickDoneItem:(id)sender
+{
+    if (self.currentTextField == self.startTimeTextField) {
+        self.startTimeButton.text = [NSDate convertStringFromDate:self.datePicker.date];
+    } else if (self.currentTextField == self.endTimeTextField) {
+        self.endTimeButton.text = [NSDate convertStringFromDate:self.datePicker.date];
+    } else {
+        self.carTypeButton.text = self.carArray[self.selectedCarRow];
+    }
+    [self.currentTextField resignFirstResponder];
+}
+
+- (void)setupStartTimeTextField
+{
+    self.startTimeTextField.inputView = self.datePicker;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
+    
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
+    
+    toolbar.items = @[cancelItem, flexibleItem, doneItem];
+    self.startTimeTextField.inputAccessoryView = toolbar;
+}
+
+- (void)setupEndTimeTextField
+{
+    self.endTimeTextField.inputView = self.datePicker;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
+    
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
+    
+    toolbar.items = @[cancelItem, flexibleItem, doneItem];
+    self.endTimeTextField.inputAccessoryView = toolbar;
+}
+
+- (void)setupCarTypeTextField
+{
+    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
+    pickerView.dataSource = self;
+    pickerView.delegate = self;
+    self.carTypeTextField.inputView = pickerView;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
+    
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
+    
+    toolbar.items = @[cancelItem, flexibleItem, doneItem];
+    self.carTypeTextField.inputAccessoryView = toolbar;
+}
+
+#pragma mark -- UIPickerViewDataSource/Delegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.carArray count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.carArray objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    _selectedCarRow = row;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     _currentTextField = textField;
@@ -495,18 +495,8 @@
         _datePicker = [[UIDatePicker alloc] init];
         [_datePicker setLocale:[NSLocale localeWithLocaleIdentifier:@"zh-CN"]];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-//        _datePicker.date = self.user.birthDate;
     }
     return _datePicker;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

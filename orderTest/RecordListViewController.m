@@ -8,6 +8,7 @@
 
 #import "RecordListViewController.h"
 #import "RecordTableViewCell.h"
+#import "OrderViewController.h"
 #import "Service.h"
 
 @interface RecordListViewController ()
@@ -92,7 +93,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    OrderViewController *orderViewController = [[OrderViewController alloc] init];
+    [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
 @end
