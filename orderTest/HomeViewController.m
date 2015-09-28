@@ -67,7 +67,7 @@
 //    [service loadDriverWithCarID:@"" completion:^(BOOL success, YLYUser *user, NSString *msg) {
 //        
 //    }];
-    [self setupUI];
+//    [self setupUI];
 }
 
 - (void)didReceiveMemoryWarning {

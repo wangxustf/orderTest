@@ -35,6 +35,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"loginName":loginName,
                                  @"password":password};
     [manager GET:[NSString stringWithFormat:@"%@/mobileLoginForIphone.html", YLYBaseURL]
@@ -273,7 +274,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
-    //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSDictionary *parameters = @{@"carId":carID};
     [manager GET:[NSString stringWithFormat:@"%@/mobileDriverInfo.html", YLYBaseURL]
       parameters:parameters
