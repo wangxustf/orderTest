@@ -13,7 +13,7 @@
 + (NSDate *)convertDateFromString:(NSString *)uiDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
-    [formatter setDateFormat:@"yyyy年MM月dd日hh时"];
+    [formatter setDateFormat:@"yyyy.MM.dd hh:mm"];
     NSDate *date = [formatter dateFromString:uiDate];
     return date;
 }
@@ -21,7 +21,7 @@
 + (NSString *)convertStringFromDate:(NSDate *)uiDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
-    [formatter setDateFormat:@"yyyy年MM月dd日hh时"];
+    [formatter setDateFormat:@"yyyy.MM.dd hh:mm"];
     NSString *date = [formatter stringFromDate:uiDate];
     return date;
 }

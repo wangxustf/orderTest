@@ -27,6 +27,11 @@
     self.telLabel.font = Font(fontSize);
 }
 
+- (CGFloat)fontSize
+{
+    return self.telLabel.font.pointSize;
+}
+
 - (void)setWithText:(NSString *)text imageName:(NSString *)imageName
 {
     self.telLabel.text = text;
@@ -42,7 +47,7 @@
         _telLabel.textColor = RGB(0x000000);
         [self addSubview:_telLabel];
         
-        _telImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 40, (self.height - 25)/2.0, 25, 25)];
+        _telImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 15, (self.height - 15)/2.0, 15, 15)];
         [self addSubview:_telImageView];
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - kLineHeight, self.width, kLineHeight)];

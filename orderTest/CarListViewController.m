@@ -53,7 +53,6 @@
     NSArray *imageArray = @[@"icon_jingji.png", @"icon_shushi.png", @"icon_haohua.png", @"icon_shangwu.png", @"icon_16zuo.png", @"icon_32zuo.png"];
     NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
     self.buttonsArray = [NSMutableArray array];
-    CGFloat gap = 10;
     CGFloat width = self.view.width / 6.0;
     for(int i = 0; i < 6; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -70,7 +69,7 @@
     }
     _scrollView.contentSize = CGSizeMake(_scrollView.width, 44);
     
-    _jingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - 64 - _scrollView.bottom);
+    _jingjiCarListViewController.view.frame = CGRectMake(0, _scrollView.bottom, self.view.width, self.view.height - _scrollView.bottom);
     [self addChildViewController:self.jingjiCarListViewController];
     self.currentViewController = self.jingjiCarListViewController;
     [self.view addSubview:self.currentViewController.view];

@@ -20,14 +20,15 @@
                   placeholder:(NSString *)placeholder
                    isPassword:(BOOL)isPassword
 {
-    UILabel *tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, self.height)];
-    tipsLabel.font = Font(14.0);
-    tipsLabel.textAlignment = NSTextAlignmentLeft;
+    UILabel *tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, self.height)];
+    tipsLabel.font = Font(12.0);
+    tipsLabel.textAlignment = NSTextAlignmentRight;
     tipsLabel.text = tips;
     [self addSubview:tipsLabel];
     
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(tipsLabel.right, 5, self.width - tipsLabel.right, self.height - 10)];
-    _textField.font = Font(14.0);
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(tipsLabel.right + 10, 5, self.width - tipsLabel.right - 10, self.height - 10)];
+    _textField.font = Font(12.0);
+    [_textField setValue:Font(12) forKeyPath:@"_placeholderLabel.font"];
     _textField.secureTextEntry = isPassword;
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.placeholder = placeholder;
@@ -38,7 +39,7 @@
     _textField.leftViewMode = UITextFieldViewModeAlways;
     [self addSubview:_textField];
     
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = RGB(0xf0f0f0);
 }
 
 - (void)setEditEnable:(BOOL)editEnable

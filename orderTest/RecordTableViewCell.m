@@ -48,12 +48,15 @@
 
 - (void)setOrder:(Order *)order
 {
-    [self.orderNameLabel setWithTip:@"订车人" value:order.dingcherenName];
-    self.phoneLabel.text = order.dingcherenPhone;
-    [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
-    [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
-    [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
-    self.lineView.top = 59.5;
+    if (_order != order) {
+        _order = order;
+        [self.orderNameLabel setWithTip:@"订车人" value:order.dingcherenName];
+        self.phoneLabel.text = order.dingcherenPhone;
+        [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
+        [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
+        [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
+        self.lineView.top = 59.5;
+    }
 }
 
 - (TipsLabel *)orderNameLabel

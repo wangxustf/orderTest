@@ -47,19 +47,22 @@
 
 - (void)setCar:(Car *)car
 {
-    NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
-    [self.portraitImageView setImageWithURL:[NSURL URLWithString:car.carImage] placeholderImage:[UIImage imageNamed:imageSelectedArray[self.carType - 1]]];
-    self.nameLabel.text = car.carName;
-    self.nameLabel.width = [self.nameLabel.text sizeWithFont:self.nameLabel.font].width;
-    self.colorLabel.left = self.nameLabel.right;
-    self.colorLabel.text = car.carColor;
-    self.colorLabel.width = [self.colorLabel.text sizeWithFont:self.colorLabel.font].width;
-    self.typeLabel.text = car.carType;
-    self.typeLabel.width = [self.typeLabel.text sizeWithFont:self.typeLabel.font].width;
-    self.plateNumberLabel.text = car.carCode;
-    self.plateNumberLabel.width = [self.plateNumberLabel.text sizeWithFont:self.plateNumberLabel.font].width;
-    self.statusLabel.text = car.carState;
-    self.lineView.top = 44.5;
+    if (_car != car) {
+        _car = car;
+        NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
+        [self.portraitImageView setImageWithURL:[NSURL URLWithString:car.carImage] placeholderImage:[UIImage imageNamed:imageSelectedArray[self.carType - 1]]];
+        self.nameLabel.text = car.carName;
+        self.nameLabel.width = [self.nameLabel.text sizeWithFont:self.nameLabel.font].width;
+        self.colorLabel.left = self.nameLabel.right;
+        self.colorLabel.text = car.carColor;
+        self.colorLabel.width = [self.colorLabel.text sizeWithFont:self.colorLabel.font].width;
+        self.typeLabel.text = car.carType;
+        self.typeLabel.width = [self.typeLabel.text sizeWithFont:self.typeLabel.font].width;
+        self.plateNumberLabel.text = car.carCode;
+        self.plateNumberLabel.width = [self.plateNumberLabel.text sizeWithFont:self.plateNumberLabel.font].width;
+        self.statusLabel.text = car.carState;
+        self.lineView.top = 44.5;
+    }
 }
 
 - (UIImageView *)portraitImageView

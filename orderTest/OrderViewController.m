@@ -22,15 +22,20 @@
 @property (nonatomic, strong) YLYTipsTextField *orderTime;
 @property (nonatomic, strong) UITextField *startTimeTextField;
 @property (nonatomic, strong) UITextField *endTimeTextField;
+@property (nonatomic, strong) UIView *timeView;
 @property (nonatomic, strong) ImageButton *startTimeButton;
 @property (nonatomic, strong) ImageButton *endTimeButton;
+@property (nonatomic, strong) UIView *typeView;
 @property (nonatomic, strong) UITextField *carTypeTextField;
 @property (nonatomic, strong) ImageButton *carTypeButton;
+@property (nonatomic, strong) UIView *driverView;
 @property (nonatomic, strong) UIButton *driverButton;
 @property (nonatomic, strong) UILabel *driverNameLabel;
 @property (nonatomic, strong) UILabel *driverPhoneLabel;
+@property (nonatomic, strong) UIView *passengerView;
 @property (nonatomic, strong) UITextField *passengerNameTextField;
 @property (nonatomic, strong) UITextField *passengerPhoneTextField;
+@property (nonatomic, strong) UIView *orderPersonView;
 @property (nonatomic, strong) UILabel *orderPersonNameLabel;
 @property (nonatomic, strong) UILabel *orderPersonPhoneLabel;
 @property (nonatomic, strong) UIDatePicker *datePicker;
@@ -97,166 +102,25 @@
 
 - (void)setupUI
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
-    [self.view addSubview:scrollView];
-    _scrollView = scrollView;
-    
-    _startPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.view.width - _gap * 2, _cellHeight)];
-    [_startPosition tipsTextFieldWithTips:@"接车地点" placeholder:@"Type something" isPassword:NO];
-    [scrollView addSubview:_startPosition];
-    
-    _passPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, _startPosition.bottom, _startPosition.width, _cellHeight)];
-    [_passPosition tipsTextFieldWithTips:@"经过地点" placeholder:@"高新十字" isPassword:NO];
-    [scrollView addSubview:_passPosition];
-    
-    _orderTime = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, _passPosition.bottom, _startPosition.width, _cellHeight)];
-    [_orderTime tipsTextFieldWithTips:@"预约时间" placeholder:[NSDate convertStringFromDate:[NSDate date]] isPassword:NO];
-    _orderTime.editEnable = NO;
-    [scrollView addSubview:_orderTime];
-    
-    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(_gap, _orderTime.bottom, _startPosition.width, _cellHeight)];
-    [scrollView addSubview:timeView];
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, _cellHeight)];
-    timeLabel.textAlignment = NSTextAlignmentLeft;
-    timeLabel.font = Font(14.0);
-    timeLabel.text = @"使用时间";
-    [timeView addSubview:timeLabel];
-    _startTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
-    _startTimeButton.frame = CGRectMake(timeLabel.right, 0, (_startPosition.width - timeLabel.width - 40)/2.0, _cellHeight);
-    [_startTimeButton addTarget:self action:@selector(didClickStartButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_startTimeButton setWithText:nil imageName:@"downArrow.png"];
-    [timeView addSubview:_startTimeButton];
-    _startTimeButton.fontSize = 10.0;
-    _startTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-    _startTimeTextField.delegate = self;
-    [timeView addSubview:_startTimeTextField];
-    [self setupStartTimeTextField];
-    UILabel *zhiLabel = [[UILabel alloc] initWithFrame:CGRectMake(_startTimeButton.right, 0, 40, _cellHeight)];
-    zhiLabel.textAlignment = NSTextAlignmentCenter;
-    zhiLabel.font = Font(14.0);
-    zhiLabel.text = @"至";
-    [timeView addSubview:zhiLabel];
-    _endTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
-    _endTimeButton.frame = CGRectMake(_startTimeButton.right + 40, 0, _startTimeButton.width, _cellHeight);
-    [_endTimeButton addTarget:self action:@selector(didClickEndButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_endTimeButton setWithText:nil imageName:@"downArrow.png"];
-    [timeView addSubview:_endTimeButton];
-    _endTimeButton.fontSize = 10.0;
-    _endTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-    _endTimeTextField.delegate = self;
-    [timeView addSubview:_endTimeTextField];
-    [self setupEndTimeTextField];
-    
-    UIView *typeView = [[UIView alloc] initWithFrame:CGRectMake(_gap, timeView.bottom, _startPosition.width, _cellHeight)];
-    [scrollView addSubview:typeView];
-    UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, _cellHeight)];
-    typeLabel.textAlignment = NSTextAlignmentLeft;
-    typeLabel.font = Font(14.0);
-    typeLabel.text = @"选择车型";
-    [typeView addSubview:typeLabel];
-    _carTypeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
-    _carTypeButton.frame = CGRectMake(typeLabel.right, 0, _startPosition.width - typeLabel.width, _cellHeight);
-    [_carTypeButton addTarget:self action:@selector(didClickTypeButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_carTypeButton setWithText:nil imageName:@"downArrow.png"];
-    [typeView addSubview:_carTypeButton];
-    _carTypeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-    _carTypeTextField.delegate = self;
-    [typeView addSubview:_carTypeTextField];
-    [self setupCarTypeTextField];
-    
-    UIView *driverView = [[UIView alloc] initWithFrame:CGRectMake(_gap, typeView.bottom, _startPosition.width, _cellHeight)];
-    [scrollView addSubview:driverView];
-    UILabel *driverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, _cellHeight)];
-    driverLabel.textAlignment = NSTextAlignmentLeft;
-    driverLabel.font = Font(14.0);
-    driverLabel.text = @"选择驾驶员";
-    [driverView addSubview:driverLabel];
-    _driverNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, _cellHeight/2.0)];
-    _driverNameLabel.textAlignment = NSTextAlignmentLeft;
-    _driverNameLabel.textColor = [UIColor blackColor];
-    [driverView addSubview:_driverNameLabel];
-    _driverPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _driverNameLabel.bottom, 100, _cellHeight/2.0)];
-    _driverPhoneLabel.textAlignment = NSTextAlignmentLeft;
-    _driverPhoneLabel.textColor = [UIColor blackColor];
-    [driverView addSubview:_driverPhoneLabel];
-    UIButton *driverButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    driverButton.frame = CGRectMake(self.view.width - 60, (driverView.height - 40)/2.0, 40, 40);
-    [driverButton setBackgroundImage:[UIImage imageNamed:@"addDriver.png"] forState:UIControlStateNormal];
-    [driverButton addTarget:self action:@selector(didClickDriverButton:) forControlEvents:UIControlEventTouchUpInside];
-    [driverView addSubview:driverButton];
-    _driverButton = driverButton;
-    
-    UIView *passengerView = [[UIView alloc] initWithFrame:CGRectMake(_gap, driverView.bottom, _startPosition.width, _cellHeight)];
-    [scrollView addSubview:passengerView];
-    UILabel *passengerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, _cellHeight)];
-    passengerLabel.textAlignment = NSTextAlignmentLeft;
-    passengerLabel.textColor = [UIColor blackColor];
-    passengerLabel.text = @"乘用者";
-    [passengerView addSubview:passengerLabel];
-    _passengerNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(passengerLabel.right, 0, self.view.width - passengerLabel.right, _cellHeight/2.0)];
-    _passengerNameTextField.placeholder = @"姓名";
-    [passengerView addSubview:_passengerNameTextField];
-    _passengerPhoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(passengerLabel.right, _passengerNameTextField.bottom, self.view.width - passengerLabel.right, _cellHeight/2.0)];
-    _passengerPhoneTextField.placeholder = @"联系电话";
-    [passengerView addSubview:_passengerPhoneTextField];
-    
-    UIView *orderPersonView = [[UIView alloc] initWithFrame:CGRectMake(_gap, passengerView.bottom, _startPosition.width, _cellHeight)];
-    [scrollView addSubview:orderPersonView];
-    UILabel *orderPersonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, _cellHeight)];
-    orderPersonLabel.textAlignment = NSTextAlignmentLeft;
-    orderPersonLabel.textColor = [UIColor blackColor];
-    orderPersonLabel.text = @"订车人";
-    [orderPersonView addSubview:orderPersonLabel];
-    _orderPersonNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, _cellHeight/2.0)];
-    _orderPersonNameLabel.textAlignment = NSTextAlignmentLeft;
-    _orderPersonNameLabel.textColor = [UIColor blackColor];
-    _orderPersonNameLabel.text = self.user.username;
-    [orderPersonView addSubview:_orderPersonNameLabel];
-    _orderPersonPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _orderPersonNameLabel.bottom, 100, _cellHeight/2.0)];
-    _orderPersonPhoneLabel.textAlignment = NSTextAlignmentLeft;
-    _orderPersonPhoneLabel.textColor = [UIColor blackColor];
-    _orderPersonPhoneLabel.text = self.user.phone;
-    [orderPersonView addSubview:_orderPersonPhoneLabel];
-    
-    UIButton *orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    orderButton.frame = CGRectMake((self.view.width - 250)/2.0, orderPersonView.bottom + 10, 250, _cellHeight);
-    orderButton.backgroundColor = RGB(kMainColor);
-    [orderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [orderButton setTitle:@"订    车" forState:UIControlStateNormal];
-    [orderButton addTarget:self action:@selector(didClickOrderButton:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:orderButton];
-    _orderButton = orderButton;
-    
-    CGFloat buttonGap = 50;
-    CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
-    _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _checkButton.frame = CGRectMake(buttonGap, orderButton.top, buttonWidth, _cellHeight);
-    _checkButton.backgroundColor = RGB(kMainColor);
-    [_checkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_checkButton setTitle:@"审 核" forState:UIControlStateNormal];
-    [_checkButton addTarget:self action:@selector(didClickCheckButton:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:_checkButton];
-    _checkButton.hidden = YES;
-    
-    _rejectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _rejectButton.frame = CGRectMake(_checkButton.right + buttonGap, orderButton.top, buttonWidth, _cellHeight);
-    _rejectButton.backgroundColor = RGB(kMainColor);
-    [_rejectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_rejectButton setTitle:@"驳 回" forState:UIControlStateNormal];
-    [_rejectButton addTarget:self action:@selector(didClickRejectButton:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:_rejectButton];
-    _rejectButton.hidden = YES;
-    
-    scrollView.contentSize = CGSizeMake(scrollView.width, MAX(scrollView.height, orderButton.bottom + 10));
-    _contentSize = scrollView.contentSize;
-    
-    for (UIView *subView in scrollView.subviews) {
-        if (subView == orderButton || subView == _checkButton || subView == _rejectButton) {
-            continue;
+    switch (self.user.userType) {
+        case UserTypeDingche:
+        {
+            self.startPosition.hidden = NO;
+            self.passPosition.top = self.startPosition.bottom;
+            self.timeView.top = self.passPosition.bottom;
+            self.typeView.top = self.timeView.bottom;
+            self.passengerView.top = self.typeView.bottom;
+            self.orderPersonView.top = self.passengerView.bottom;
+            self.orderButton.top = self.orderPersonView.bottom + 10;
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
         }
-        [subView addSubview:[DashView dashViewWithRect:CGRectMake(0, subView.height - 1, subView.width, 1)]];
+            break;
+            
+        default:
+            break;
     }
-    [self setupAuthorityWithUser:self.user];
+    _contentSize = self.scrollView.contentSize;
+//    [self setupAuthorityWithUser:self.user];
 }
 
 - (void)setupAuthorityWithUser:(YLYUser *)user
@@ -323,8 +187,26 @@
 
 - (void)didClickOrderButton:(id)sender
 {
-//    self.checkButton.hidden = self.rejectButton.hidden = NO;
-//    self.orderButton.hidden = YES;
+    if (self.startPosition.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"接车地点不能为空"];
+        return;
+    }
+    if (self.passPosition.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"经过地点不能为空"];
+        return;
+    }
+    if (self.startTimeButton.titleLabel.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"起始时间不能为空"];
+        return;
+    }
+    if (self.endTimeButton.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"结束时间不能为空"];
+        return;
+    }
+    if (self.carTypeButton.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆类型不能为空"];
+        return;
+    }
     Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
     Order *order = [[Order alloc] init];
@@ -561,6 +443,237 @@
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
     return _datePicker;
+}
+
+- (UIScrollView *)scrollView
+{
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
+        [self.view addSubview:_scrollView];
+    }
+    return _scrollView;
+}
+
+- (YLYTipsTextField *)startPosition
+{
+    if (!_startPosition) {
+        _startPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.view.width - _gap * 2, _cellHeight)];
+        [_startPosition tipsTextFieldWithTips:@"接车地点" placeholder:@"请输入接车地点！" isPassword:NO];
+        [self.scrollView addSubview:_startPosition];
+    }
+    return _startPosition;
+}
+
+- (YLYTipsTextField *)passPosition
+{
+    if (!_passPosition) {
+        _passPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, self.startPosition.bottom, self.startPosition.width, _cellHeight)];
+        [_passPosition tipsTextFieldWithTips:@"经过地点" placeholder:@"请输入经过地点！" isPassword:NO];
+        [self.scrollView addSubview:_passPosition];
+    }
+    return _passPosition;
+}
+
+- (YLYTipsTextField *)orderTime
+{
+    if (!_orderTime) {
+        _orderTime = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_orderTime tipsTextFieldWithTips:@"预约时间" placeholder:[NSDate convertStringFromDate:[NSDate date]] isPassword:NO];
+        _orderTime.editEnable = NO;
+        [self.scrollView addSubview:_orderTime];
+    }
+    return _orderTime;
+}
+
+- (UIView *)timeView
+{
+    if (!_timeView) {
+        _timeView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_timeView];
+        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        timeLabel.textAlignment = NSTextAlignmentRight;
+        timeLabel.font = Font(12.0);
+        timeLabel.text = @"使用时间";
+        [_timeView addSubview:timeLabel];
+        _startTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
+        _startTimeButton.frame = CGRectMake(timeLabel.right + 10, 0, (self.startPosition.width - timeLabel.width - 10 - 16)/2.0, _cellHeight);
+        [_startTimeButton addTarget:self action:@selector(didClickStartButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_startTimeButton setWithText:nil imageName:@"downArrow.png"];
+        [_timeView addSubview:_startTimeButton];
+        _startTimeButton.fontSize = 12;
+        _startTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _startTimeTextField.delegate = self;
+        [_timeView addSubview:_startTimeTextField];
+        [self setupStartTimeTextField];
+        UILabel *zhiLabel = [[UILabel alloc] initWithFrame:CGRectMake(_startTimeButton.right, 0, 16, _cellHeight)];
+        zhiLabel.textAlignment = NSTextAlignmentCenter;
+        zhiLabel.font = Font(12.0);
+        zhiLabel.text = @"至";
+        [_timeView addSubview:zhiLabel];
+        _endTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
+        _endTimeButton.frame = CGRectMake(_startTimeButton.right + 16, 0, _startTimeButton.width, _cellHeight);
+        [_endTimeButton addTarget:self action:@selector(didClickEndButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_endTimeButton setWithText:nil imageName:@"downArrow.png"];
+        [_timeView addSubview:_endTimeButton];
+        _endTimeButton.fontSize = _startTimeButton.fontSize;
+        _endTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _endTimeTextField.delegate = self;
+        [_timeView addSubview:_endTimeTextField];
+        [self setupEndTimeTextField];
+    }
+    return _timeView;
+}
+
+- (UIView *)typeView
+{
+    if (!_typeView) {
+        _typeView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_typeView];
+        UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        typeLabel.textAlignment = NSTextAlignmentRight;
+        typeLabel.font = Font(12.0);
+        typeLabel.text = @"车辆类型";
+        [_typeView addSubview:typeLabel];
+        _carTypeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
+        _carTypeButton.frame = CGRectMake(typeLabel.right + 10, 0, self.startPosition.width - typeLabel.width, _cellHeight);
+        _carTypeButton.fontSize = 12;
+        [_carTypeButton addTarget:self action:@selector(didClickTypeButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_carTypeButton setWithText:nil imageName:@"downArrow.png"];
+        [_typeView addSubview:_carTypeButton];
+        _carTypeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _carTypeTextField.delegate = self;
+        [_typeView addSubview:_carTypeTextField];
+        [self setupCarTypeTextField];
+    }
+    return _typeView;
+}
+
+- (UIView *)driverView
+{
+    if (!_driverView) {
+        _driverView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_driverView];
+        UILabel *driverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        driverLabel.textAlignment = NSTextAlignmentRight;
+        driverLabel.font = Font(12.0);
+        driverLabel.text = @"选择驾驶员";
+        [_driverView addSubview:driverLabel];
+        _driverNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(driverLabel.right + 10, 0, 100, _cellHeight/2.0)];
+        _driverNameLabel.textAlignment = NSTextAlignmentLeft;
+        _driverNameLabel.textColor = [UIColor blackColor];
+        _driverNameLabel.font = Font(12);
+        [_driverView addSubview:_driverNameLabel];
+        _driverPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(_driverNameLabel.left, _driverNameLabel.bottom, 100, _cellHeight/2.0)];
+        _driverPhoneLabel.textAlignment = NSTextAlignmentLeft;
+        _driverPhoneLabel.textColor = [UIColor blackColor];
+        _driverPhoneLabel.font = Font(12);
+        [_driverView addSubview:_driverPhoneLabel];
+        UIButton *driverButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        driverButton.frame = CGRectMake(self.view.width - 60, (_driverView.height - 40)/2.0, 40, 40);
+        [driverButton setBackgroundImage:[UIImage imageNamed:@"addDriver.png"] forState:UIControlStateNormal];
+        [driverButton addTarget:self action:@selector(didClickDriverButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_driverView addSubview:driverButton];
+        _driverButton = driverButton;
+    }
+    return _driverView;
+}
+
+- (UIView *)passengerView
+{
+    if (!_passengerView) {
+        _passengerView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_passengerView];
+        UILabel *passengerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        passengerLabel.textAlignment = NSTextAlignmentRight;
+        passengerLabel.textColor = [UIColor blackColor];
+        passengerLabel.text = @"乘车人";
+        passengerLabel.font = Font(12);
+        [_passengerView addSubview:passengerLabel];
+        _passengerNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(passengerLabel.right + 10, 0, self.view.width - passengerLabel.right, _cellHeight/2.0)];
+        _passengerNameTextField.font = Font(12);
+        [_passengerNameTextField setValue:Font(12) forKeyPath:@"_placeholderLabel.font"];
+        _passengerNameTextField.placeholder = @"请输入乘车人姓名！（如是本人可免）";
+        [_passengerView addSubview:_passengerNameTextField];
+        _passengerPhoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(_passengerNameTextField.left, _passengerNameTextField.bottom, self.view.width - passengerLabel.right, _cellHeight/2.0)];
+        _passengerPhoneTextField.font = Font(12);
+        [_passengerPhoneTextField setValue:Font(12) forKeyPath:@"_placeholderLabel.font"];
+        _passengerPhoneTextField.placeholder = @"请输入乘车人电话！（如是本人可免）";
+        [_passengerView addSubview:_passengerPhoneTextField];
+    }
+    return _passengerView;
+}
+
+- (UIView *)orderPersonView
+{
+    if (!_orderPersonView) {
+        _orderPersonView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_orderPersonView];
+        UILabel *orderPersonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        orderPersonLabel.textAlignment = NSTextAlignmentRight;
+        orderPersonLabel.textColor = [UIColor blackColor];
+        orderPersonLabel.font = Font(12);
+        orderPersonLabel.text = @"订车人";
+        [_orderPersonView addSubview:orderPersonLabel];
+        _orderPersonNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderPersonLabel.right + 10, 0, 100, _cellHeight/2.0)];
+        _orderPersonNameLabel.textAlignment = NSTextAlignmentLeft;
+        _orderPersonNameLabel.textColor = [UIColor blackColor];
+        _orderPersonNameLabel.font = Font(12);
+        _orderPersonNameLabel.text = self.user.username;
+        [_orderPersonView addSubview:_orderPersonNameLabel];
+        _orderPersonPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(_orderPersonNameLabel.left, _orderPersonNameLabel.bottom, 100, _cellHeight/2.0)];
+        _orderPersonPhoneLabel.textAlignment = NSTextAlignmentLeft;
+        _orderPersonPhoneLabel.textColor = [UIColor blackColor];
+        _orderPersonPhoneLabel.font = Font(12);
+        _orderPersonPhoneLabel.text = self.user.phone;
+        [_orderPersonView addSubview:_orderPersonPhoneLabel];
+    }
+    return _orderPersonView;
+}
+
+- (UIButton *)orderButton
+{
+    if (!_orderButton) {
+        _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _orderButton.frame = CGRectMake((self.view.width - 250)/2.0, 0, 250, _cellHeight);
+        _orderButton.backgroundColor = RGB(kMainColor);
+        [_orderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_orderButton setTitle:@"订    车" forState:UIControlStateNormal];
+        [_orderButton addTarget:self action:@selector(didClickOrderButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:_orderButton];
+    }
+    return _orderButton;
+}
+
+- (UIButton *)checkButton
+{
+    if (!_checkButton) {
+        CGFloat buttonGap = 50;
+        CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
+        _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _checkButton.frame = CGRectMake(buttonGap, 0, buttonWidth, _cellHeight);
+        _checkButton.backgroundColor = RGB(kMainColor);
+        [_checkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_checkButton setTitle:@"审 核" forState:UIControlStateNormal];
+        [_checkButton addTarget:self action:@selector(didClickCheckButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:_checkButton];
+    }
+    return _checkButton;
+}
+
+- (UIButton *)rejectButton
+{
+    if (!_rejectButton) {
+        CGFloat buttonGap = 50;
+        CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
+        _rejectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _rejectButton.frame = CGRectMake(self.checkButton.right + buttonGap, 0, buttonWidth, _cellHeight);
+        _rejectButton.backgroundColor = RGB(kMainColor);
+        [_rejectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_rejectButton setTitle:@"驳 回" forState:UIControlStateNormal];
+        [_rejectButton addTarget:self action:@selector(didClickRejectButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:_rejectButton];
+    }
+    return _rejectButton;
 }
 
 @end

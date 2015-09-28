@@ -32,13 +32,16 @@
 
 - (void)setOrder:(Order *)order
 {
-    self.nameLabel.text = order.dingcherenName;
-    self.addressLabel.text = [NSString stringWithFormat:@"%@ %@", order.jiecheAddress, order.jingguoAddress];
-    self.addressLabel.width = [self.addressLabel.text sizeWithFont:self.addressLabel.font].width;
-    self.timeLabel.text = order.yuyueTime;
-    self.timeLabel.width = [self.timeLabel.text sizeWithFont:self.timeLabel.font].width;
-    self.milsLabel.text = @"里程：";
-    self.lineView.top = 43.5;
+    if (_order != order) {
+        _order = order;
+        self.nameLabel.text = order.dingcherenName;
+        self.addressLabel.text = [NSString stringWithFormat:@"%@ %@", order.jiecheAddress, order.jingguoAddress];
+        self.addressLabel.width = [self.addressLabel.text sizeWithFont:self.addressLabel.font].width;
+        self.timeLabel.text = order.yuyueTime;
+        self.timeLabel.width = [self.timeLabel.text sizeWithFont:self.timeLabel.font].width;
+        self.milsLabel.text = @"里程：";
+        self.lineView.top = 43.5;
+    }
 }
 
 - (UILabel *)nameLabel
