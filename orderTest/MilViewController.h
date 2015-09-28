@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface MilViewController : UITableViewController
+@interface MilViewController : BaseViewController
 
 @end

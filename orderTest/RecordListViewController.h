@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, FinishType) {
-    FinishTypeFinished,
-    FinishTypeUnfinished
+    FinishTypeUnfinished,
+    FinishTypeFinished
 };
 
-@interface RecordListViewController : UITableViewController
+@interface RecordListViewController : BaseViewController
 
 @property (nonatomic, assign) FinishType finishType;
 

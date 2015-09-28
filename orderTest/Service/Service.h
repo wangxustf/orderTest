@@ -14,13 +14,10 @@
 
 - (void)resetPage;
 - (void)loginWithLoginName:(NSString *)loginName password:(NSString *)password completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion;
-- (void)loadCarInfoWithDriverID:(NSString *)deviceID carType:(NSString *)carType completion:(void(^)(BOOL success, NSArray *carsArray, NSString *msg))completion;
-- (void)loadDingCheWithOrder:(Order *)order completion:(void(^)(BOOL success, NSString *msg))completion;
-- (void)loadDincheWeiwanchengWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
-- (void)loadDincheYiwanchengWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
-- (void)loadDriverWithCarID:(NSString *)carID completion:(void(^)(BOOL success, NSArray *driversArray, NSString *msg))completion;
-- (void)loadHistoryDriverJinxingzhongWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
-- (void)loadHistoryDriverJijieshuWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
-- (void)loadMolleageWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
+- (void)loadCarListWithDriverID:(NSString *)deviceID carType:(NSString *)carType completion:(void(^)(BOOL success, NSArray *carsArray, NSString *msg))completion;
+- (void)DingCheWithOrder:(Order *)order completion:(void(^)(BOOL success, NSString *msg))completion;
+- (void)loadOrderListWithUserID:(NSString *)userID isFinish:(BOOL)isFinish isDriver:(BOOL)isDriver completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
+- (void)loadDriverListWithCarID:(NSString *)carID completion:(void(^)(BOOL success, NSArray *driversArray, NSString *msg))completion;
+- (void)loadMolleageListWithUserID:(NSString *)userID completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion;
 
 @end

@@ -10,10 +10,14 @@
 #import "RecordTableViewCell.h"
 #import "OrderViewController.h"
 #import "Service.h"
+#import "PullTableView.h"
 
-@interface RecordListViewController ()
+@interface RecordListViewController () <UITableViewDataSource, UITableViewDelegate, PullTableViewDelegate>
 
-@property (nonatomic, strong) NSArray *orderList;
+@property (nonatomic, strong) PullTableView *tableView;
+@property (nonatomic, strong) NSMutableArray *orderList;
+@property (nonatomic, strong) Service *service;
+@property (nonatomic, strong) YLYUser *user;
 
 @end
 
@@ -34,32 +38,54 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.title = @"订车纪录";
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    Service *service = [[Service alloc] init];
-    YLYUser *user = [NSUserDefaults user];
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    if (_finishType) {
-        [service loadDincheYiwanchengWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
-            [DejalBezelActivityView removeView];
-            if (success) {
-                self.orderList = ordersArray;
-                [self.tableView reloadData];
-            }
-        }];
-    } else {
-        [service loadDincheWeiwanchengWithUserID:user.userID completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
-            [DejalBezelActivityView removeView];
-            if (success) {
-                self.orderList = ordersArray;
-                [self.tableView reloadData];
-            }
-        }];
-    }
+    _service = [[Service alloc] init];
+    self.user = [NSUserDefaults user];
+    [self refreshTableView];
+}
+
+- (void)dealloc
+{
+    _tableView.delegate = nil;
+    _tableView.dataSource = nil;
+    _tableView.pullDelegate = nil;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)refreshTableView
+{
+    [self.service resetPage];
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
+    [self.service loadOrderListWithUserID:self.user.userID isFinish:(_finishType == FinishTypeFinished) isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+        [DejalBezelActivityView removeView];
+        self.tableView.pullTableIsRefreshing = NO;
+        if (success) {
+            self.orderList = [NSMutableArray arrayWithArray:ordersArray];
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+#pragma mark - PullTableViewDelegate
+
+- (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
+{
+    [self refreshTableView];
+}
+
+- (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
+{
+    [self.service loadOrderListWithUserID:self.user.userID isFinish:(_finishType == FinishTypeFinished) isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+        [DejalBezelActivityView removeView];
+        self.tableView.pullTableIsLoadingMore = NO;
+        if (success) {
+            [self.orderList addObjectsFromArray:ordersArray];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - Table view data source
@@ -96,6 +122,23 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
     [self.navigationController pushViewController:orderViewController animated:YES];
+}
+
+#pragma mark -- getter
+
+- (PullTableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[PullTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+        _tableView.backgroundColor = RGB(0xf0f0f0);
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.pullDelegate = self;
+        _tableView.pullTableViewEnable = YES;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.view addSubview:_tableView];
+    }
+    return _tableView;
 }
 
 @end
