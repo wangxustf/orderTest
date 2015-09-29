@@ -12,6 +12,7 @@
 #import "ServiceViewController.h"
 #import "MineViewController.h"
 #import "YLYLoginViewController.h"
+#import "RecordViewController.h"
 
 @interface TabbarViewController ()
 
@@ -25,9 +26,31 @@
     //    self.tabBar.barTintColor = [UIColor yellowColor];
     self.tabBar.tintColor = RGB(kLineColor);
     
+    [self setupViewControllers];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self setupViewControllers];
+    
+    YLYUser *user = [NSUserDefaults user];
+    if (!user) {
+        UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
+        loginViewController.navigationBar.barTintColor = RGB(kMainColor);
+        loginViewController.navigationBar.tintColor = [UIColor blueColor];
+        [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    }
+}
+
+- (void)setupViewControllers
+{
     HomeViewController *homeViewController = [[HomeViewController alloc] init];
     UITabBarItem *homeTabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"icon_TabBar_Session.png"] selectedImage:nil];
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
+    RecordViewController *recordViewController = [[RecordViewController alloc] init];
+    recordViewController.isTab = YES;
     UITabBarItem *orderTabBarItem = [[UITabBarItem alloc] initWithTitle:@"订车" image:[UIImage imageNamed:@"icon_TabBar_Plan.png"] selectedImage:nil];
     ServiceViewController *serviceViewController = [[ServiceViewController alloc] init];
     UITabBarItem *serviceTabBarItem = [[UITabBarItem alloc] initWithTitle:@"客服中心" image:[UIImage imageNamed:@"icon_TabBar_Forum.png"] selectedImage:nil];
@@ -35,6 +58,10 @@
     UITabBarItem *mineTabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"icon_TabBar_People.png"] selectedImage:nil];
     
     NSArray *viewControllers = @[homeViewController, orderViewController, serviceViewController, mineViewController];
+    YLYUser *user = [NSUserDefaults user];
+    if (user.userType != UserTypeDingche) {
+        viewControllers = @[homeViewController, recordViewController, serviceViewController, mineViewController];
+    }
     NSArray *tabBarItems = @[homeTabBarItem, orderTabBarItem, serviceTabBarItem, mineTabBarItem];
     NSMutableArray *navigationControllers = [NSMutableArray array];
     for (UIViewController *viewController in viewControllers) {
@@ -47,20 +74,6 @@
     }
     
     self.viewControllers = navigationControllers;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    YLYUser *user = [NSUserDefaults user];
-    if (!user) {
-        UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
-        loginViewController.navigationBar.barTintColor = RGB(kMainColor);
-        loginViewController.navigationBar.tintColor = [UIColor blueColor];
-        [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-        [self presentViewController:loginViewController animated:YES completion:nil];
-    }
 }
 
 - (void)didReceiveMemoryWarning {

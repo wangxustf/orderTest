@@ -10,4 +10,6 @@
 
 @interface RecordViewController : BaseViewController
 
+@property (nonatomic, assign) BOOL isTab;
+
 @end

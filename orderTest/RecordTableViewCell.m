@@ -55,6 +55,7 @@
         [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
         [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
         [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
+        self.statusLabel.text = @"";
         self.lineView.top = 59.5;
     }
 }

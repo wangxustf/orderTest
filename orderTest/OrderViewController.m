@@ -47,6 +47,7 @@
 @property (nonatomic, strong) UIButton *rejectButton;
 @property (nonatomic, strong) Driver *driver;
 @property (nonatomic, strong) YLYUser *user;
+@property (nonatomic, strong) Service *service;
 
 @end
 
@@ -72,6 +73,7 @@
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
         _user = [NSUserDefaults user];
+        _service = [[Service alloc] init];
     }
     return self;
 }
@@ -85,7 +87,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"订车";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"订车历史" style:UIBarButtonItemStyleDone target:self action:@selector(didClickRightBarButtonItem:)];
+    if (self.user.userType == UserTypeDingche) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"订车历史" style:UIBarButtonItemStyleDone target:self action:@selector(didClickRightBarButtonItem:)];
+    }
     _gap = 0;
     _cellHeight = 60;
     _carArray = @[@"经济型", @"舒适型", @"商务型", @"豪华型", @"16座客车", @"32座客车"];
@@ -99,7 +103,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//0	//:订车
+//1	//:审核通过
+//11	//:审核驳回
+//2	//:派车人确认
+//22	//:派车人驳回
+//3       //:司机确认通过
+//33      //:司机确认驳回
+//4       //:派车人发车
+//5	//:司机开始
+//6	//:司机结束
+//7	//客户确认
+//8       //:派车流程终了
 - (void)setupUI
 {
     switch (self.user.userType) {
@@ -112,7 +127,66 @@
             self.passengerView.top = self.typeView.bottom;
             self.orderPersonView.top = self.passengerView.bottom;
             self.orderButton.top = self.orderPersonView.bottom + 10;
+            [self.orderButton setTitle:(self.order ? @"确认" : @"订车") forState:UIControlStateNormal];
             self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+        }
+            break;
+            
+        case UserTypeShenhe:
+        {
+            self.startPosition.hidden = NO;
+            self.passPosition.top = self.startPosition.bottom;
+            self.timeView.top = self.passPosition.bottom;
+            self.typeView.top = self.timeView.bottom;
+            self.passengerView.top = self.typeView.bottom;
+            self.orderPersonView.top = self.passengerView.bottom;
+            self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+            [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+            [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.rejectButton.bottom + 10, self.scrollView.height));
+        }
+            break;
+            
+        case UserTypePaiche:
+        {
+            self.startPosition.hidden = NO;
+            self.passPosition.top = self.startPosition.bottom;
+            self.timeView.top = self.passPosition.bottom;
+            self.typeView.top = self.timeView.bottom;
+            self.passengerView.top = self.typeView.bottom;
+            self.orderPersonView.top = self.passengerView.bottom;
+            if ([self.order.orderState integerValue] == 1) {
+                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+                [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+            } else if ([self.order.orderState integerValue] == 3) {
+                [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+            } else if ([self.order.orderState integerValue] == 7) {
+                [self.orderButton setTitle:@"终了" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+            }
+        }
+            break;
+            
+        case UserTypeDriver:
+        {
+            self.startPosition.hidden = NO;
+            self.passPosition.top = self.startPosition.bottom;
+            self.timeView.top = self.passPosition.bottom;
+            self.typeView.top = self.timeView.bottom;
+            self.passengerView.top = self.typeView.bottom;
+            self.orderPersonView.top = self.passengerView.bottom;
+            self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+            if ([self.order.orderState integerValue] == 2) {
+                [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+                [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+            } else {
+                [self.checkButton setTitle:@"开始" forState:UIControlStateNormal];
+                [self.rejectButton setTitle:@"结束" forState:UIControlStateNormal];
+            }
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
         }
             break;
             
@@ -195,7 +269,7 @@
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"经过地点不能为空"];
         return;
     }
-    if (self.startTimeButton.titleLabel.text.length <= 0) {
+    if (self.startTimeButton.text.length <= 0) {
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"起始时间不能为空"];
         return;
     }
@@ -207,48 +281,122 @@
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆类型不能为空"];
         return;
     }
-    Service *service = [[Service alloc] init];
     YLYUser *user = [NSUserDefaults user];
-    Order *order = [[Order alloc] init];
-    order.orderID = nil;
-    order.jiecheAddress = self.startPosition.text;
-    order.jingguoAddress = self.passPosition.text;
-    order.realJingguoAddress = @"";
-    order.yuyueTime = self.orderTime.text;
-    order.startTime = self.startTimeTextField.text;
-    order.endTime = self.endTimeTextField.text;
-    order.realStartTime = @"";
-    order.realEndTime = @"";
-    order.isPublic = @"";
-    order.carType = [@(_selectedCarRow) stringValue];
-    order.userName = self.passengerNameTextField.text;
-    order.userPhone = self.passengerPhoneTextField.text;
-    order.carID = @"";
-    order.dingcherenID = user.userID;
-    order.dingcherenName = user.username;
-    order.dingcherenPhone = user.phone;
-    order.dingcherenDep = user.depName;
-    order.dingcherenDepID = user.depID;
-    order.orderState = @"";
-    order.shenpirenName = @"";
-    order.shenpirenID = @"";
-    order.paicherenID = @"";
-    order.driverID = @"";//self.driver.driverID;
-    order.driverName = @"";//self.driverNameLabel.text;
-    order.driverPhone = @"";//self.driverPhoneLabel.text;
-    order.startMetre = @"";
-    order.endMetre = @"";
-    order.shenheYiJian = @"";
-    order.facheYijian = @"";
-    order.bohuiYuanYin = @"";
-    order.countMetre = @"";
-    order.pingjia = @"";
+    if (!_order) {
+        _order = [[Order alloc] init];
+        _order.orderState = @"0";
+        _order.jiecheAddress = self.startPosition.text;
+        _order.jingguoAddress = self.passPosition.text;
+        _order.yuyueTime = self.orderTime.text;
+        _order.startTime = self.startTimeTextField.text;
+        _order.endTime = self.endTimeTextField.text;
+        _order.carType = [@(_selectedCarRow) stringValue];
+        _order.userName = self.passengerNameTextField.text;
+        _order.userPhone = self.passengerPhoneTextField.text;
+        _order.dingcherenID = user.userID;
+        _order.dingcherenName = user.username;
+        _order.dingcherenPhone = user.phone;
+        _order.dingcherenDep = user.depName;
+        _order.dingcherenDepID = user.depID;
+    } else {
+        self.startPosition.editEnable = NO;
+        self.passPosition.editEnable = NO;
+        self.startTimeButton.enabled = NO;
+        self.endTimeButton.enabled = NO;
+        self.carTypeButton.enabled = NO;
+        self.passengerNameTextField.enabled = NO;
+        self.passengerPhoneTextField.enabled = NO;
+        switch ([_order.orderState integerValue]) {
+            case 3:
+                self.order.orderState = @"4";
+                break;
+                
+            case 6:
+                self.order.orderState = @"7";
+                break;
+                
+            case 7:
+                self.order.orderState = @"8";
+                break;
+                
+            default:
+                break;
+        }
+    }
+//    _order.orderState = @"";
+//    _order.orderID = nil;
+//    _order.realJingguoAddress = @"";
+//    _order.realStartTime = @"";
+//    _order.realEndTime = @"";
+//    _order.isPublic = @"";
+//    _order.carID = @"";
+//    _order.shenpirenName = @"";
+//    _order.shenpirenID = @"";
+//    _order.paicherenID = @"";
+//    _order.driverID = @"";//self.driver.driverID;
+//    _order.driverName = @"";//self.driverNameLabel.text;
+//    _order.driverPhone = @"";//self.driverPhoneLabel.text;
+//    _order.startMetre = @"";
+//    _order.endMetre = @"";
+//    _order.shenheYiJian = @"";
+//    _order.facheYijian = @"";
+//    _order.bohuiYuanYin = @"";
+//    _order.countMetre = @"";
+//    _order.pingjia = @"";
+    [self reportOrder];
+}
+
+- (void)didClickCheckButton:(id)sender
+{
+    switch (self.user.userType) {
+        case UserTypeShenhe:
+            self.order.orderState = @"1";
+            break;
+            
+        case UserTypePaiche:
+            self.order.orderState = @"2";
+            break;
+            
+        case UserTypeDriver:
+            self.order.orderState = ([self.order.orderState integerValue] == 2) ? @"3" : @"5";
+            break;
+            
+        default:
+            break;
+    }
+    [self reportOrder];
+}
+
+- (void)didClickRejectButton:(id)sender
+{
+    switch (self.user.userType) {
+        case UserTypeShenhe:
+            self.order.orderState = @"11";
+            break;
+            
+        case UserTypePaiche:
+            self.order.orderState = @"22";
+            break;
+            
+        case UserTypeDriver:
+            self.order.orderState = ([self.order.orderState integerValue] == 2) ? @"33" : @"6";
+            break;
+            
+        default:
+            break;
+    }
+    [self reportOrder];
+}
+
+- (void)reportOrder
+{
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    [service DingCheWithOrder:order completion:^(BOOL success, NSString *msg) {
+    [self.service DingCheWithOrder:self.order completion:^(BOOL success, NSString *msg) {
         [DejalBezelActivityView removeView];
-        
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:success ? @"成功" : @"失败"];
     }];
 }
+
 - (void)didClickRightBarButtonItem:(id)sender
 {
     RecordViewController *recordViewController = [[RecordViewController alloc] init];
@@ -286,16 +434,6 @@
     };
     driverListViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:driverListViewController animated:YES];
-}
-
-- (void)didClickCheckButton:(id)sender
-{
-    
-}
-
-- (void)didClickRejectButton:(id)sender
-{
-    
 }
 
 //Code from Brett Schumann

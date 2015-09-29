@@ -17,6 +17,11 @@
 
 @implementation ImageButton
 
+- (NSString *)text
+{
+    return self.telLabel.text;
+}
+
 - (void)setText:(NSString *)text
 {
     self.telLabel.text = text;

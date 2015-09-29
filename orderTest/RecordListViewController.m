@@ -120,7 +120,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.user.userType == UserTypeDingche) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
+    orderViewController.order = self.orderList[indexPath.row];
     [self.navigationController pushViewController:orderViewController animated:YES];
 }
 

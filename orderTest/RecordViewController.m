@@ -38,7 +38,7 @@
     
     self.view.height = self.view.height - self.navigationController.navigationBar.height - 20;
     
-    _unfinishedRecordListViewController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height - self.segmentedView.height);
+    _unfinishedRecordListViewController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height - self.segmentedView.height - (self.isTab ? 49 : 0));
     [self addChildViewController:self.unfinishedRecordListViewController];
     self.currentViewController = self.unfinishedRecordListViewController;
     [self.view addSubview:self.currentViewController.view];
@@ -87,7 +87,7 @@
 - (ChoiceSegmentedView *)segmentedView
 {
     if (!_segmentedView) {
-        _segmentedView = [[ChoiceSegmentedView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, self.view.width, 44)];
+        _segmentedView = [[ChoiceSegmentedView alloc] initWithFrame:CGRectMake(0, self.view.height - 44 - (self.isTab ? 49 : 0), self.view.width, 44)];
         _segmentedView.layer.borderColor = [UIColor whiteColor].CGColor;
         _segmentedView.layer.borderWidth = 1.0;
         _segmentedView.layer.cornerRadius = 2.5;
