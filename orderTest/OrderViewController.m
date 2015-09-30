@@ -13,8 +13,9 @@
 #import "DashView.h"
 #import "ImageButton.h"
 #import "Service.h"
+#import <MessageUI/MessageUI.h>
 
-@interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) YLYTipsTextField *startPosition;
@@ -49,6 +50,8 @@
 @property (nonatomic, strong) YLYUser *user;
 
 @end
+
+static MFMessageComposeViewController *controller;
 
 @implementation OrderViewController
 {
@@ -295,6 +298,52 @@
 
 - (void)didClickRejectButton:(id)sender
 {
+    
+}
+
+-(void)showMessageView:(NSArray *)phones body:(NSString *)body
+{
+    if( [MFMessageComposeViewController canSendText] )
+    {
+        //        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+        controller.recipients = phones;
+        controller.navigationBar.tintColor = [UIColor redColor];
+        controller.body = body;
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息"
+                                                        message:@"该设备不支持短信功能"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissModalViewControllerAnimated:NO];//关键的一句   不能为YES
+    switch ( result ) {
+        case MessageComposeResultCancelled:
+        {
+            //click cancel button
+        }
+            break;
+        case MessageComposeResultFailed:// send failed
+            
+            break;
+        case MessageComposeResultSent:
+        {
+            
+            //do something
+        }
+            break;
+        default:
+            break;
+    }
     
 }
 

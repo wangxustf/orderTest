@@ -29,6 +29,7 @@
 		78226D6A1BB826CA00C8598D /* TipsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78226D691BB826CA00C8598D /* TipsLabel.m */; settings = {ASSET_TAGS = (); }; };
 		7842AB981BAAB0A6005DEA8D /* NetworkCheckUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */; settings = {ASSET_TAGS = (); }; };
 		78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78446F9F1BB22F62003B8428 /* CoreTelephony.framework */; };
+		784EF2421BBA5B8100EF4A43 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784EF2411BBA5B8100EF4A43 /* MessageUI.framework */; };
 		7863ABE41BA3B10000499BBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE31BA3B10000499BBB /* main.m */; };
 		7863ABE71BA3B10000499BBB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7863ABE61BA3B10000499BBB /* AppDelegate.m */; };
 		7863ABEF1BA3B10000499BBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7863ABEE1BA3B10000499BBB /* Images.xcassets */; };
@@ -132,6 +133,7 @@
 		7842AB961BAAB0A6005DEA8D /* NetworkCheckUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCheckUtil.h; sourceTree = "<group>"; };
 		7842AB971BAAB0A6005DEA8D /* NetworkCheckUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCheckUtil.m; sourceTree = "<group>"; };
 		78446F9F1BB22F62003B8428 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		784EF2411BBA5B8100EF4A43 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		7863ABDE1BA3B10000499BBB /* orderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7863ABE21BA3B10000499BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7863ABE31BA3B10000499BBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				784EF2421BBA5B8100EF4A43 /* MessageUI.framework in Frameworks */,
 				78446FA01BB22F62003B8428 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +339,7 @@
 		7863ABD51BA3B10000499BBB = {
 			isa = PBXGroup;
 			children = (
+				784EF2411BBA5B8100EF4A43 /* MessageUI.framework */,
 				78446F9F1BB22F62003B8428 /* CoreTelephony.framework */,
 				7863ABE01BA3B10000499BBB /* orderTest */,
 				7863ABFA1BA3B10000499BBB /* orderTestTests */,
@@ -654,9 +658,11 @@
 				TargetAttributes = {
 					7863ABDD1BA3B10000499BBB = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5PF3UMHS46;
 					};
 					7863ABF61BA3B10000499BBB = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5PF3UMHS46;
 						TestTargetID = 7863ABDD1BA3B10000499BBB;
 					};
 				};
@@ -850,6 +856,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "070a55ef-1105-447a-a516-81d0bbafa5e8";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -886,6 +893,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "070a55ef-1105-447a-a516-81d0bbafa5e8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -895,13 +903,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = KeychainAccessGroups.plist;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orderTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -909,13 +921,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = KeychainAccessGroups.plist;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orderTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -923,6 +939,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -934,6 +952,7 @@
 				INFOPLIST_FILE = orderTestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/orderTest.app/orderTest";
 			};
 			name = Debug;
@@ -942,6 +961,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -949,6 +970,7 @@
 				INFOPLIST_FILE = orderTestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/orderTest.app/orderTest";
 			};
 			name = Release;
