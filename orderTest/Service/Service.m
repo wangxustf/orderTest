@@ -196,7 +196,7 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               if (completion != nil) {
                   if ([responseObject isKindOfClass:[NSDictionary class]]) {
-                      completion(YES, nil);
+                      completion(([responseObject[@"result"] integerValue] == 0), nil);
                   } else {
                       completion(NO, nil);
                   }
