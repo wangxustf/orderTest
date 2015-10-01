@@ -9,26 +9,34 @@
 #import "OrderViewController.h"
 #import "RecordViewController.h"
 #import "DriverListViewController.h"
+#import "CarListViewController.h"
 #import "YLYTipsTextField.h"
 #import "DashView.h"
 #import "ImageButton.h"
 #import "Service.h"
 #import <MessageUI/MessageUI.h>
+#import "CWStarRateView.h"
 
-@interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate>
+@interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate, CWStarRateViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) YLYTipsTextField *startPosition;
 @property (nonatomic, strong) YLYTipsTextField *passPosition;
+@property (nonatomic, strong) YLYTipsTextField *realPassPosition;
 @property (nonatomic, strong) YLYTipsTextField *orderTime;
 @property (nonatomic, strong) UITextField *startTimeTextField;
 @property (nonatomic, strong) UITextField *endTimeTextField;
 @property (nonatomic, strong) UIView *timeView;
 @property (nonatomic, strong) ImageButton *startTimeButton;
 @property (nonatomic, strong) ImageButton *endTimeButton;
+@property (nonatomic, strong) UIView *carView;
+@property (nonatomic, strong) UIButton *carButton;
 @property (nonatomic, strong) UIView *typeView;
 @property (nonatomic, strong) UITextField *carTypeTextField;
 @property (nonatomic, strong) ImageButton *carTypeButton;
+@property (nonatomic, strong) YLYTipsTextField *carNotes;
+@property (nonatomic, strong) UIView *isPublicView;
+@property (nonatomic, strong) UIButton *publicButton;
 @property (nonatomic, strong) UIView *driverView;
 @property (nonatomic, strong) UIButton *driverButton;
 @property (nonatomic, strong) UILabel *driverNameLabel;
@@ -36,9 +44,17 @@
 @property (nonatomic, strong) UIView *passengerView;
 @property (nonatomic, strong) UITextField *passengerNameTextField;
 @property (nonatomic, strong) UITextField *passengerPhoneTextField;
+@property (nonatomic, strong) YLYTipsTextField *passengerNumberTextField;
 @property (nonatomic, strong) UIView *orderPersonView;
 @property (nonatomic, strong) UILabel *orderPersonNameLabel;
 @property (nonatomic, strong) UILabel *orderPersonPhoneLabel;
+@property (nonatomic, strong) YLYTipsTextField *shenherenTextField;
+@property (nonatomic, strong) YLYTipsTextField *shenheyijianTextField;
+@property (nonatomic, strong) YLYTipsTextField *bohuiyijianTextField;
+@property (nonatomic, strong) YLYTipsTextField *tripDistanceTextField;
+@property (nonatomic, strong) YLYTipsTextField *pricePerKilometerTextField;
+@property (nonatomic, strong) YLYTipsTextField *roadChargeTextField;
+@property (nonatomic, strong) YLYTipsTextField *bridgeChargeTextField;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UITextField *currentTextField;
 @property (nonatomic, strong) NSArray *carArray;
@@ -47,8 +63,10 @@
 @property (nonatomic, strong) UIButton *checkButton;
 @property (nonatomic, strong) UIButton *rejectButton;
 @property (nonatomic, strong) Driver *driver;
+@property (nonatomic, strong) Car *car;
 @property (nonatomic, strong) YLYUser *user;
 @property (nonatomic, strong) Service *service;
+@property (nonatomic, strong) CWStarRateView *starRateView;
 
 @end
 
@@ -97,6 +115,9 @@ static MFMessageComposeViewController *controller;
     _cellHeight = 60;
     _carArray = @[@"经济型", @"舒适型", @"商务型", @"豪华型", @"16座客车", @"32座客车"];
     _selectedCarRow = 0;
+    if (!_order) {
+        _order = [[Order alloc] init];
+    }
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapGestureRecognizer:)]];
     [self setupUI];
@@ -123,26 +144,97 @@ static MFMessageComposeViewController *controller;
     switch (self.user.userType) {
         case UserTypeDingche:
         {
-            self.startPosition.hidden = NO;
-            self.passPosition.top = self.startPosition.bottom;
-            self.timeView.top = self.passPosition.bottom;
-            self.typeView.top = self.timeView.bottom;
-            self.passengerView.top = self.typeView.bottom;
-            self.orderPersonView.top = self.passengerView.bottom;
-            self.orderButton.top = self.orderPersonView.bottom + 10;
-            [self.orderButton setTitle:(self.order ? @"确认" : @"订车") forState:UIControlStateNormal];
-            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+            if (self.order.orderID.length <= 0) {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.typeView.top = self.timeView.bottom;
+                self.carNotes.top = self.typeView.bottom;
+                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.passengerView.top = self.passengerNumberTextField.bottom;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.shenherenTextField.top = self.orderPersonView.bottom;
+                self.shenherenTextField.editEnable = NO;
+                [self.shenherenTextField tipsTextFieldWithTips:@"审核人姓名" placeholder:self.order.shenpirenName isPassword:NO];
+                self.tripDistanceTextField.top = self.shenherenTextField.bottom;
+                self.tripDistanceTextField.editEnable = NO;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.pricePerKilometerTextField.editEnable = NO;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.roadChargeTextField.editEnable = NO;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.bridgeChargeTextField.editEnable = NO;
+                self.orderButton.top = self.bridgeChargeTextField.bottom + 10;
+                [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+            } else {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.realPassPosition.editEnable = NO;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.carNotes.top = self.timeView.bottom;
+                self.carNotes.editEnable = NO;
+                self.tripDistanceTextField.top = self.carNotes.bottom;
+                self.tripDistanceTextField.editEnable = NO;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.pricePerKilometerTextField.editEnable = NO;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.roadChargeTextField.editEnable = NO;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.bridgeChargeTextField.editEnable = NO;
+                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.starRateView.top = self.orderPersonView.bottom;
+                self.orderButton.top = self.starRateView.bottom + 10;
+                [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+            }
         }
             break;
             
         case UserTypeShenhe:
         {
             self.startPosition.hidden = NO;
+            self.startPosition.editEnable = NO;
+            self.startPosition.text = self.order.jiecheAddress;
             self.passPosition.top = self.startPosition.bottom;
-            self.timeView.top = self.passPosition.bottom;
+            self.passPosition.editEnable = NO;
+            self.passPosition.text = self.order.jingguoAddress;
+            self.orderTime.top = self.passPosition.bottom;
+            self.orderTime.text = self.order.yuyueTime;
+            self.timeView.top = self.orderTime.bottom;
+            self.startTimeButton.enabled = NO;
+            self.startTimeButton.text = self.order.startTime;
+            self.endTimeButton.enabled = NO;
+            self.endTimeButton.text = self.order.endTime;
             self.typeView.top = self.timeView.bottom;
-            self.passengerView.top = self.typeView.bottom;
+            self.carTypeButton.enabled = NO;
+            self.carTypeButton.text = self.order.carType;
+            self.carNotes.top = self.typeView.bottom;
+            self.carNotes.editEnable = NO;
+//            self.carNotes.text = self.order.
+            self.passengerNumberTextField.top = self.carNotes.bottom;
+            self.passengerNumberTextField.editEnable = NO;
+            self.driverView.top = self.passengerNumberTextField.bottom;
+            self.passengerView.top = self.driverView.bottom;
+            self.passengerNameTextField.enabled = NO;
+            self.passengerPhoneTextField.enabled = NO;
             self.orderPersonView.top = self.passengerView.bottom;
+            self.orderPersonNameLabel.text = self.order.dingcherenName;
+            self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
             [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
             [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
@@ -152,21 +244,95 @@ static MFMessageComposeViewController *controller;
             
         case UserTypePaiche:
         {
-            self.startPosition.hidden = NO;
-            self.passPosition.top = self.startPosition.bottom;
-            self.timeView.top = self.passPosition.bottom;
-            self.typeView.top = self.timeView.bottom;
-            self.passengerView.top = self.typeView.bottom;
-            self.orderPersonView.top = self.passengerView.bottom;
             if ([self.order.orderState integerValue] == 1) {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.orderTime.top = self.passPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.isPublicView.top = self.timeView.bottom;
+                self.publicButton.enabled = NO;
+                self.carNotes.top = self.isPublicView.bottom;
+                self.carNotes.editEnable = NO;
+                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.passengerNumberTextField.editEnable = NO;
+                self.carView.top = self.passengerNumberTextField.bottom;
+                self.carButton.enabled = NO;
+                self.driverView.top = self.carView.bottom;
+                self.driverButton.enabled = NO;
+                self.passengerView.top = self.driverView.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
                 self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
             } else if ([self.order.orderState integerValue] == 3) {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.realPassPosition.editEnable = NO;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.isPublicView.top = self.timeView.bottom;
+                self.publicButton.enabled = NO;
+                self.carNotes.top = self.isPublicView.bottom;
+                self.carNotes.editEnable = NO;
+                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.passengerNumberTextField.editEnable = NO;
+                self.driverView.top = self.passengerNumberTextField.bottom;
+                self.driverButton.enabled = NO;
+                self.passengerView.top = self.driverView.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.shenherenTextField.top = self.passengerView.bottom;
+                self.shenherenTextField.editEnable = NO;
+                self.orderPersonView.top = self.shenherenTextField.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.orderButton.top = self.orderPersonView.bottom + 10;
                 [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
             } else if ([self.order.orderState integerValue] == 7) {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.realPassPosition.editEnable = NO;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.carNotes.top = self.timeView.bottom;
+                self.carNotes.editEnable = NO;
+                self.tripDistanceTextField.top = self.carNotes.bottom;
+                self.tripDistanceTextField.editEnable = NO;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.pricePerKilometerTextField.editEnable = NO;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.roadChargeTextField.editEnable = NO;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.bridgeChargeTextField.editEnable = NO;
+                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.starRateView.top = self.orderPersonView.bottom;
+                self.starRateView.disEnable = YES;
+                self.orderButton.top = self.starRateView.bottom + 10;
                 [self.orderButton setTitle:@"终了" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
             }
@@ -175,17 +341,58 @@ static MFMessageComposeViewController *controller;
             
         case UserTypeDriver:
         {
-            self.startPosition.hidden = NO;
-            self.passPosition.top = self.startPosition.bottom;
-            self.timeView.top = self.passPosition.bottom;
-            self.typeView.top = self.timeView.bottom;
-            self.passengerView.top = self.typeView.bottom;
-            self.orderPersonView.top = self.passengerView.bottom;
-            self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
             if ([self.order.orderState integerValue] == 2) {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.orderTime.top = self.passPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.isPublicView.top = self.timeView.bottom;
+                self.publicButton.enabled = NO;
+                self.carNotes.top = self.publicButton.bottom;
+                self.carNotes.editEnable = NO;
+                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.passengerNumberTextField.editEnable = NO;
+                self.carView.top = self.passengerNumberTextField.bottom;
+                self.carButton.enabled = NO;
+                self.driverView.top = self.carView.bottom;
+                self.driverButton.enabled = NO;
+                self.passengerView.top = self.driverView.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
             } else {
+                self.startPosition.hidden = NO;
+                self.startPosition.editEnable = NO;
+                self.passPosition.top = self.startPosition.bottom;
+                self.passPosition.editEnable = NO;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.realPassPosition.editEnable = NO;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.carNotes.top = self.timeView.bottom;
+                self.carNotes.editEnable = NO;
+                self.tripDistanceTextField.top = self.carNotes.bottom;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                self.orderPersonView.top = self.passengerView.bottom;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.checkButton setTitle:@"开始" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"结束" forState:UIControlStateNormal];
             }
@@ -285,8 +492,7 @@ static MFMessageComposeViewController *controller;
         return;
     }
     YLYUser *user = [NSUserDefaults user];
-    if (!_order) {
-        _order = [[Order alloc] init];
+    if (_order.orderID.length <= 0) {
         _order.orderState = @"0";
         _order.jiecheAddress = self.startPosition.text;
         _order.jingguoAddress = self.passPosition.text;
@@ -430,6 +636,15 @@ static MFMessageComposeViewController *controller;
     [self.carTypeTextField becomeFirstResponder];
 }
 
+- (void)didClickPublicButton:(id)sender
+{
+    UIButton *publicButton = (UIButton *)sender;
+    BOOL isPublic = [self.order.isPublic integerValue] == 1;
+    isPublic = !isPublic;
+    self.order.isPublic = isPublic ? @"1" : @"0";
+    [publicButton setImage:[UIImage imageNamed:isPublic ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+}
+
 - (void)didClickDriverButton:(id)sender
 {
     DriverListViewController *driverListViewController = [[DriverListViewController alloc] init];
@@ -440,6 +655,17 @@ static MFMessageComposeViewController *controller;
     };
     driverListViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:driverListViewController animated:YES];
+}
+
+- (void)didClickCarButton:(id)sender
+{
+    CarListViewController *carListViewController = [[CarListViewController alloc] init];
+    carListViewController.selectBlock = ^(Car *car) {
+        self.car = car;
+        [self.carButton setTitle:car.carName forState:UIControlStateNormal];
+    };
+    carListViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:carListViewController animated:YES];
 }
 
 -(void)showMessageView:(NSArray *)phones body:(NSString *)body
@@ -625,6 +851,11 @@ static MFMessageComposeViewController *controller;
     _currentTextField = textField;
 }
 
+- (void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
+{
+    
+}
+
 - (UIDatePicker *)datePicker
 {
     if (!_datePicker) {
@@ -662,6 +893,16 @@ static MFMessageComposeViewController *controller;
         [self.scrollView addSubview:_passPosition];
     }
     return _passPosition;
+}
+
+- (YLYTipsTextField *)realPassPosition
+{
+    if (!_realPassPosition) {
+        _realPassPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, self.startPosition.bottom, self.startPosition.width, _cellHeight)];
+        [_realPassPosition tipsTextFieldWithTips:@"实际经过地点" placeholder:@"请输入实际经过地点！" isPassword:NO];
+        [self.scrollView addSubview:_realPassPosition];
+    }
+    return _realPassPosition;
 }
 
 - (YLYTipsTextField *)orderTime
@@ -736,6 +977,71 @@ static MFMessageComposeViewController *controller;
         [self setupCarTypeTextField];
     }
     return _typeView;
+}
+
+- (YLYTipsTextField *)carNotes
+{
+    if (!_carNotes) {
+        _carNotes = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_carNotes tipsTextFieldWithTips:@"用车事宜" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_carNotes];
+    }
+    return _carNotes;
+}
+
+- (UIView *)isPublicView
+{
+    if (!_isPublicView) {
+        _isPublicView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_isPublicView];
+        
+        UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        tipLabel.textAlignment = NSTextAlignmentRight;
+        tipLabel.text = @"是否私用";
+        tipLabel.font = Font(12);
+        [_isPublicView addSubview:tipLabel];
+        
+        UIButton *publicButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        publicButton.frame = CGRectMake(tipLabel.right + 10, 0, self.view.width - tipLabel.right - 10, _cellHeight);
+        [publicButton setTitleColor:RGB(0x000000) forState:UIControlStateNormal];
+        publicButton.titleLabel.font = Font(12);
+        [publicButton setTitle:@"公用" forState:UIControlStateNormal];
+        [publicButton setImage:[UIImage imageNamed:@"icon_unselected.png"] forState:UIControlStateNormal];
+        [publicButton addTarget:self action:@selector(didClickPublicButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_isPublicView addSubview:publicButton];
+        _publicButton = publicButton;
+    }
+    return _isPublicView;
+}
+
+- (YLYTipsTextField *)passengerNumberTextField
+{
+    if (!_passengerNumberTextField) {
+        _passengerNumberTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_passengerNumberTextField tipsTextFieldWithTips:@"乘车人数" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_passengerNumberTextField];
+    }
+    return _passengerNumberTextField;
+}
+
+- (UIView *)carView
+{
+    if (!_carView) {
+        _carView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_carView];
+        UILabel *driverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        driverLabel.textAlignment = NSTextAlignmentRight;
+        driverLabel.font = Font(12.0);
+        driverLabel.text = @"选择车辆";
+        [_carView addSubview:driverLabel];
+        UIButton *carButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        carButton.frame = CGRectMake(self.view.width - 60, (_driverView.height - 40)/2.0, 40, 40);
+        [carButton setBackgroundImage:[UIImage imageNamed:@"addDriver.png"] forState:UIControlStateNormal];
+        [carButton addTarget:self action:@selector(didClickCarButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_carView addSubview:carButton];
+        _carButton = carButton;
+    }
+    return _carView;
 }
 
 - (UIView *)driverView
@@ -818,6 +1124,87 @@ static MFMessageComposeViewController *controller;
         [_orderPersonView addSubview:_orderPersonPhoneLabel];
     }
     return _orderPersonView;
+}
+
+- (YLYTipsTextField *)tripDistanceTextField
+{
+    if (!_tripDistanceTextField) {
+        _tripDistanceTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_tripDistanceTextField tipsTextFieldWithTips:@"行驶公里数" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_tripDistanceTextField];
+    }
+    return _tripDistanceTextField;
+}
+
+- (YLYTipsTextField *)pricePerKilometerTextField
+{
+    if (!_pricePerKilometerTextField) {
+        _pricePerKilometerTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_pricePerKilometerTextField tipsTextFieldWithTips:@"公里单价/台班费" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_pricePerKilometerTextField];
+    }
+    return _pricePerKilometerTextField;
+}
+
+- (YLYTipsTextField *)roadChargeTextField
+{
+    if (!_roadChargeTextField) {
+        _roadChargeTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_roadChargeTextField tipsTextFieldWithTips:@"停车过路费" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_roadChargeTextField];
+    }
+    return _roadChargeTextField;
+}
+
+- (YLYTipsTextField *)bridgeChargeTextField
+{
+    if (!_bridgeChargeTextField) {
+        _bridgeChargeTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_bridgeChargeTextField tipsTextFieldWithTips:@"过桥费" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_bridgeChargeTextField];
+    }
+    return _bridgeChargeTextField;
+}
+
+- (YLYTipsTextField *)shenherenTextField
+{
+    if (!_shenherenTextField) {
+        _shenherenTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_shenherenTextField];
+    }
+    return _shenherenTextField;
+}
+
+- (YLYTipsTextField *)shenheyijianTextField
+{
+    if (!_shenheyijianTextField) {
+        _shenheyijianTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_shenheyijianTextField tipsTextFieldWithTips:@"审核意见" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_shenheyijianTextField];
+    }
+    return _shenheyijianTextField;
+}
+
+- (YLYTipsTextField *)bohuiyijianTextField
+{
+    if (!_bohuiyijianTextField) {
+        _bohuiyijianTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_bohuiyijianTextField tipsTextFieldWithTips:@"驳回意见" placeholder:@"" isPassword:NO];
+        [self.scrollView addSubview:_bohuiyijianTextField];
+    }
+    return _bohuiyijianTextField;
+}
+
+- (CWStarRateView *)starRateView
+{
+    if (!_starRateView) {
+        _starRateView = [[CWStarRateView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight) numberOfStars:5];
+        _starRateView.hasAnimation = NO;
+        _starRateView.allowIncompleteStar = YES;
+        _starRateView.delegate = self;
+        [self.scrollView addSubview:_starRateView];
+    }
+    return _starRateView;
 }
 
 - (UIButton *)orderButton
