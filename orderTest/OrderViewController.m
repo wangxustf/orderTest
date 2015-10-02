@@ -29,6 +29,11 @@
 @property (nonatomic, strong) UIView *timeView;
 @property (nonatomic, strong) ImageButton *startTimeButton;
 @property (nonatomic, strong) ImageButton *endTimeButton;
+@property (nonatomic, strong) UIView *realTimeView;
+@property (nonatomic, strong) ImageButton *realStartTimeButton;
+@property (nonatomic, strong) ImageButton *realEndTimeButton;
+@property (nonatomic, strong) UITextField *realStartTimeTextField;
+@property (nonatomic, strong) UITextField *realEndTimeTextField;
 @property (nonatomic, strong) UIView *carView;
 @property (nonatomic, strong) UIButton *carButton;
 @property (nonatomic, strong) UIView *typeView;
@@ -145,196 +150,231 @@ static MFMessageComposeViewController *controller;
         case UserTypeDingche:
         {
             if (self.order.orderID.length <= 0) {
-                self.startPosition.hidden = NO;
-                self.startPosition.editEnable = NO;
                 self.passPosition.top = self.startPosition.bottom;
-                self.realPassPosition.top = self.passPosition.bottom;
-                self.orderTime.top = self.realPassPosition.bottom;
+                self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
                 self.typeView.top = self.timeView.bottom;
                 self.carNotes.top = self.typeView.bottom;
-                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.isPublicView.top = self.carNotes.bottom;
+                self.passengerNumberTextField.top = self.isPublicView.bottom;
                 self.passengerView.top = self.passengerNumberTextField.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.shenherenTextField.top = self.orderPersonView.bottom;
-                self.shenherenTextField.editEnable = NO;
-                [self.shenherenTextField tipsTextFieldWithTips:@"审核人姓名" placeholder:self.order.shenpirenName isPassword:NO];
-                self.tripDistanceTextField.top = self.shenherenTextField.bottom;
-                self.tripDistanceTextField.editEnable = NO;
-                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
-                self.pricePerKilometerTextField.editEnable = NO;
-                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
-                self.roadChargeTextField.editEnable = NO;
-                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
-                self.bridgeChargeTextField.editEnable = NO;
-                self.orderButton.top = self.bridgeChargeTextField.bottom + 10;
+                self.orderButton.top = self.orderPersonView.bottom + 10;
                 [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
-            } else {
-                self.startPosition.hidden = NO;
-                self.startPosition.editEnable = NO;
-                self.passPosition.top = self.startPosition.bottom;
-                self.passPosition.editEnable = NO;
-                self.realPassPosition.top = self.passPosition.bottom;
-                self.realPassPosition.editEnable = NO;
-                self.orderTime.top = self.realPassPosition.bottom;
-                self.timeView.top = self.orderTime.bottom;
-                self.startTimeButton.enabled = NO;
-                self.endTimeButton.enabled = NO;
-                self.carNotes.top = self.timeView.bottom;
-                self.carNotes.editEnable = NO;
-                self.tripDistanceTextField.top = self.carNotes.bottom;
-                self.tripDistanceTextField.editEnable = NO;
-                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
-                self.pricePerKilometerTextField.editEnable = NO;
-                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
-                self.roadChargeTextField.editEnable = NO;
-                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
-                self.bridgeChargeTextField.editEnable = NO;
-                self.passengerView.top = self.bridgeChargeTextField.bottom;
-                self.passengerNameTextField.enabled = NO;
-                self.passengerPhoneTextField.enabled = NO;
-                self.orderPersonView.top = self.passengerView.bottom;
+                
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+            } else {
+                self.passPosition.top = self.startPosition.bottom;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.carNotes.top = self.timeView.bottom;
+                self.tripDistanceTextField.top = self.carNotes.bottom;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.orderPersonView.top = self.passengerView.bottom;
                 self.starRateView.top = self.orderPersonView.bottom;
                 self.orderButton.top = self.starRateView.bottom + 10;
                 [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                
+                self.startPosition.editEnable = NO;
+                self.passPosition.editEnable = NO;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.realStartTimeButton.enabled = NO;
+                self.realEndTimeButton.enabled = NO;
+                self.carNotes.editEnable = NO;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                self.realStartTimeButton.text = self.order.realStartTime;
+                self.realEndTimeButton.text = self.order.realEndTime;
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
         }
             break;
             
         case UserTypeShenhe:
         {
-            self.startPosition.hidden = NO;
-            self.startPosition.editEnable = NO;
-            self.startPosition.text = self.order.jiecheAddress;
             self.passPosition.top = self.startPosition.bottom;
-            self.passPosition.editEnable = NO;
-            self.passPosition.text = self.order.jingguoAddress;
             self.orderTime.top = self.passPosition.bottom;
             self.orderTime.text = self.order.yuyueTime;
             self.timeView.top = self.orderTime.bottom;
-            self.startTimeButton.enabled = NO;
-            self.startTimeButton.text = self.order.startTime;
-            self.endTimeButton.enabled = NO;
-            self.endTimeButton.text = self.order.endTime;
             self.typeView.top = self.timeView.bottom;
-            self.carTypeButton.enabled = NO;
-            self.carTypeButton.text = self.order.carType;
             self.carNotes.top = self.typeView.bottom;
-            self.carNotes.editEnable = NO;
-//            self.carNotes.text = self.order.
             self.passengerNumberTextField.top = self.carNotes.bottom;
-            self.passengerNumberTextField.editEnable = NO;
-            self.driverView.top = self.passengerNumberTextField.bottom;
-            self.passengerView.top = self.driverView.bottom;
-            self.passengerNameTextField.enabled = NO;
-            self.passengerPhoneTextField.enabled = NO;
+            self.passengerView.top = self.passengerNumberTextField.bottom;
             self.orderPersonView.top = self.passengerView.bottom;
-            self.orderPersonNameLabel.text = self.order.dingcherenName;
-            self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
             [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
             [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
             self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.rejectButton.bottom + 10, self.scrollView.height));
+            
+            self.startPosition.editEnable = NO;
+            self.passPosition.editEnable = NO;
+            self.startTimeButton.enabled = NO;
+            self.endTimeButton.enabled = NO;
+            self.carNotes.editEnable = NO;
+            self.passengerNumberTextField.editEnable = NO;
+            self.passengerNameTextField.enabled = NO;
+            self.passengerPhoneTextField.enabled = NO;
+            
+            self.startPosition.text = self.order.jiecheAddress;
+            self.passPosition.text = self.order.jingguoAddress;
+            self.orderTime.text = self.order.yuyueTime;
+            self.startTimeButton.text = self.order.startTime;
+            self.endTimeButton.text = self.order.endTime;
+            self.passengerNameTextField.text = self.order.userName;
+            self.passengerPhoneTextField.text = self.order.userPhone;
+            self.orderPersonNameLabel.text = self.order.dingcherenName;
+            self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
         }
             break;
             
         case UserTypePaiche:
         {
             if ([self.order.orderState integerValue] == 1) {
-                self.startPosition.hidden = NO;
-                self.startPosition.editEnable = NO;
                 self.passPosition.top = self.startPosition.bottom;
-                self.passPosition.editEnable = NO;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
-                self.startTimeButton.enabled = NO;
-                self.endTimeButton.enabled = NO;
                 self.isPublicView.top = self.timeView.bottom;
-                self.publicButton.enabled = NO;
                 self.carNotes.top = self.isPublicView.bottom;
-                self.carNotes.editEnable = NO;
                 self.passengerNumberTextField.top = self.carNotes.bottom;
-                self.passengerNumberTextField.editEnable = NO;
                 self.carView.top = self.passengerNumberTextField.bottom;
-                self.carButton.enabled = NO;
                 self.driverView.top = self.carView.bottom;
-                self.driverButton.enabled = NO;
                 self.passengerView.top = self.driverView.bottom;
-                self.passengerNameTextField.enabled = NO;
-                self.passengerPhoneTextField.enabled = NO;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.orderPersonNameLabel.text = self.order.dingcherenName;
-                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
-                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                self.shenherenTextField.top = self.orderPersonView.bottom;
+                self.shenheyijianTextField.top = self.shenherenTextField.bottom;
+                self.bohuiyijianTextField.top = self.shenheyijianTextField.bottom;
+                self.rejectButton.top = self.checkButton.top = self.bohuiyijianTextField.bottom + 10;
                 [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
-            } else if ([self.order.orderState integerValue] == 3) {
-                self.startPosition.hidden = NO;
+                
                 self.startPosition.editEnable = NO;
-                self.passPosition.top = self.startPosition.bottom;
                 self.passPosition.editEnable = NO;
-                self.realPassPosition.top = self.passPosition.bottom;
-                self.realPassPosition.editEnable = NO;
-                self.orderTime.top = self.realPassPosition.bottom;
-                self.timeView.top = self.orderTime.bottom;
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
-                self.isPublicView.top = self.timeView.bottom;
                 self.publicButton.enabled = NO;
-                self.carNotes.top = self.isPublicView.bottom;
                 self.carNotes.editEnable = NO;
-                self.passengerNumberTextField.top = self.carNotes.bottom;
                 self.passengerNumberTextField.editEnable = NO;
-                self.driverView.top = self.passengerNumberTextField.bottom;
+                self.carButton.enabled = NO;
                 self.driverButton.enabled = NO;
-                self.passengerView.top = self.driverView.bottom;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
-                self.shenherenTextField.top = self.passengerView.bottom;
                 self.shenherenTextField.editEnable = NO;
-                self.orderPersonView.top = self.shenherenTextField.bottom;
+                self.shenheyijianTextField.editEnable = NO;
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 1) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
+                self.driverNameLabel.text = self.order.driverName;
+                self.driverPhoneLabel.text = self.order.driverPhone;
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
-                self.orderButton.top = self.orderPersonView.bottom + 10;
+                self.shenherenTextField.text = self.order.shenpirenName;
+                self.shenheyijianTextField.text = self.order.shenheYiJian;
+            } else if ([self.order.orderState integerValue] == 3) {
+                self.passPosition.top = self.startPosition.bottom;
+                self.orderTime.top = self.passPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.isPublicView.top = self.timeView.bottom;
+                self.carNotes.top = self.isPublicView.bottom;
+                self.passengerNumberTextField.top = self.carNotes.bottom;
+                self.carView.top = self.passengerNumberTextField.bottom;
+                self.driverView.top = self.carView.bottom;
+                self.passengerView.top = self.driverView.bottom;
+                self.shenherenTextField.top = self.passengerView.bottom;
+                self.orderPersonView.top = self.shenherenTextField.bottom;
+                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
-            } else if ([self.order.orderState integerValue] == 7) {
-                self.startPosition.hidden = NO;
+                
                 self.startPosition.editEnable = NO;
-                self.passPosition.top = self.startPosition.bottom;
                 self.passPosition.editEnable = NO;
-                self.realPassPosition.top = self.passPosition.bottom;
-                self.realPassPosition.editEnable = NO;
-                self.orderTime.top = self.realPassPosition.bottom;
-                self.timeView.top = self.orderTime.bottom;
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
-                self.carNotes.top = self.timeView.bottom;
+                self.publicButton.enabled = NO;
                 self.carNotes.editEnable = NO;
-                self.tripDistanceTextField.top = self.carNotes.bottom;
-                self.tripDistanceTextField.editEnable = NO;
-                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
-                self.pricePerKilometerTextField.editEnable = NO;
-                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
-                self.roadChargeTextField.editEnable = NO;
-                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
-                self.bridgeChargeTextField.editEnable = NO;
-                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.passengerNumberTextField.editEnable = NO;
+                self.carButton.enabled = NO;
+                self.driverButton.enabled = NO;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
-                self.orderPersonView.top = self.passengerView.bottom;
+                self.shenherenTextField.editEnable = NO;
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 1) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
+                self.driverNameLabel.text = self.order.driverName;
+                self.driverPhoneLabel.text = self.order.driverPhone;
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
+                self.shenherenTextField.text = self.order.shenpirenName;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+            } else if ([self.order.orderState integerValue] == 7) {
+                self.passPosition.top = self.startPosition.bottom;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.carNotes.top = self.timeView.bottom;
+                self.tripDistanceTextField.top = self.carNotes.bottom;
+                self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
+                self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
+                self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
+                self.passengerView.top = self.bridgeChargeTextField.bottom;
+                self.orderPersonView.top = self.passengerView.bottom;
                 self.starRateView.top = self.orderPersonView.bottom;
-                self.starRateView.disEnable = YES;
                 self.orderButton.top = self.starRateView.bottom + 10;
                 [self.orderButton setTitle:@"终了" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                
+                self.startPosition.editEnable = NO;
+                self.passPosition.editEnable = NO;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.realStartTimeButton.enabled = NO;
+                self.realEndTimeButton.enabled = NO;
+                self.carNotes.editEnable = NO;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                self.realStartTimeButton.text = self.order.realStartTime;
+                self.realEndTimeButton.text = self.order.realEndTime;
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
         }
             break;
@@ -342,61 +382,90 @@ static MFMessageComposeViewController *controller;
         case UserTypeDriver:
         {
             if ([self.order.orderState integerValue] == 2) {
-                self.startPosition.hidden = NO;
-                self.startPosition.editEnable = NO;
                 self.passPosition.top = self.startPosition.bottom;
-                self.passPosition.editEnable = NO;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
-                self.startTimeButton.enabled = NO;
-                self.endTimeButton.enabled = NO;
                 self.isPublicView.top = self.timeView.bottom;
-                self.publicButton.enabled = NO;
-                self.carNotes.top = self.publicButton.bottom;
-                self.carNotes.editEnable = NO;
+                self.carNotes.top = self.isPublicView.bottom;
                 self.passengerNumberTextField.top = self.carNotes.bottom;
-                self.passengerNumberTextField.editEnable = NO;
                 self.carView.top = self.passengerNumberTextField.bottom;
-                self.carButton.enabled = NO;
                 self.driverView.top = self.carView.bottom;
-                self.driverButton.enabled = NO;
                 self.passengerView.top = self.driverView.bottom;
-                self.passengerNameTextField.enabled = NO;
-                self.passengerPhoneTextField.enabled = NO;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.orderPersonNameLabel.text = self.order.dingcherenName;
-                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
                 self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
-            } else {
-                self.startPosition.hidden = NO;
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                
                 self.startPosition.editEnable = NO;
-                self.passPosition.top = self.startPosition.bottom;
                 self.passPosition.editEnable = NO;
-                self.realPassPosition.top = self.passPosition.bottom;
-                self.realPassPosition.editEnable = NO;
-                self.orderTime.top = self.realPassPosition.bottom;
-                self.timeView.top = self.orderTime.bottom;
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
-                self.carNotes.top = self.timeView.bottom;
+                self.publicButton.enabled = NO;
                 self.carNotes.editEnable = NO;
+                self.passengerNumberTextField.editEnable = NO;
+                self.carButton.enabled = NO;
+                self.driverButton.enabled = NO;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 1) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
+                self.driverNameLabel.text = self.order.driverName;
+                self.driverPhoneLabel.text = self.order.driverPhone;
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+            } else {
+                self.passPosition.top = self.startPosition.bottom;
+                self.realPassPosition.top = self.passPosition.bottom;
+                self.orderTime.top = self.realPassPosition.bottom;
+                self.timeView.top = self.orderTime.bottom;
+                self.realTimeView.top = self.timeView.bottom;
+                self.carNotes.top = self.realTimeView.bottom;
                 self.tripDistanceTextField.top = self.carNotes.bottom;
                 self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
                 self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
                 self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
                 self.passengerView.top = self.bridgeChargeTextField.bottom;
-                self.passengerNameTextField.enabled = NO;
-                self.passengerPhoneTextField.enabled = NO;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.orderPersonNameLabel.text = self.order.dingcherenName;
-                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
                 self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
                 [self.checkButton setTitle:@"开始" forState:UIControlStateNormal];
                 [self.rejectButton setTitle:@"结束" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                
+                self.startPosition.editEnable = NO;
+                self.passPosition.editEnable = NO;
+                self.startTimeButton.enabled = NO;
+                self.endTimeButton.enabled = NO;
+                self.carNotes.editEnable = NO;
+                self.passengerNameTextField.enabled = NO;
+                self.passengerPhoneTextField.enabled = NO;
+                if ([self.order.orderState integerValue] == 4) {
+                    self.realEndTimeButton.enabled = NO;
+                } else if ([self.order.orderState integerValue] == 5) {
+                    self.realStartTimeButton.enabled = NO;
+                }
+                
+                self.startPosition.text = self.order.jiecheAddress;
+                self.passPosition.text = self.order.jingguoAddress;
+                self.orderTime.text = self.order.yuyueTime;
+                self.startTimeButton.text = self.order.startTime;
+                self.endTimeButton.text = self.order.endTime;
+                if ([self.order.orderState integerValue] == 4) {
+                    self.realStartTimeButton.text = self.order.realStartTime;
+                }
+                self.passengerNameTextField.text = self.order.userName;
+                self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderPersonNameLabel.text = self.order.dingcherenName;
+                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
-            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
         }
             break;
             
@@ -404,69 +473,6 @@ static MFMessageComposeViewController *controller;
             break;
     }
     _contentSize = self.scrollView.contentSize;
-//    [self setupAuthorityWithUser:self.user];
-}
-
-- (void)setupAuthorityWithUser:(YLYUser *)user
-{
-    switch (user.userType) {
-        case UserTypeDingche:
-        {
-            self.startPosition.editEnable = YES;
-            self.passPosition.editEnable = YES;
-            self.startTimeButton.enabled = YES;
-            self.endTimeButton.enabled = YES;
-            self.carTypeButton.enabled = YES;
-            self.driverButton.enabled = NO;
-            self.orderButton.hidden = NO;
-        }
-            break;
-            
-        case UserTypeShenhe:
-        {
-            self.startPosition.editEnable = NO;
-            self.passPosition.editEnable = NO;
-            self.startTimeButton.enabled = NO;
-            self.endTimeButton.enabled = NO;
-            self.carTypeButton.enabled = NO;
-            self.driverButton.enabled = NO;
-            self.orderButton.hidden = YES;
-            self.checkButton.hidden = NO;
-            self.rejectButton.hidden = NO;
-        }
-            break;
-            
-        case UserTypePaiche:
-        {
-            self.startPosition.editEnable = NO;
-            self.passPosition.editEnable = NO;
-            self.startTimeButton.enabled = NO;
-            self.endTimeButton.enabled = NO;
-            self.carTypeButton.enabled = NO;
-            self.driverButton.enabled = YES;
-            self.orderButton.hidden = YES;
-            self.checkButton.hidden = NO;
-            self.rejectButton.hidden = NO;
-        }
-            break;
-            
-        case UserTypeDriver:
-        {
-            self.startPosition.editEnable = NO;
-            self.passPosition.editEnable = NO;
-            self.startTimeButton.enabled = NO;
-            self.endTimeButton.enabled = NO;
-            self.carTypeButton.enabled = NO;
-            self.driverButton.enabled = NO;
-            self.orderButton.hidden = YES;
-            self.checkButton.hidden = NO;
-            self.rejectButton.hidden = NO;
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 - (void)didClickOrderButton:(id)sender
@@ -776,10 +782,8 @@ static MFMessageComposeViewController *controller;
     [self.currentTextField resignFirstResponder];
 }
 
-- (void)setupStartTimeTextField
+- (UIToolbar *)textFieldToobar
 {
-    self.startTimeTextField.inputView = self.datePicker;
-    
     UIToolbar *toolbar = [[UIToolbar alloc] init];
     toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
     
@@ -788,22 +792,31 @@ static MFMessageComposeViewController *controller;
     UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
     
     toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.startTimeTextField.inputAccessoryView = toolbar;
+    return toolbar;
+}
+
+- (void)setupStartTimeTextField
+{
+    self.startTimeTextField.inputView = self.datePicker;
+    self.startTimeTextField.inputAccessoryView = [self textFieldToobar];
 }
 
 - (void)setupEndTimeTextField
 {
     self.endTimeTextField.inputView = self.datePicker;
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
-    
-    toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.endTimeTextField.inputAccessoryView = toolbar;
+    self.endTimeTextField.inputAccessoryView = [self textFieldToobar];
+}
+
+- (void)setupRealStartTimeTextField
+{
+    self.realStartTimeTextField.inputView = self.datePicker;
+    self.realStartTimeTextField.inputAccessoryView = [self textFieldToobar];
+}
+
+- (void)setupRealEndTimeTextField
+{
+    self.realEndTimeTextField.inputView = self.datePicker;
+    self.realEndTimeTextField.inputAccessoryView = [self textFieldToobar];
 }
 
 - (void)setupCarTypeTextField
@@ -951,6 +964,45 @@ static MFMessageComposeViewController *controller;
         _endTimeTextField.delegate = self;
         [_timeView addSubview:_endTimeTextField];
         [self setupEndTimeTextField];
+    }
+    return _timeView;
+}
+
+- (UIView *)realTimeView
+{
+    if (!_realTimeView) {
+        _realTimeView = [[UIView alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [self.scrollView addSubview:_realTimeView];
+        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, _cellHeight)];
+        timeLabel.textAlignment = NSTextAlignmentRight;
+        timeLabel.font = Font(12.0);
+        timeLabel.text = @"实际使用时间";
+        [_realTimeView addSubview:timeLabel];
+        _realStartTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
+        _realStartTimeButton.frame = CGRectMake(timeLabel.right + 10, 0, (self.startPosition.width - timeLabel.width - 10 - 16)/2.0, _cellHeight);
+        [_realStartTimeButton addTarget:self action:@selector(didClickStartButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_realStartTimeButton setWithText:nil imageName:@"downArrow.png"];
+        [_realTimeView addSubview:_realStartTimeButton];
+        _realStartTimeButton.fontSize = 12;
+        _realStartTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _realStartTimeTextField.delegate = self;
+        [_realTimeView addSubview:_realStartTimeTextField];
+        [self setupRealStartTimeTextField];
+        UILabel *zhiLabel = [[UILabel alloc] initWithFrame:CGRectMake(_startTimeButton.right, 0, 16, _cellHeight)];
+        zhiLabel.textAlignment = NSTextAlignmentCenter;
+        zhiLabel.font = Font(12.0);
+        zhiLabel.text = @"至";
+        [_realTimeView addSubview:zhiLabel];
+        _realEndTimeButton = [ImageButton buttonWithType:UIButtonTypeCustom];
+        _realEndTimeButton.frame = CGRectMake(_startTimeButton.right + 16, 0, _startTimeButton.width, _cellHeight);
+        [_realEndTimeButton addTarget:self action:@selector(didClickEndButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_realEndTimeButton setWithText:nil imageName:@"downArrow.png"];
+        [_realTimeView addSubview:_realEndTimeButton];
+        _realEndTimeButton.fontSize = _startTimeButton.fontSize;
+        _realEndTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _realEndTimeTextField.delegate = self;
+        [_realTimeView addSubview:_realEndTimeTextField];
+        [self setupRealEndTimeTextField];
     }
     return _timeView;
 }
