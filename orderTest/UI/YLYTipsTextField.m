@@ -39,7 +39,7 @@
     _textField.leftViewMode = UITextFieldViewModeAlways;
     [self addSubview:_textField];
     
-    self.backgroundColor = RGB(0xf0f0f0);
+    self.backgroundColor = RGB(0xffffff);
 }
 
 - (void)setEditEnable:(BOOL)editEnable
@@ -55,6 +55,11 @@
 - (void)setText:(NSString *)text
 {
     self.textField.text = text;
+}
+
+- (void)setKeyboardType:(UIKeyboardType)keyboardType
+{
+    self.textField.keyboardType = keyboardType;
 }
 
 @end

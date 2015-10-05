@@ -17,6 +17,33 @@
 #import <MessageUI/MessageUI.h>
 #import "CWStarRateView.h"
 
+//0	//:订车
+//1	//:审核通过
+//11	//:审核驳回
+//2	//:派车人确认
+//22	//:派车人驳回
+//3       //:司机确认通过
+//33      //:司机确认驳回
+//4       //:派车人发车
+//5	//:司机开始
+//6	//:司机结束
+//7	//客户确认
+//8       //:派车流程终了
+typedef NS_ENUM(NSInteger, OrderState) {
+    OrderStateDingche = 0,
+    OrderStateShenhetongguo = 1,
+    OrderStateShenhebohui = 11,
+    OrderStatePaichequeren = 2,
+    OrderStatePaichebohui = 22,
+    OrderStateSijiqueren = 3,
+    OrderStateSijibohui = 33,
+    OrderStatePaichefache = 4,
+    OrderStateSijikaishi = 5,
+    OrderStateSijijieshu = 6,
+    OrderStateKehuqueren = 7,
+    OrderStatePaichezhongliao = 8
+};
+
 @interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate, CWStarRateViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -51,6 +78,7 @@
 @property (nonatomic, strong) UITextField *passengerPhoneTextField;
 @property (nonatomic, strong) YLYTipsTextField *passengerNumberTextField;
 @property (nonatomic, strong) UIView *orderPersonView;
+@property (nonatomic, strong) UILabel *orderDepNameLabel;
 @property (nonatomic, strong) UILabel *orderPersonNameLabel;
 @property (nonatomic, strong) UILabel *orderPersonPhoneLabel;
 @property (nonatomic, strong) YLYTipsTextField *shenherenTextField;
@@ -132,18 +160,7 @@ static MFMessageComposeViewController *controller;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//0	//:订车
-//1	//:审核通过
-//11	//:审核驳回
-//2	//:派车人确认
-//22	//:派车人驳回
-//3       //:司机确认通过
-//33      //:司机确认驳回
-//4       //:派车人发车
-//5	//:司机开始
-//6	//:司机结束
-//7	//客户确认
-//8       //:派车流程终了
+
 - (void)setupUI
 {
     switch (self.user.userType) {
@@ -163,14 +180,16 @@ static MFMessageComposeViewController *controller;
                 [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
                 self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
                 
-                self.orderPersonNameLabel.text = self.order.dingcherenName;
-                self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
+                self.orderDepNameLabel.text = self.user.depName;
+                self.orderPersonNameLabel.text = self.user.username;
+                self.orderPersonPhoneLabel.text = self.user.phone;
             } else {
                 self.passPosition.top = self.startPosition.bottom;
                 self.realPassPosition.top = self.passPosition.bottom;
                 self.orderTime.top = self.realPassPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
-                self.carNotes.top = self.timeView.bottom;
+                self.realTimeView.top = self.timeView.bottom;
+                self.carNotes.top = self.realTimeView.bottom;
                 self.tripDistanceTextField.top = self.carNotes.bottom;
                 self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
                 self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
@@ -184,23 +203,34 @@ static MFMessageComposeViewController *controller;
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
+                self.realPassPosition.editEnable = NO;
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
                 self.realStartTimeButton.enabled = NO;
                 self.realEndTimeButton.enabled = NO;
                 self.carNotes.editEnable = NO;
+                self.tripDistanceTextField.editEnable = NO;
+                self.pricePerKilometerTextField.editEnable = NO;
+                self.roadChargeTextField.editEnable = NO;
+                self.bridgeChargeTextField.editEnable = NO;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
                 
                 self.startPosition.text = self.order.jiecheAddress;
                 self.passPosition.text = self.order.jingguoAddress;
+                self.realPassPosition.text = self.order.realJingguoAddress;
                 self.orderTime.text = self.order.yuyueTime;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
                 self.realStartTimeButton.text = self.order.realStartTime;
                 self.realEndTimeButton.text = self.order.realEndTime;
+                self.tripDistanceTextField.text = self.order.countMetre;
+                self.pricePerKilometerTextField.text = self.order.gonglidanjia;
+                self.roadChargeTextField.text = self.order.tingcheguolufei;
+                self.bridgeChargeTextField.text = self.order.guoqiaofei;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
@@ -211,7 +241,6 @@ static MFMessageComposeViewController *controller;
         {
             self.passPosition.top = self.startPosition.bottom;
             self.orderTime.top = self.passPosition.bottom;
-            self.orderTime.text = self.order.yuyueTime;
             self.timeView.top = self.orderTime.bottom;
             self.typeView.top = self.timeView.bottom;
             self.carNotes.top = self.typeView.bottom;
@@ -227,6 +256,7 @@ static MFMessageComposeViewController *controller;
             self.passPosition.editEnable = NO;
             self.startTimeButton.enabled = NO;
             self.endTimeButton.enabled = NO;
+            self.carTypeButton.enabled = NO;
             self.carNotes.editEnable = NO;
             self.passengerNumberTextField.editEnable = NO;
             self.passengerNameTextField.enabled = NO;
@@ -237,8 +267,10 @@ static MFMessageComposeViewController *controller;
             self.orderTime.text = self.order.yuyueTime;
             self.startTimeButton.text = self.order.startTime;
             self.endTimeButton.text = self.order.endTime;
+            [self.carTypeButton setTitle:self.order.carType forState:UIControlStateNormal];
             self.passengerNameTextField.text = self.order.userName;
             self.passengerPhoneTextField.text = self.order.userPhone;
+            self.orderDepNameLabel.text = self.order.dingcherenDep;
             self.orderPersonNameLabel.text = self.order.dingcherenName;
             self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
         }
@@ -246,7 +278,7 @@ static MFMessageComposeViewController *controller;
             
         case UserTypePaiche:
         {
-            if ([self.order.orderState integerValue] == 1) {
+            if ([self.order.orderState integerValue] == OrderStateShenhetongguo) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
@@ -272,8 +304,6 @@ static MFMessageComposeViewController *controller;
                 self.publicButton.enabled = NO;
                 self.carNotes.editEnable = NO;
                 self.passengerNumberTextField.editEnable = NO;
-                self.carButton.enabled = NO;
-                self.driverButton.enabled = NO;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
                 self.shenherenTextField.editEnable = NO;
@@ -285,16 +315,14 @@ static MFMessageComposeViewController *controller;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
                 [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 1) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
-                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
-                self.driverNameLabel.text = self.order.driverName;
-                self.driverPhoneLabel.text = self.order.driverPhone;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
                 self.shenherenTextField.text = self.order.shenpirenName;
                 self.shenheyijianTextField.text = self.order.shenheYiJian;
-            } else if ([self.order.orderState integerValue] == 3) {
+            } else if ([self.order.orderState integerValue] == OrderStateSijiqueren) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
@@ -335,9 +363,10 @@ static MFMessageComposeViewController *controller;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
                 self.shenherenTextField.text = self.order.shenpirenName;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
-            } else if ([self.order.orderState integerValue] == 7) {
+            } else if ([self.order.orderState integerValue] == OrderStateKehuqueren) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.realPassPosition.top = self.passPosition.bottom;
                 self.orderTime.top = self.realPassPosition.bottom;
@@ -356,13 +385,19 @@ static MFMessageComposeViewController *controller;
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
+                self.realPassPosition.editEnable = NO;
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
                 self.realStartTimeButton.enabled = NO;
                 self.realEndTimeButton.enabled = NO;
                 self.carNotes.editEnable = NO;
+                self.tripDistanceTextField.editEnable = NO;
+                self.pricePerKilometerTextField.editEnable = NO;
+                self.roadChargeTextField.editEnable = NO;
+                self.bridgeChargeTextField.editEnable = NO;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
+                self.starRateView.disEnable = YES;
                 
                 self.startPosition.text = self.order.jiecheAddress;
                 self.passPosition.text = self.order.jingguoAddress;
@@ -371,8 +406,13 @@ static MFMessageComposeViewController *controller;
                 self.endTimeButton.text = self.order.endTime;
                 self.realStartTimeButton.text = self.order.realStartTime;
                 self.realEndTimeButton.text = self.order.realEndTime;
+                self.tripDistanceTextField.text = self.order.countMetre;
+                self.pricePerKilometerTextField.text = self.order.gonglidanjia;
+                self.roadChargeTextField.text = self.order.tingcheguolufei;
+                self.bridgeChargeTextField.text = self.order.guoqiaofei;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
@@ -381,7 +421,7 @@ static MFMessageComposeViewController *controller;
             
         case UserTypeDriver:
         {
-            if ([self.order.orderState integerValue] == 2) {
+            if ([self.order.orderState integerValue] == OrderStatePaichequeren) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
@@ -403,6 +443,8 @@ static MFMessageComposeViewController *controller;
                 self.endTimeButton.enabled = NO;
                 self.publicButton.enabled = NO;
                 self.carNotes.editEnable = NO;
+                self.carButton.enabled = NO;
+                self.driverButton.enabled = NO;
                 self.passengerNumberTextField.editEnable = NO;
                 self.carButton.enabled = NO;
                 self.driverButton.enabled = NO;
@@ -420,6 +462,7 @@ static MFMessageComposeViewController *controller;
                 self.driverPhoneLabel.text = self.order.driverPhone;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             } else {
@@ -442,27 +485,34 @@ static MFMessageComposeViewController *controller;
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
+                if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
+                    self.realPassPosition.editEnable = NO;
+                }
                 self.startTimeButton.enabled = NO;
                 self.endTimeButton.enabled = NO;
                 self.carNotes.editEnable = NO;
                 self.passengerNameTextField.enabled = NO;
                 self.passengerPhoneTextField.enabled = NO;
-                if ([self.order.orderState integerValue] == 4) {
+                if ([self.order.orderState integerValue] == OrderStatePaichefache) {
                     self.realEndTimeButton.enabled = NO;
-                } else if ([self.order.orderState integerValue] == 5) {
+                } else if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
                     self.realStartTimeButton.enabled = NO;
                 }
                 
                 self.startPosition.text = self.order.jiecheAddress;
                 self.passPosition.text = self.order.jingguoAddress;
+                if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
+                    self.realPassPosition.text = self.order.realJingguoAddress;
+                }
                 self.orderTime.text = self.order.yuyueTime;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
-                if ([self.order.orderState integerValue] == 4) {
+                if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
                     self.realStartTimeButton.text = self.order.realStartTime;
                 }
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
+                self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
             }
@@ -499,15 +549,15 @@ static MFMessageComposeViewController *controller;
     }
     YLYUser *user = [NSUserDefaults user];
     if (_order.orderID.length <= 0) {
-        _order.orderState = @"0";
+        _order.orderState = [@(OrderStateDingche) stringValue];
         _order.jiecheAddress = self.startPosition.text;
         _order.jingguoAddress = self.passPosition.text;
         _order.yuyueTime = self.orderTime.text;
         _order.startTime = self.startTimeTextField.text;
         _order.endTime = self.endTimeTextField.text;
-        _order.carType = [@(_selectedCarRow) stringValue];
-        _order.userName = self.passengerNameTextField.text;
-        _order.userPhone = self.passengerPhoneTextField.text;
+        _order.carType =  _carArray[_selectedCarRow];
+        _order.userName = self.passengerNameTextField.text ? : user.username;
+        _order.userPhone = self.passengerPhoneTextField.text ? : user.phone;;
         _order.dingcherenID = user.userID;
         _order.dingcherenName = user.username;
         _order.dingcherenPhone = user.phone;
@@ -522,42 +572,23 @@ static MFMessageComposeViewController *controller;
         self.passengerNameTextField.enabled = NO;
         self.passengerPhoneTextField.enabled = NO;
         switch ([_order.orderState integerValue]) {
-            case 3:
-                self.order.orderState = @"4";
+            case OrderStateSijiqueren:
+                self.order.orderState = [@(OrderStatePaichefache) stringValue];
                 break;
                 
-            case 6:
-                self.order.orderState = @"7";
+            case OrderStateSijijieshu:
+                self.order.orderState = [@(OrderStateKehuqueren) stringValue];
+                self.order.pingjia = [@(self.starRateView.scorePercent) stringValue];
                 break;
                 
-            case 7:
-                self.order.orderState = @"8";
+            case OrderStateKehuqueren:
+                self.order.orderState = [@(OrderStatePaichezhongliao) stringValue];
                 break;
                 
             default:
                 break;
         }
     }
-//    _order.orderState = @"";
-//    _order.orderID = nil;
-//    _order.realJingguoAddress = @"";
-//    _order.realStartTime = @"";
-//    _order.realEndTime = @"";
-//    _order.isPublic = @"";
-//    _order.carID = @"";
-//    _order.shenpirenName = @"";
-//    _order.shenpirenID = @"";
-//    _order.paicherenID = @"";
-//    _order.driverID = @"";//self.driver.driverID;
-//    _order.driverName = @"";//self.driverNameLabel.text;
-//    _order.driverPhone = @"";//self.driverPhoneLabel.text;
-//    _order.startMetre = @"";
-//    _order.endMetre = @"";
-//    _order.shenheYiJian = @"";
-//    _order.facheYijian = @"";
-//    _order.bohuiYuanYin = @"";
-//    _order.countMetre = @"";
-//    _order.pingjia = @"";
     [self reportOrder];
 }
 
@@ -565,15 +596,26 @@ static MFMessageComposeViewController *controller;
 {
     switch (self.user.userType) {
         case UserTypeShenhe:
-            self.order.orderState = @"1";
+            self.order.orderState = [@(OrderStateShenhetongguo) stringValue];
             break;
             
         case UserTypePaiche:
-            self.order.orderState = @"2";
+            self.order.orderState = [@(OrderStatePaichequeren) stringValue];
+            self.order.carID = self.car.carID;
+            self.order.driverID = self.driver.driverID;
+            self.order.driverName = self.driver.driverName;
+            self.order.driverPhone = self.driver.driverPhone;
             break;
             
         case UserTypeDriver:
-            self.order.orderState = ([self.order.orderState integerValue] == 2) ? @"3" : @"5";
+            self.order.orderState = ([self.order.orderState integerValue] == OrderStatePaichequeren) ? [@(OrderStateSijiqueren) stringValue] : [@(OrderStateSijikaishi) stringValue];
+            if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
+                self.order.countMetre = self.tripDistanceTextField.text;
+                self.order.gonglidanjia = self.pricePerKilometerTextField.text;
+                self.order.guoqiaofei = self.bridgeChargeTextField.text;
+                self.order.tingcheguolufei = self.roadChargeTextField.text;
+                self.order.realStartTime = self.realStartTimeButton.text;
+            }
             break;
             
         default:
@@ -586,15 +628,27 @@ static MFMessageComposeViewController *controller;
 {
     switch (self.user.userType) {
         case UserTypeShenhe:
-            self.order.orderState = @"11";
+            self.order.orderState = [@(OrderStateShenhebohui) stringValue];
             break;
             
         case UserTypePaiche:
-            self.order.orderState = @"22";
+            self.order.orderState = [@(OrderStatePaichebohui) stringValue];
+            self.order.carID = self.car.carID;
+            self.order.driverID = self.driver.driverID;
+            self.order.driverName = self.driver.driverName;
+            self.order.driverPhone = self.driver.driverPhone;
+            self.order.bohuiYuanYin = self.bohuiyijianTextField.text;
             break;
             
         case UserTypeDriver:
-            self.order.orderState = ([self.order.orderState integerValue] == 2) ? @"33" : @"6";
+            self.order.orderState = ([self.order.orderState integerValue] == OrderStatePaichequeren) ? [@(OrderStateSijibohui) stringValue]: [@(OrderStateSijijieshu) stringValue];
+            if ([self.order.orderState integerValue] == OrderStateSijijieshu) {
+                self.order.countMetre = self.tripDistanceTextField.text;
+                self.order.gonglidanjia = self.pricePerKilometerTextField.text;
+                self.order.guoqiaofei = self.bridgeChargeTextField.text;
+                self.order.tingcheguolufei = self.roadChargeTextField.text;
+                self.order.realEndTime = self.realEndTimeButton.text;
+            }
             break;
             
         default:
@@ -602,6 +656,27 @@ static MFMessageComposeViewController *controller;
     }
     [self reportOrder];
 }
+
+//增加各节点发送短信提醒功能。
+//①订车人订车：向审核人发短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车，请核实。
+//②审核人审核通过向派车人、订车人发短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，审核通过。
+//③审核人驳回：向订车人发短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，审核不通过。请再次核实。
+//④派车人点击司机确认：向司机发短信。
+//短信内容：今有XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，请确认。
+//⑤司机确认通过：向派车人发短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，已接受。
+//⑥司机驳回：向派车人发短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，无法成行。
+//⑦派车人发车：向司机、订车人、乘坐者发送短信。
+//短信内容：XXX（订车人名）XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车，已派车。
+//接车地点：XXXXX   预计经过地点：XXXX  乘客姓名：XXXXX
+//电话：XXXXX  用车事宜：XXXXXXXXXXXX。
+//车牌号码：XXXXXX 驾驶员电话：XXXXXX
+//⑧司机结束订单：向派车人、订车人发送短信。
+//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，已完成。
 
 - (void)reportOrder
 {
@@ -611,6 +686,12 @@ static MFMessageComposeViewController *controller;
         [[TKAlertCenter defaultCenter] postAlertWithMessage:success ? @"成功" : @"失败"];
         if (success) {
 //            [self showMessageView:@[@"phonenumber"] body:@"短信内容"];
+            [self.navigationController popViewControllerAnimated:YES];
+            if ([self.order.orderState integerValue] == OrderStateShenhetongguo || [self.order.orderState integerValue] == OrderStateKehuqueren || [self.order.orderState integerValue] == OrderStatePaichezhongliao || [self.order.orderState integerValue] == OrderStateSijijieshu) {
+                if (_tongguoBlock) {
+                    _tongguoBlock();
+                }
+            }
         }
     }];
 }
@@ -982,6 +1063,7 @@ static MFMessageComposeViewController *controller;
         _realStartTimeButton.frame = CGRectMake(timeLabel.right + 10, 0, (self.startPosition.width - timeLabel.width - 10 - 16)/2.0, _cellHeight);
         [_realStartTimeButton addTarget:self action:@selector(didClickStartButton:) forControlEvents:UIControlEventTouchUpInside];
         [_realStartTimeButton setWithText:nil imageName:@"downArrow.png"];
+        _realStartTimeButton.text = [NSDate convertStringFromDate:[NSDate date]];
         [_realTimeView addSubview:_realStartTimeButton];
         _realStartTimeButton.fontSize = 12;
         _realStartTimeTextField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -1071,6 +1153,7 @@ static MFMessageComposeViewController *controller;
     if (!_passengerNumberTextField) {
         _passengerNumberTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_passengerNumberTextField tipsTextFieldWithTips:@"乘车人数" placeholder:@"" isPassword:NO];
+        _passengerNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_passengerNumberTextField];
     }
     return _passengerNumberTextField;
@@ -1145,6 +1228,7 @@ static MFMessageComposeViewController *controller;
         _passengerPhoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(_passengerNameTextField.left, _passengerNameTextField.bottom, self.view.width - passengerLabel.right, _cellHeight/2.0)];
         _passengerPhoneTextField.font = Font(12);
         [_passengerPhoneTextField setValue:Font(12) forKeyPath:@"_placeholderLabel.font"];
+        _passengerPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
         _passengerPhoneTextField.placeholder = @"请输入乘车人电话！（如是本人可免）";
         [_passengerView addSubview:_passengerPhoneTextField];
     }
@@ -1162,13 +1246,19 @@ static MFMessageComposeViewController *controller;
         orderPersonLabel.font = Font(12);
         orderPersonLabel.text = @"订车人";
         [_orderPersonView addSubview:orderPersonLabel];
-        _orderPersonNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderPersonLabel.right + 10, 0, 100, _cellHeight/2.0)];
+        _orderDepNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderPersonLabel.right + 10, 0, 100, _cellHeight/3.0)];
+        _orderDepNameLabel.textAlignment = NSTextAlignmentLeft;
+        _orderDepNameLabel.textColor = [UIColor blackColor];
+        _orderDepNameLabel.font = Font(12);
+        _orderDepNameLabel.text = self.user.depName;
+        [_orderPersonView addSubview:_orderDepNameLabel];
+        _orderPersonNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderPersonLabel.right + 10, 0, 100, _cellHeight/3.0)];
         _orderPersonNameLabel.textAlignment = NSTextAlignmentLeft;
         _orderPersonNameLabel.textColor = [UIColor blackColor];
         _orderPersonNameLabel.font = Font(12);
         _orderPersonNameLabel.text = self.user.username;
         [_orderPersonView addSubview:_orderPersonNameLabel];
-        _orderPersonPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(_orderPersonNameLabel.left, _orderPersonNameLabel.bottom, 100, _cellHeight/2.0)];
+        _orderPersonPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(_orderPersonNameLabel.left, _orderPersonNameLabel.bottom, 100, _cellHeight/3.0)];
         _orderPersonPhoneLabel.textAlignment = NSTextAlignmentLeft;
         _orderPersonPhoneLabel.textColor = [UIColor blackColor];
         _orderPersonPhoneLabel.font = Font(12);
@@ -1183,6 +1273,7 @@ static MFMessageComposeViewController *controller;
     if (!_tripDistanceTextField) {
         _tripDistanceTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_tripDistanceTextField tipsTextFieldWithTips:@"行驶公里数" placeholder:@"" isPassword:NO];
+        _tripDistanceTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_tripDistanceTextField];
     }
     return _tripDistanceTextField;
@@ -1193,6 +1284,7 @@ static MFMessageComposeViewController *controller;
     if (!_pricePerKilometerTextField) {
         _pricePerKilometerTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_pricePerKilometerTextField tipsTextFieldWithTips:@"公里单价/台班费" placeholder:@"" isPassword:NO];
+        _pricePerKilometerTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_pricePerKilometerTextField];
     }
     return _pricePerKilometerTextField;
@@ -1203,6 +1295,7 @@ static MFMessageComposeViewController *controller;
     if (!_roadChargeTextField) {
         _roadChargeTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_roadChargeTextField tipsTextFieldWithTips:@"停车过路费" placeholder:@"" isPassword:NO];
+        _roadChargeTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_roadChargeTextField];
     }
     return _roadChargeTextField;
@@ -1213,6 +1306,7 @@ static MFMessageComposeViewController *controller;
     if (!_bridgeChargeTextField) {
         _bridgeChargeTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_bridgeChargeTextField tipsTextFieldWithTips:@"过桥费" placeholder:@"" isPassword:NO];
+        _bridgeChargeTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_bridgeChargeTextField];
     }
     return _bridgeChargeTextField;

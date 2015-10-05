@@ -43,6 +43,10 @@
 @property (nonatomic, strong) NSString *bohuiYuanYin;
 @property (nonatomic, strong) NSString *countMetre;
 @property (nonatomic, strong) NSString *pingjia;
+@property (nonatomic, strong) NSString *yongcheyijian;
+@property (nonatomic, strong) NSString *tingcheguolufei;
+@property (nonatomic, strong) NSString *gonglidanjia;
+@property (nonatomic, strong) NSString *guoqiaofei;
 
 + (Order *)orderWithDictionary:(NSDictionary *)dictionary;
 

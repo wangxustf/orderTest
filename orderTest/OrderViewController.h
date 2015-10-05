@@ -12,5 +12,6 @@
 @interface OrderViewController : BaseViewController
 
 @property (nonatomic, strong) Order *order;
+@property (nonatomic, copy) void (^tongguoBlock)();
 
 @end

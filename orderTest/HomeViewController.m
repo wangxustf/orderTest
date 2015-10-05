@@ -15,6 +15,8 @@
 
 @interface HomeViewController ()
 
+@property (nonatomic, strong) YLYUser *user;
+
 @end
 
 @implementation HomeViewController
@@ -35,7 +37,7 @@
     _width = (self.view.width - _gap * 3) / 3.0;
     _subHeight = (_height - _gap / 2.0) / 2.0;
     
-    YLYUser *user = [NSUserDefaults user];
+    self.user = [NSUserDefaults user];
     [self setupUI];
 }
 
@@ -93,7 +95,8 @@
     imageView.image = [UIImage imageNamed:@"homebg.png"];
     [self.view addSubview:imageView];
     
-    NSArray *titles = @[@[@"基础\n信息", @"车辆信息", @"司机信息", @"我的收藏", @"订车记录"], @[@"订车", @"订车", @"我的订车", @"历史记录", @"客服中心"], @[@"维修•保养", @"车辆保养", @"维修预约", @"车辆保养", @"保养常识"], @[@"年检•违章", @"违章查询", @"代办违章", @"代办年检", @"会员服务"]];
+    NSArray *titleTypes = @[@"", @"", @"订车", @"审车", @"派车", @"接车"];
+    NSArray *titles = @[@[@"基础\n信息", @"车辆信息", @"司机信息", @"我的收藏", [NSString stringWithFormat:@"%@记录", titleTypes[self.user.userType]]], @[titleTypes[self.user.userType], titleTypes[self.user.userType], [NSString stringWithFormat:@"我的%@", titleTypes[self.user.userType]], @"历史记录", @"客服中心"], @[@"维修•保养", @"车辆保养", @"维修预约", @"车辆保养", @"保养常识"], @[@"年检•违章", @"违章查询", @"代办违章", @"代办年检", @"会员服务"]];
     NSArray *colors = @[[UIColor blueColor], [UIColor orangeColor], [UIColor greenColor], [UIColor redColor]];
     NSArray *selectorString = @[@[@"didClickBaseInfo", @"didClickCarList", @"didClickDriverList", @"didClickEmpty", @"didClickRecordList"], @[@"didClickEmpty", @"didClickOrderCar", @"didClickRecordList", @"didClickRecordList", @"didClickServerCenter"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"], @[@"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty", @"didClickEmpty"]];
     CGFloat top = imageView.bottom + 2 * _gap;

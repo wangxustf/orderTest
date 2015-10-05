@@ -126,6 +126,10 @@
     }
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
     orderViewController.order = self.orderList[indexPath.row];
+    orderViewController.tongguoBlock = ^ {
+        [self.orderList removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    };
     [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
@@ -135,7 +139,7 @@
 {
     if (_tableView == nil) {
         _tableView = [[PullTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-        _tableView.backgroundColor = RGB(0xf0f0f0);
+        _tableView.backgroundColor = RGB(0xffffff);
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.pullDelegate = self;

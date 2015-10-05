@@ -45,6 +45,10 @@
     order.bohuiYuanYin          = [dictionary strValue:@"bohuiYuanYin"];
     order.countMetre            = [dictionary strValue:@"countMetre"];
     order.pingjia               = [dictionary strValue:@"pingjia"];
+    order.yongcheyijian         = [dictionary strValue:@"yongcheyijian"];
+    order.tingcheguolufei       = [dictionary strValue:@"tingcheguolufei"];
+    order.gonglidanjia          = [dictionary strValue:@"gonglidanjia"];
+    order.guoqiaofei            = [dictionary strValue:@"guoqiaofei"];
     return order;
 }
 

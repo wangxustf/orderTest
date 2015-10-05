@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, assign) BOOL editEnable;
+@property (nonatomic, assign) UIKeyboardType keyboardType;
 
 - (void)tipsTextFieldWithTips:(NSString *)tips
                   placeholder:(NSString *)placeholder
