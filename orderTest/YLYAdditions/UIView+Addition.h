@@ -44,4 +44,6 @@
 
 - (void)removeAllSubViews;
 
++ (UIView *)lineViewWithFrame:(CGRect)frame;
+
 @end

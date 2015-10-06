@@ -27,6 +27,7 @@
 {
     if (self = [super init]) {
         _finishType = finishType;
+        _orderList = [NSMutableArray array];
     }
     return self;
 }
@@ -53,6 +54,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)addOrder:(Order *)order
+{
+    [self.orderList addObject:order];
+    [self.tableView reloadData];
 }
 
 - (void)refreshTableView
@@ -125,10 +132,16 @@
         return;
     }
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
-    orderViewController.order = self.orderList[indexPath.row];
+    orderViewController.hidesBottomBarWhenPushed = YES;
+    orderViewController.finished = (_finishType == FinishTypeFinished);
+    Order *order = self.orderList[indexPath.row];
+    orderViewController.order = order;
     orderViewController.tongguoBlock = ^ {
         [self.orderList removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (_tongguoBlock) {
+            _tongguoBlock(order);
+        }
     };
     [self.navigationController pushViewController:orderViewController animated:YES];
 }

@@ -24,7 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //    self.tabBar.barTintColor = [UIColor yellowColor];
-    self.tabBar.tintColor = RGB(kLineColor);
+    self.tabBar.tintColor = RGB(0xffffff);
     
     [self setupViewControllers];
 }

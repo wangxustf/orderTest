@@ -97,4 +97,11 @@
     }
 }
 
++ (UIView *)lineViewWithFrame:(CGRect)frame
+{
+    UIView *lineView = [[UIView alloc] initWithFrame:frame];
+    lineView.backgroundColor = RGB(kLineColor);
+    return lineView;
+}
+
 @end

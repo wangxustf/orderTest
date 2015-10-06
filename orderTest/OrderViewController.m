@@ -110,6 +110,7 @@ static MFMessageComposeViewController *controller;
     CGFloat _gap;
     CGFloat _cellHeight;
     CGSize _contentSize;
+    CGPoint _contentOffset;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -176,9 +177,13 @@ static MFMessageComposeViewController *controller;
                 self.passengerNumberTextField.top = self.isPublicView.bottom;
                 self.passengerView.top = self.passengerNumberTextField.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.orderButton.top = self.orderPersonView.bottom + 10;
-                [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.orderButton.top = self.orderPersonView.bottom + 10;
+                    [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.orderDepNameLabel.text = self.user.depName;
                 self.orderPersonNameLabel.text = self.user.username;
@@ -197,9 +202,13 @@ static MFMessageComposeViewController *controller;
                 self.passengerView.top = self.bridgeChargeTextField.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
                 self.starRateView.top = self.orderPersonView.bottom;
-                self.orderButton.top = self.starRateView.bottom + 10;
-                [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.orderButton.top = self.starRateView.bottom + 10;
+                    [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.starRateView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -247,10 +256,14 @@ static MFMessageComposeViewController *controller;
             self.passengerNumberTextField.top = self.carNotes.bottom;
             self.passengerView.top = self.passengerNumberTextField.bottom;
             self.orderPersonView.top = self.passengerView.bottom;
-            self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
-            [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
-            [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
-            self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.rejectButton.bottom + 10, self.scrollView.height));
+            if (!_finished) {
+                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+                [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.rejectButton.bottom + 10, self.scrollView.height));
+            } else {
+                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
+            }
             
             self.startPosition.editEnable = NO;
             self.passPosition.editEnable = NO;
@@ -292,10 +305,14 @@ static MFMessageComposeViewController *controller;
                 self.shenherenTextField.top = self.orderPersonView.bottom;
                 self.shenheyijianTextField.top = self.shenherenTextField.bottom;
                 self.bohuiyijianTextField.top = self.shenheyijianTextField.bottom;
-                self.rejectButton.top = self.checkButton.top = self.bohuiyijianTextField.bottom + 10;
-                [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
-                [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.rejectButton.top = self.checkButton.top = self.bohuiyijianTextField.bottom + 10;
+                    [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+                    [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.bohuiyijianTextField.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -334,9 +351,13 @@ static MFMessageComposeViewController *controller;
                 self.passengerView.top = self.driverView.bottom;
                 self.shenherenTextField.top = self.passengerView.bottom;
                 self.orderPersonView.top = self.shenherenTextField.bottom;
-                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
-                [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                    [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -379,9 +400,13 @@ static MFMessageComposeViewController *controller;
                 self.passengerView.top = self.bridgeChargeTextField.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
                 self.starRateView.top = self.orderPersonView.bottom;
-                self.orderButton.top = self.starRateView.bottom + 10;
-                [self.orderButton setTitle:@"终了" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.orderButton.top = self.starRateView.bottom + 10;
+                    [self.orderButton setTitle:@"终了" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.starRateView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -432,10 +457,14 @@ static MFMessageComposeViewController *controller;
                 self.driverView.top = self.carView.bottom;
                 self.passengerView.top = self.driverView.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
-                [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
-                [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                    [self.checkButton setTitle:@"通过" forState:UIControlStateNormal];
+                    [self.rejectButton setTitle:@"驳回" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -478,10 +507,14 @@ static MFMessageComposeViewController *controller;
                 self.bridgeChargeTextField.top = self.roadChargeTextField.bottom;
                 self.passengerView.top = self.bridgeChargeTextField.bottom;
                 self.orderPersonView.top = self.passengerView.bottom;
-                self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
-                [self.checkButton setTitle:@"开始" forState:UIControlStateNormal];
-                [self.rejectButton setTitle:@"结束" forState:UIControlStateNormal];
-                self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                if (!_finished) {
+                    self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                    [self.checkButton setTitle:@"开始" forState:UIControlStateNormal];
+                    [self.rejectButton setTitle:@"结束" forState:UIControlStateNormal];
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.checkButton.bottom + 10, self.scrollView.height));
+                } else {
+                    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
+                }
                 
                 self.startPosition.editEnable = NO;
                 self.passPosition.editEnable = NO;
@@ -823,6 +856,7 @@ static MFMessageComposeViewController *controller;
     
     // commit animations
     [UIView commitAnimations];
+    _contentOffset = self.scrollView.contentOffset;
     self.scrollView.contentOffset = CGPointMake(0, _contentSize.height - self.scrollView.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(_contentSize.height, self.scrollView.height));
 }
@@ -840,6 +874,7 @@ static MFMessageComposeViewController *controller;
     
     // set views with new info
     self.scrollView.height = self.view.height;
+    self.scrollView.contentOffset = _contentOffset;
     
     // commit animations
     [UIView commitAnimations];
@@ -964,6 +999,9 @@ static MFMessageComposeViewController *controller;
 {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
+        if ([self.navigationController.viewControllers count] >= 2) {
+            _scrollView.height += 49;
+        }
         [self.view addSubview:_scrollView];
     }
     return _scrollView;
@@ -975,6 +1013,7 @@ static MFMessageComposeViewController *controller;
         _startPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.view.width - _gap * 2, _cellHeight)];
         [_startPosition tipsTextFieldWithTips:@"接车地点" placeholder:@"请输入接车地点！" isPassword:NO];
         [self.scrollView addSubview:_startPosition];
+        [_startPosition addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _startPosition;
 }
@@ -985,6 +1024,7 @@ static MFMessageComposeViewController *controller;
         _passPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, self.startPosition.bottom, self.startPosition.width, _cellHeight)];
         [_passPosition tipsTextFieldWithTips:@"经过地点" placeholder:@"请输入经过地点！" isPassword:NO];
         [self.scrollView addSubview:_passPosition];
+        [_passPosition addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _passPosition;
 }
@@ -995,6 +1035,7 @@ static MFMessageComposeViewController *controller;
         _realPassPosition = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, self.startPosition.bottom, self.startPosition.width, _cellHeight)];
         [_realPassPosition tipsTextFieldWithTips:@"实际经过地点" placeholder:@"请输入实际经过地点！" isPassword:NO];
         [self.scrollView addSubview:_realPassPosition];
+        [_realPassPosition addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _realPassPosition;
 }
@@ -1006,6 +1047,7 @@ static MFMessageComposeViewController *controller;
         [_orderTime tipsTextFieldWithTips:@"预约时间" placeholder:[NSDate convertStringFromDate:[NSDate date]] isPassword:NO];
         _orderTime.editEnable = NO;
         [self.scrollView addSubview:_orderTime];
+        [_orderTime addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _orderTime;
 }
@@ -1045,6 +1087,7 @@ static MFMessageComposeViewController *controller;
         _endTimeTextField.delegate = self;
         [_timeView addSubview:_endTimeTextField];
         [self setupEndTimeTextField];
+        [_timeView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _timeView;
 }
@@ -1085,8 +1128,9 @@ static MFMessageComposeViewController *controller;
         _realEndTimeTextField.delegate = self;
         [_realTimeView addSubview:_realEndTimeTextField];
         [self setupRealEndTimeTextField];
+        [_realTimeView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
-    return _timeView;
+    return _realTimeView;
 }
 
 - (UIView *)typeView
@@ -1109,6 +1153,7 @@ static MFMessageComposeViewController *controller;
         _carTypeTextField.delegate = self;
         [_typeView addSubview:_carTypeTextField];
         [self setupCarTypeTextField];
+        [_typeView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _typeView;
 }
@@ -1119,6 +1164,7 @@ static MFMessageComposeViewController *controller;
         _carNotes = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_carNotes tipsTextFieldWithTips:@"用车事宜" placeholder:@"" isPassword:NO];
         [self.scrollView addSubview:_carNotes];
+        [_carNotes addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _carNotes;
 }
@@ -1144,6 +1190,7 @@ static MFMessageComposeViewController *controller;
         [publicButton addTarget:self action:@selector(didClickPublicButton:) forControlEvents:UIControlEventTouchUpInside];
         [_isPublicView addSubview:publicButton];
         _publicButton = publicButton;
+        [_isPublicView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _isPublicView;
 }
@@ -1155,6 +1202,7 @@ static MFMessageComposeViewController *controller;
         [_passengerNumberTextField tipsTextFieldWithTips:@"乘车人数" placeholder:@"" isPassword:NO];
         _passengerNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_passengerNumberTextField];
+        [_passengerNumberTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _passengerNumberTextField;
 }
@@ -1175,6 +1223,7 @@ static MFMessageComposeViewController *controller;
         [carButton addTarget:self action:@selector(didClickCarButton:) forControlEvents:UIControlEventTouchUpInside];
         [_carView addSubview:carButton];
         _carButton = carButton;
+        [_carView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _carView;
 }
@@ -1205,6 +1254,7 @@ static MFMessageComposeViewController *controller;
         [driverButton addTarget:self action:@selector(didClickDriverButton:) forControlEvents:UIControlEventTouchUpInside];
         [_driverView addSubview:driverButton];
         _driverButton = driverButton;
+        [_driverView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _driverView;
 }
@@ -1231,6 +1281,7 @@ static MFMessageComposeViewController *controller;
         _passengerPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
         _passengerPhoneTextField.placeholder = @"请输入乘车人电话！（如是本人可免）";
         [_passengerView addSubview:_passengerPhoneTextField];
+        [_passengerView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _passengerView;
 }
@@ -1264,6 +1315,7 @@ static MFMessageComposeViewController *controller;
         _orderPersonPhoneLabel.font = Font(12);
         _orderPersonPhoneLabel.text = self.user.phone;
         [_orderPersonView addSubview:_orderPersonPhoneLabel];
+        [_orderPersonView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _orderPersonView;
 }
@@ -1275,6 +1327,7 @@ static MFMessageComposeViewController *controller;
         [_tripDistanceTextField tipsTextFieldWithTips:@"行驶公里数" placeholder:@"" isPassword:NO];
         _tripDistanceTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_tripDistanceTextField];
+        [_tripDistanceTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _tripDistanceTextField;
 }
@@ -1286,6 +1339,7 @@ static MFMessageComposeViewController *controller;
         [_pricePerKilometerTextField tipsTextFieldWithTips:@"公里单价/台班费" placeholder:@"" isPassword:NO];
         _pricePerKilometerTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_pricePerKilometerTextField];
+        [_pricePerKilometerTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _pricePerKilometerTextField;
 }
@@ -1297,6 +1351,7 @@ static MFMessageComposeViewController *controller;
         [_roadChargeTextField tipsTextFieldWithTips:@"停车过路费" placeholder:@"" isPassword:NO];
         _roadChargeTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_roadChargeTextField];
+        [_roadChargeTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _roadChargeTextField;
 }
@@ -1308,6 +1363,7 @@ static MFMessageComposeViewController *controller;
         [_bridgeChargeTextField tipsTextFieldWithTips:@"过桥费" placeholder:@"" isPassword:NO];
         _bridgeChargeTextField.keyboardType = UIKeyboardTypeNumberPad;
         [self.scrollView addSubview:_bridgeChargeTextField];
+        [_bridgeChargeTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _bridgeChargeTextField;
 }
@@ -1317,6 +1373,7 @@ static MFMessageComposeViewController *controller;
     if (!_shenherenTextField) {
         _shenherenTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [self.scrollView addSubview:_shenherenTextField];
+        [_shenherenTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _shenherenTextField;
 }
@@ -1327,6 +1384,7 @@ static MFMessageComposeViewController *controller;
         _shenheyijianTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_shenheyijianTextField tipsTextFieldWithTips:@"审核意见" placeholder:@"" isPassword:NO];
         [self.scrollView addSubview:_shenheyijianTextField];
+        [_shenheyijianTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _shenheyijianTextField;
 }
@@ -1337,6 +1395,7 @@ static MFMessageComposeViewController *controller;
         _bohuiyijianTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_bohuiyijianTextField tipsTextFieldWithTips:@"驳回意见" placeholder:@"" isPassword:NO];
         [self.scrollView addSubview:_bohuiyijianTextField];
+        [_bohuiyijianTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _bohuiyijianTextField;
 }
@@ -1349,6 +1408,7 @@ static MFMessageComposeViewController *controller;
         _starRateView.allowIncompleteStar = YES;
         _starRateView.delegate = self;
         [self.scrollView addSubview:_starRateView];
+        [_starRateView addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }
     return _starRateView;
 }
@@ -1357,9 +1417,9 @@ static MFMessageComposeViewController *controller;
 {
     if (!_orderButton) {
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _orderButton.frame = CGRectMake((self.view.width - 250)/2.0, 0, 250, _cellHeight);
+        _orderButton.frame = CGRectMake((self.view.width - 250)/2.0, 0, 250, 44);
         _orderButton.backgroundColor = RGB(kMainColor);
-        [_orderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_orderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_orderButton setTitle:@"订    车" forState:UIControlStateNormal];
         [_orderButton addTarget:self action:@selector(didClickOrderButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:_orderButton];
@@ -1373,9 +1433,9 @@ static MFMessageComposeViewController *controller;
         CGFloat buttonGap = 50;
         CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _checkButton.frame = CGRectMake(buttonGap, 0, buttonWidth, _cellHeight);
+        _checkButton.frame = CGRectMake(buttonGap, 0, buttonWidth, 44);
         _checkButton.backgroundColor = RGB(kMainColor);
-        [_checkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_checkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_checkButton setTitle:@"审 核" forState:UIControlStateNormal];
         [_checkButton addTarget:self action:@selector(didClickCheckButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:_checkButton];
@@ -1389,9 +1449,9 @@ static MFMessageComposeViewController *controller;
         CGFloat buttonGap = 50;
         CGFloat buttonWidth = (self.view.width - buttonGap * 3)/2.0;
         _rejectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _rejectButton.frame = CGRectMake(self.checkButton.right + buttonGap, 0, buttonWidth, _cellHeight);
+        _rejectButton.frame = CGRectMake(self.checkButton.right + buttonGap, 0, buttonWidth, 44);
         _rejectButton.backgroundColor = RGB(kMainColor);
-        [_rejectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_rejectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_rejectButton setTitle:@"驳 回" forState:UIControlStateNormal];
         [_rejectButton addTarget:self action:@selector(didClickRejectButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:_rejectButton];

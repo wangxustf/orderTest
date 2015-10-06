@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Order.h"
 
 typedef NS_ENUM(NSInteger, FinishType) {
     FinishTypeUnfinished,
@@ -16,7 +17,9 @@ typedef NS_ENUM(NSInteger, FinishType) {
 @interface RecordListViewController : BaseViewController
 
 @property (nonatomic, assign) FinishType finishType;
+@property (nonatomic, copy) void (^tongguoBlock)(Order *order);
 
 - (id)initWithFinishType:(FinishType)finishType;
+- (void)addOrder:(Order *)order;
 
 @end
