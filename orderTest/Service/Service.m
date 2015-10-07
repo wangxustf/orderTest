@@ -28,7 +28,7 @@
 
 - (void)resetPage
 {
-    _page = 1;
+    _page = 0;
 }
 
 - (void)loginWithLoginName:(NSString *)loginName password:(NSString *)password completion:(void(^)(BOOL success, YLYUser *user, NSString *msg))completion
@@ -102,13 +102,16 @@
         [parameters setObject:order.jiecheAddress forKey:@"jiecheAddress"];
     }
     if (order.jingguoAddress.length > 0) {
-        [parameters setObject:order.jingguoAddress forKey:@"jingguoAddress"];
+        [parameters setObject:order.jingguoAddress forKey:@"jingguoAdress"];
     }
     if (order.realJingguoAddress.length > 0) {
-        [parameters setObject:order.realJingguoAddress forKey:@"realJingguoAddress"];
+        [parameters setObject:order.realJingguoAddress forKey:@"realJingguoAdres"];
     }
     if (order.yuyueTime.length > 0) {
         [parameters setObject:order.yuyueTime forKey:@"yuyueTime"];
+    }
+    if (order.startTime.length > 0) {
+        [parameters setObject:order.startTime forKey:@"startTime"];
     }
     if (order.endTime.length > 0) {
         [parameters setObject:order.endTime forKey:@"endTime"];

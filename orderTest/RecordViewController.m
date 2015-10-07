@@ -41,6 +41,10 @@
     _unfinishedRecordListViewController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height - self.segmentedView.height - (self.isTab ? 49 : 0));
     __weak typeof(self) weakSelf = self;
     _unfinishedRecordListViewController.tongguoBlock = ^(Order *order) {
+        if (![weakSelf.finishedRecordListViewController parentViewController]) {
+            weakSelf.finishedRecordListViewController.view.frame = CGRectMake(0, 0, weakSelf.view.width, weakSelf.view.height - weakSelf.segmentedView.height);
+            [weakSelf addChildViewController:weakSelf.finishedRecordListViewController];
+        }
         [weakSelf.finishedRecordListViewController addOrder:order];
     };
     [self addChildViewController:self.unfinishedRecordListViewController];

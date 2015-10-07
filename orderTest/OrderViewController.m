@@ -280,7 +280,7 @@ static MFMessageComposeViewController *controller;
             self.orderTime.text = self.order.yuyueTime;
             self.startTimeButton.text = self.order.startTime;
             self.endTimeButton.text = self.order.endTime;
-            [self.carTypeButton setTitle:self.order.carType forState:UIControlStateNormal];
+            self.carTypeButton.text = self.order.carType;
             self.passengerNameTextField.text = self.order.userName;
             self.passengerPhoneTextField.text = self.order.userPhone;
             self.orderDepNameLabel.text = self.order.dingcherenDep;
@@ -586,11 +586,11 @@ static MFMessageComposeViewController *controller;
         _order.jiecheAddress = self.startPosition.text;
         _order.jingguoAddress = self.passPosition.text;
         _order.yuyueTime = self.orderTime.text;
-        _order.startTime = self.startTimeTextField.text;
-        _order.endTime = self.endTimeTextField.text;
+        _order.startTime = self.startTimeButton.text;
+        _order.endTime = self.endTimeButton.text;
         _order.carType =  _carArray[_selectedCarRow];
-        _order.userName = self.passengerNameTextField.text ? : user.username;
-        _order.userPhone = self.passengerPhoneTextField.text ? : user.phone;;
+        _order.userName = self.passengerNameTextField.text.length > 0 ? self.passengerNameTextField.text : user.username;
+        _order.userPhone = self.passengerPhoneTextField.text.length > 0 ? self.passengerPhoneTextField.text : user.phone;;
         _order.dingcherenID = user.userID;
         _order.dingcherenName = user.username;
         _order.dingcherenPhone = user.phone;
@@ -937,20 +937,11 @@ static MFMessageComposeViewController *controller;
 
 - (void)setupCarTypeTextField
 {
-    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
+    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 200)];
     pickerView.dataSource = self;
     pickerView.delegate = self;
     self.carTypeTextField.inputView = pickerView;
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.width, 44);
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelItem:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(didClickDoneItem:)];
-    
-    toolbar.items = @[cancelItem, flexibleItem, doneItem];
-    self.carTypeTextField.inputAccessoryView = toolbar;
+    self.carTypeTextField.inputAccessoryView = [self textFieldToobar];
 }
 
 #pragma mark -- UIPickerViewDataSource/Delegate
@@ -1045,6 +1036,7 @@ static MFMessageComposeViewController *controller;
     if (!_orderTime) {
         _orderTime = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
         [_orderTime tipsTextFieldWithTips:@"预约时间" placeholder:[NSDate convertStringFromDate:[NSDate date]] isPassword:NO];
+        _orderTime.text = [NSDate convertStringFromDate:[NSDate date]];
         _orderTime.editEnable = NO;
         [self.scrollView addSubview:_orderTime];
         [_orderTime addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];

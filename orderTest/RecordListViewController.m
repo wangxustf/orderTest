@@ -41,6 +41,8 @@
     
     _service = [[Service alloc] init];
     self.user = [NSUserDefaults user];
+    self.view.height = self.view.height - 64 - 49 - 44;
+    self.tableView.hidden = NO;
     [self refreshTableView];
 }
 
@@ -120,6 +122,7 @@
         recordTableViewCell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRecordTableViewCell];
         recordTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    recordTableViewCell.finished = (_finishType == FinishTypeFinished);
     recordTableViewCell.order = self.orderList[indexPath.row];
     return recordTableViewCell;
 }

@@ -12,5 +12,6 @@
 @interface RecordTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Order *order;
+@property (nonatomic, assign) BOOL finished;
 
 @end

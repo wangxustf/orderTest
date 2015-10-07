@@ -16,8 +16,8 @@
     Order *order = [[Order alloc] init];
     order.orderID               = [dictionary strValue:@"orderId"];
     order.jiecheAddress         = [dictionary strValue:@"jiecheAddress"];
-    order.jingguoAddress        = [dictionary strValue:@"jingguoAddress"];
-    order.realJingguoAddress    = [dictionary strValue:@"realJingguoAddress"];
+    order.jingguoAddress        = [dictionary strValue:@"jingguoAdress"];
+    order.realJingguoAddress    = [dictionary strValue:@"realJingguoAdres"];
     order.yuyueTime             = [dictionary strValue:@"yuyueTime"];
     order.startTime             = [dictionary strValue:@"startTime"];
     order.endTime               = [dictionary strValue:@"endTime"];

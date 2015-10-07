@@ -55,7 +55,7 @@
         [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
         [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
         [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
-        self.statusLabel.text = @"";
+        self.statusLabel.text = self.finished ? @"已审批" : @"未审批";
         self.lineView.top = 59.5;
     }
 }
@@ -109,9 +109,10 @@
 - (UILabel *)statusLabel
 {
     if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.phoneLabel.right, self.orderNameLabel.top, self.width - self.phoneLabel.right, _subHeight)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 80, 0, 60, 60)];
         _statusLabel.font = Font(14);
         _statusLabel.textColor = [UIColor redColor];
+        _statusLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_statusLabel];
     }
     return _statusLabel;
