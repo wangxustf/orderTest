@@ -29,6 +29,7 @@
     order.userPhone             = [dictionary strValue:@"userPhone"];
     order.carID                 = [dictionary strValue:@"carID"];
     order.dingcherenID          = [dictionary strValue:@"dingcherenID"];
+    order.dingcherenName        = [dictionary strValue:@"dingcherenName"];
     order.dingcherenPhone       = [dictionary strValue:@"dingcherenPhone"];
     order.dingcherenDep         = [dictionary strValue:@"dingcherenDep"];
     order.dingcherenDepID       = [dictionary strValue:@"dingcherenDepID"];

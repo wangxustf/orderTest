@@ -70,6 +70,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.navigationController popViewControllerAnimated:YES];
     if (_selectBlock) {
         _selectBlock(self.carList[indexPath.row]);
     }
