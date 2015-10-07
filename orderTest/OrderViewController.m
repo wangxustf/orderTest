@@ -165,6 +165,11 @@ static MFMessageComposeViewController *controller;
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setOrder:(Order *)order
+{
+    _order = [order copy];
+}
+
 - (void)setupUI
 {
     switch (self.user.userType) {
@@ -295,7 +300,7 @@ static MFMessageComposeViewController *controller;
             
         case UserTypePaiche:
         {
-            if ([self.order.orderState integerValue] == OrderStateShenhetongguo) {
+            if ([self.order.orderState integerValue] == OrderStateShenhetongguo || [self.order.orderState integerValue] == OrderStatePaichequeren) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
@@ -635,6 +640,8 @@ static MFMessageComposeViewController *controller;
     switch (self.user.userType) {
         case UserTypeShenhe:
             self.order.orderState = [@(OrderStateShenhetongguo) stringValue];
+            self.order.shenpirenID = self.user.userID;
+            self.order.shenpirenName = self.user.username;
             break;
             
         case UserTypePaiche:
@@ -643,6 +650,7 @@ static MFMessageComposeViewController *controller;
             self.order.driverID = self.driver.driverID;
             self.order.driverName = self.driver.driverName;
             self.order.driverPhone = self.driver.driverPhone;
+            self.order.paicherenID = self.user.userID;
             break;
             
         case UserTypeDriver:

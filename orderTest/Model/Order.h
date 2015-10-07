@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Order : NSObject
+@interface Order : NSObject <NSCopying>
 
 @property (nonatomic, strong) NSString *orderID;
 @property (nonatomic, strong) NSString *jiecheAddress;
