@@ -230,14 +230,15 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{@"userId":userID,
-                                 @"page":[@(_page) stringValue]};
     NSString *subURL = nil;
     if (!isDriver) {
         subURL = isFinish ? @"mobileDingCheHisYiWanCheng.html" : @"mobileDingCheHisWeiWanCheng.html";
     } else {
+        userID = @"4driver";// [NSString stringWithFormat:@"%@driver", userID];
         subURL = isFinish ? @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisSijiJinxingzhong.html";
     }
+    NSDictionary *parameters = @{@"userId":userID,
+                                 @"page":[@(_page) stringValue]};
     [manager POST:[NSString stringWithFormat:@"%@/%@", YLYBaseURL, subURL]
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {

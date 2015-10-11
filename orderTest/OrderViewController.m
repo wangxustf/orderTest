@@ -289,7 +289,17 @@ static MFMessageComposeViewController *controller;
             self.startTimeButton.text = self.order.startTime;
             self.endTimeButton.text = self.order.endTime;
             self.carTypeButton.text = self.order.carType;
-            self.carTypeButton.text = _carArray[[_carTitleArray indexOfObject:self.carTypeButton.text]];
+            NSInteger i = 0;
+            for (NSString *title in _carTitleArray) {
+                if ([title containsString:self.carTypeButton.text]) {
+                    break;
+                }
+                i++;
+            }
+            if (i == 6) {
+                i = 0;
+            }
+            self.carTypeButton.text = _carArray[i];
             self.passengerNameTextField.text = self.order.userName;
             self.passengerPhoneTextField.text = self.order.userPhone;
             self.orderDepNameLabel.text = self.order.dingcherenDep;
@@ -645,7 +655,11 @@ static MFMessageComposeViewController *controller;
             break;
             
         case UserTypePaiche:
-            self.order.orderState = [@(OrderStatePaichequeren) stringValue];
+            if ([self.order.orderState integerValue] == OrderStateShenhetongguo) {
+                self.order.orderState = [@(OrderStatePaichequeren) stringValue];
+            } else if ([self.order.orderState integerValue] == OrderStateSijiqueren) {
+                self.order.orderState = [@(OrderStatePaichefache) stringValue];
+            }
             self.order.carID = self.car.carID;
             self.order.driverID = self.driver.driverID;
             self.order.driverName = self.driver.driverName;
