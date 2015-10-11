@@ -43,7 +43,7 @@
     //dingche A004
     //driver A003
     //paiche A002
-    [self.service loginWithLoginName:@"A004" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+    [self.service loginWithLoginName:@"18966834015" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
         if (success) {
             [self dismissViewControllerAnimated:YES completion:nil];
         }

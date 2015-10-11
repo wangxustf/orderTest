@@ -20,8 +20,10 @@
     user.phone      = [dictionary strValue:@"phone"];
     user.depName    = [dictionary strValue:@"depName"];
     user.depID      = [dictionary strValue:@"depId"];
-    user.userType   = [dictionary intValue:@"roleId"];
+    user.userType   = [dictionary intValue:@"userType"];
     user.userTypeName = @[@"订车用户", @"审核用户", @"派车用户", @"司机用户"][user.userType - UserTypeDingche];
+    user.paicherenPhone = [[dictionary strValue:@"paicherenPhone"] componentsSeparatedByString:@","];
+    user.shenpirenPhone = [[dictionary strValue:@"shenpirenPhone"] componentsSeparatedByString:@","];
     return user;
 }
 
@@ -35,6 +37,8 @@
     [coder encodeObject:self.depID    forKey:@"depID"];
     [coder encodeInteger:self.userType forKey:@"userType"];
     [coder encodeObject:self.userTypeName forKey:@"userTypeName"];
+    [coder encodeObject:self.shenpirenPhone forKey:@"shenpirenPhone"];
+    [coder encodeObject:self.paicherenPhone forKey:@"paicherenPhone"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -48,6 +52,8 @@
         self.depID      = [coder decodeObjectForKey:@"depID"];
         self.userType   = [coder decodeIntegerForKey:@"userType"];
         self.userTypeName   = [coder decodeObjectForKey:@"userTypeName"];
+        self.paicherenPhone = [coder decodeObjectForKey:@"paicherenPhone"];
+        self.shenpirenPhone = [coder decodeObjectForKey:@"shenpirenPhone"];
     }
     return self;
 }

@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, UserType) {
 @property (nonatomic, strong) NSString *depID;
 @property (nonatomic, assign) UserType userType;
 @property (nonatomic, strong) NSString *userTypeName;
+@property (nonatomic, strong) NSArray *shenpirenPhone;
+@property (nonatomic, strong) NSArray *paicherenPhone;
 
 + (YLYUser *)userWithDictionary:(NSDictionary *)dictionary;
 
