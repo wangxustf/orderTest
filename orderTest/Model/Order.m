@@ -47,10 +47,11 @@
     order.bohuiYuanYin          = [dictionary strValue:@"bohuiYuanYin"];
     order.countMetre            = [dictionary strValue:@"countMetre"];
     order.pingjia               = [dictionary strValue:@"pingjia"];
-    order.yongcheyijian         = [dictionary strValue:@"yongcheyijian"];
+    order.yongcheshiyi         = [dictionary strValue:@"yongcheshiyi"];
     order.tingcheguolufei       = [dictionary strValue:@"tingcheguolufei"];
     order.gonglidanjia          = [dictionary strValue:@"gonglidanjia"];
     order.guoqiaofei            = [dictionary strValue:@"guoqiaofei"];
+    order.carCode = [dictionary strValue:@"carCode"];
     return order;
 }
 
@@ -89,10 +90,11 @@
     order.bohuiYuanYin          = self.bohuiYuanYin;
     order.countMetre            = self.countMetre;
     order.pingjia               = self.pingjia;
-    order.yongcheyijian         = self.yongcheyijian;
+    order.yongcheshiyi         = self.yongcheshiyi;
     order.tingcheguolufei       = self.tingcheguolufei;
     order.gonglidanjia          = self.gonglidanjia;
     order.guoqiaofei            = self.guoqiaofei;
+    order.carCode = self.carCode;
     return order;
 }
 

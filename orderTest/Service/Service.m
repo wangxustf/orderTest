@@ -194,8 +194,8 @@
     if (order.pingjia.length > 0) {
         [parameters setObject:order.pingjia forKey:@"pingjia"];
     }
-    if (order.yongcheyijian.length > 0) {
-        [parameters setObject:order.yongcheyijian forKey:@"yongcheyijian"];
+    if (order.yongcheshiyi.length > 0) {
+        [parameters setObject:order.yongcheshiyi forKey:@"yongcheshiyi"];
     }
     if (order.gonglidanjia.length > 0) {
         [parameters setObject:order.gonglidanjia forKey:@"gonglidanjia"];

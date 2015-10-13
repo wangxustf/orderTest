@@ -38,6 +38,7 @@
     
     self.view.height = self.view.height - self.navigationController.navigationBar.height - 20;
     
+    _unfinishedRecordListViewController.isTab = _finishedRecordListViewController.isTab = self.isTab;
     _unfinishedRecordListViewController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height - self.segmentedView.height - (self.isTab ? 49 : 0));
     __weak typeof(self) weakSelf = self;
     _unfinishedRecordListViewController.tongguoBlock = ^(Order *order) {

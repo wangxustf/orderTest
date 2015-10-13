@@ -241,6 +241,7 @@ static MFMessageComposeViewController *controller;
                 self.endTimeButton.text = self.order.endTime;
                 self.realStartTimeButton.text = self.order.realStartTime;
                 self.realEndTimeButton.text = self.order.realEndTime;
+                self.carNotes.text = self.order.yongcheshiyi;
                 self.tripDistanceTextField.text = self.order.countMetre;
                 self.pricePerKilometerTextField.text = self.order.gonglidanjia;
                 self.roadChargeTextField.text = self.order.tingcheguolufei;
@@ -288,6 +289,7 @@ static MFMessageComposeViewController *controller;
             self.orderTime.text = self.order.yuyueTime;
             self.startTimeButton.text = self.order.startTime;
             self.endTimeButton.text = self.order.endTime;
+            self.carNotes.text = self.order.yongcheshiyi;
             self.carTypeButton.text = self.order.carType;
             NSInteger i = 0;
             for (NSString *title in _carTitleArray) {
@@ -351,6 +353,7 @@ static MFMessageComposeViewController *controller;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
                 [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 0) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                self.carNotes.text = self.order.yongcheshiyi;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
                 self.orderDepNameLabel.text = self.order.dingcherenDep;
@@ -397,6 +400,7 @@ static MFMessageComposeViewController *controller;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
                 [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 0) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                self.carNotes.text = self.order.yongcheshiyi;
                 [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
                 self.driverNameLabel.text = self.order.driverName;
                 self.driverPhoneLabel.text = self.order.driverPhone;
@@ -411,7 +415,8 @@ static MFMessageComposeViewController *controller;
                 self.realPassPosition.top = self.passPosition.bottom;
                 self.orderTime.top = self.realPassPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
-                self.carNotes.top = self.timeView.bottom;
+                self.realTimeView.top = self.timeView.bottom;
+                self.carNotes.top = self.realTimeView.bottom;
                 self.tripDistanceTextField.top = self.carNotes.bottom;
                 self.pricePerKilometerTextField.top = self.tripDistanceTextField.bottom;
                 self.roadChargeTextField.top = self.pricePerKilometerTextField.bottom;
@@ -450,6 +455,7 @@ static MFMessageComposeViewController *controller;
                 self.endTimeButton.text = self.order.endTime;
                 self.realStartTimeButton.text = self.order.realStartTime;
                 self.realEndTimeButton.text = self.order.realEndTime;
+                self.carNotes.text = self.order.yongcheshiyi;
                 self.tripDistanceTextField.text = self.order.countMetre;
                 self.pricePerKilometerTextField.text = self.order.gonglidanjia;
                 self.roadChargeTextField.text = self.order.tingcheguolufei;
@@ -505,6 +511,7 @@ static MFMessageComposeViewController *controller;
                 self.startTimeButton.text = self.order.startTime;
                 self.endTimeButton.text = self.order.endTime;
                 [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 0) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
+                self.carNotes.text = self.order.yongcheshiyi;
                 [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
                 self.driverNameLabel.text = self.order.driverName;
                 self.driverPhoneLabel.text = self.order.driverPhone;
@@ -562,6 +569,7 @@ static MFMessageComposeViewController *controller;
                 if ([self.order.orderState integerValue] == OrderStateSijikaishi) {
                     self.realStartTimeButton.text = self.order.realStartTime;
                 }
+                self.carNotes.text = self.order.yongcheshiyi;
                 self.passengerNameTextField.text = self.order.userName;
                 self.passengerPhoneTextField.text = self.order.userPhone;
                 self.orderDepNameLabel.text = self.order.dingcherenDep;
@@ -599,6 +607,10 @@ static MFMessageComposeViewController *controller;
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆类型不能为空"];
         return;
     }
+    if (self.carNotes.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"用车事宜不能为空"];
+        return;
+    }
     YLYUser *user = [NSUserDefaults user];
     if (_order.orderID.length <= 0) {
         _order.orderState = [@(OrderStateDingche) stringValue];
@@ -608,6 +620,7 @@ static MFMessageComposeViewController *controller;
         _order.startTime = self.startTimeButton.text;
         _order.endTime = self.endTimeButton.text;
         _order.carType =  _carTitleArray[_selectedCarRow];
+        _order.yongcheshiyi = self.carNotes.text;
         _order.isPublic = self.order.isPublic ?  @"0" : @"1";
         _order.userName = self.passengerNameTextField.text.length > 0 ? self.passengerNameTextField.text : user.username;
         _order.userPhone = self.passengerPhoneTextField.text.length > 0 ? self.passengerPhoneTextField.text : user.phone;;
@@ -657,6 +670,14 @@ static MFMessageComposeViewController *controller;
         case UserTypePaiche:
             if ([self.order.orderState integerValue] == OrderStateShenhetongguo) {
                 self.order.orderState = [@(OrderStatePaichequeren) stringValue];
+                if (self.car.carID.length <= 0) {
+                    [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆不能为空"];
+                    return;
+                }
+                if (self.driver.driverID.length <= 0) {
+                    [[TKAlertCenter defaultCenter] postAlertWithMessage:@"司机不能为空"];
+                    return;
+                }
             } else if ([self.order.orderState integerValue] == OrderStateSijiqueren) {
                 self.order.orderState = [@(OrderStatePaichefache) stringValue];
             }
@@ -717,26 +738,73 @@ static MFMessageComposeViewController *controller;
     [self reportOrder];
 }
 
-//增加各节点发送短信提醒功能。
-//①订车人订车：向审核人发短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车，请核实。
-//②审核人审核通过向派车人、订车人发短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，审核通过。
-//③审核人驳回：向订车人发短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，审核不通过。请再次核实。
-//④派车人点击司机确认：向司机发短信。
-//短信内容：今有XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，请确认。
-//⑤司机确认通过：向派车人发短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，已接受。
-//⑥司机驳回：向派车人发短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，无法成行。
-//⑦派车人发车：向司机、订车人、乘坐者发送短信。
-//短信内容：XXX（订车人名）XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车，已派车。
-//接车地点：XXXXX   预计经过地点：XXXX  乘客姓名：XXXXX
-//电话：XXXXX  用车事宜：XXXXXXXXXXXX。
-//车牌号码：XXXXXX 驾驶员电话：XXXXXX
-//⑧司机结束订单：向派车人、订车人发送短信。
-//短信内容：XXX（订车人名）欲于XXXX年XX月XX日XX时开始至XXXX年XX月XX日XX时预定一辆（经济型）轿车订单，已完成。
+- (void)sendMsg
+{
+    NSMutableArray *phonesArray = [NSMutableArray array];
+    NSInteger i = 0;
+    for (NSString *title in _carTitleArray) {
+        if ([title containsString:self.order.carType]) {
+            break;
+        }
+        i++;
+    }
+    if (i == 6) {
+        i = 0;
+    }
+    NSString *msg = [NSString stringWithFormat:@"%@欲于%@开始至%@预定一辆(%@)轿车", self.order.dingcherenName, self.order.startTime, self.order.endTime, _carArray[i]];
+    switch ([self.order.orderState integerValue]) {
+        case OrderStateDingche:
+            [phonesArray addObjectsFromArray:self.user.shenpirenPhone];
+            msg = [NSString stringWithFormat:@"%@，请核实。", msg];
+            break;
+            
+        case OrderStateShenhetongguo:
+            [phonesArray addObjectsFromArray:@[self.order.dingcherenPhone]];
+            [phonesArray addObjectsFromArray:self.user.paicherenPhone];
+            msg = [NSString stringWithFormat:@"%@订单，审核通过。", msg];
+            break;
+            
+        case OrderStateShenhebohui:
+            [phonesArray addObjectsFromArray:@[self.order.dingcherenPhone]];
+            msg = [NSString stringWithFormat:@"%@订单，审核不通过。请再次核实。", msg];
+            break;
+            
+        case OrderStatePaichequeren:
+            if (self.order.driverPhone.length > 0) {
+                [phonesArray addObjectsFromArray:@[self.order.driverPhone]];
+            }
+            msg = [NSString stringWithFormat:@"%@订单，请确认。", msg];
+            break;
+            
+        case OrderStateSijiqueren:
+            [phonesArray addObjectsFromArray:self.user.paicherenPhone];
+            msg = [NSString stringWithFormat:@"%@订单，请确认。", msg];
+            break;
+            
+        case OrderStateSijibohui:
+            [phonesArray addObjectsFromArray:self.user.paicherenPhone];
+            msg = [NSString stringWithFormat:@"%@订单，无法成行。", msg];
+            break;
+            
+        case OrderStatePaichefache:
+            if (self.order.driverPhone.length > 0) {
+                [phonesArray addObjectsFromArray:@[self.order.driverPhone, self.order.dingcherenPhone, self.order.userPhone]];
+            }
+            msg = [NSString stringWithFormat:@"%@，已派车。\n接车地点：％@ 预计经过地点：％@ 乘客姓名：％@\n电话：％@ 用车事宜:%@。\n车牌号码：％@ 驾驶员电话：％@", msg, self.order.jiecheAddress, self.order.jingguoAddress, self.order.userName, self.order.userPhone, self.order.yongcheshiyi, self.order.carCode, self.order.driverPhone];
+            break;
+            
+        case OrderStateSijijieshu:
+            [phonesArray addObjectsFromArray:@[self.user.paicherenPhone, self.order.dingcherenPhone]];
+            msg = [NSString stringWithFormat:@"%@订单，已完成。", msg];
+            break;
+            
+        default:
+            break;
+    }
+    if (phonesArray.count > 0) {
+        [self showMessageView:phonesArray body:msg];
+    }
+}
 
 - (void)reportOrder
 {
@@ -745,7 +813,7 @@ static MFMessageComposeViewController *controller;
         [DejalBezelActivityView removeView];
         [[TKAlertCenter defaultCenter] postAlertWithMessage:success ? @"成功" : @"失败"];
         if (success) {
-//            [self showMessageView:@[@"phonenumber"] body:@"短信内容"];
+            [self sendMsg];
             [self.navigationController popViewControllerAnimated:YES];
             if ([self.order.orderState integerValue] == OrderStateShenhetongguo || [self.order.orderState integerValue] == OrderStateKehuqueren || [self.order.orderState integerValue] == OrderStatePaichezhongliao || [self.order.orderState integerValue] == OrderStateSijijieshu) {
                 if (_tongguoBlock) {

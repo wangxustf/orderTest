@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, FinishType) {
 
 @property (nonatomic, assign) FinishType finishType;
 @property (nonatomic, copy) void (^tongguoBlock)(Order *order);
+@property (nonatomic, assign) BOOL isTab;
 
 - (id)initWithFinishType:(FinishType)finishType;
 - (void)addOrder:(Order *)order;

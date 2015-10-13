@@ -41,7 +41,7 @@
     
     _service = [[Service alloc] init];
     self.user = [NSUserDefaults user];
-    self.view.height = self.view.height - 64 - 49 - 44;
+    self.view.height = self.view.height - 64 - 44 - (self.isTab ? 49 : 0);
     self.tableView.hidden = NO;
     [self refreshTableView];
 }
