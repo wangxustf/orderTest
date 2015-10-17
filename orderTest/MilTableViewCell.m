@@ -39,7 +39,7 @@
         self.addressLabel.width = [self.addressLabel.text sizeWithFont:self.addressLabel.font].width;
         self.timeLabel.text = order.yuyueTime;
         self.timeLabel.width = [self.timeLabel.text sizeWithFont:self.timeLabel.font].width;
-        self.milsLabel.text = @"里程：";
+        self.milsLabel.text = [NSString stringWithFormat:@"里程：%@公里", order.countMetre.length > 0 ? order.countMetre : @"0"];
         self.lineView.top = 43.5;
     }
 }
@@ -77,7 +77,7 @@
 - (UILabel *)milsLabel
 {
     if (!_milsLabel) {
-        _milsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 70, 0, 60, 44)];
+        _milsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 110, 0, 100, 44)];
         _milsLabel.font = Font(16);
         _milsLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_milsLabel];
