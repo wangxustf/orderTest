@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *orderList;
 @property (nonatomic, strong) Service *service;
 @property (nonatomic, strong) YLYUser *user;
+@property (nonatomic, assign) BOOL firstIn;
 
 @end
 
@@ -28,6 +29,7 @@
     if (self = [super init]) {
         _finishType = finishType;
         _orderList = [NSMutableArray array];
+        _firstIn = YES;
     }
     return self;
 }
@@ -68,11 +70,20 @@
 {
     [self.service resetPage];
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"正在获取数据,请稍候..."];
-    [self.service loadOrderListWithUserID:self.user.userID isFinish:(_finishType == FinishTypeFinished) isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+    [self.service loadOrderListWithUserID:self.user.userID  finishType:_finishType isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
         [DejalBezelActivityView removeView];
         self.tableView.pullTableIsRefreshing = NO;
         if (success) {
-            self.orderList = [NSMutableArray arrayWithArray:ordersArray];
+            if (_firstIn) {
+                _firstIn = NO;
+                if (self.orderList.count > 0) {
+                    [self.orderList addObjectsFromArray:ordersArray];
+                } else {
+                    self.orderList = [NSMutableArray arrayWithArray:ordersArray];
+                }
+            } else {
+                self.orderList = [NSMutableArray arrayWithArray:ordersArray];
+            }
             [self.tableView reloadData];
         }
     }];
@@ -87,7 +98,7 @@
 
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
-    [self.service loadOrderListWithUserID:self.user.userID isFinish:(_finishType == FinishTypeFinished) isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
+    [self.service loadOrderListWithUserID:self.user.userID finishType:_finishType isDriver:(self.user.userType == UserTypeDriver) completion:^(BOOL success, NSArray *ordersArray, NSString *msg) {
         [DejalBezelActivityView removeView];
         self.tableView.pullTableIsLoadingMore = NO;
         if (success) {
@@ -130,14 +141,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.user.userType == UserTypeDingche) {
+    Order *order = self.orderList[indexPath.row];
+    if (self.user.userType == UserTypeDingche && ([order.orderState integerValue] == OrderStateDingche)) {
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
     OrderViewController *orderViewController = [[OrderViewController alloc] init];
     orderViewController.hidesBottomBarWhenPushed = YES;
     orderViewController.finished = (_finishType == FinishTypeFinished);
-    Order *order = self.orderList[indexPath.row];
     orderViewController.order = order;
     orderViewController.tongguoBlock = ^ {
         [self.orderList removeObjectAtIndex:indexPath.row];

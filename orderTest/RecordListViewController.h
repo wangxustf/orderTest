@@ -10,8 +10,9 @@
 #import "Order.h"
 
 typedef NS_ENUM(NSInteger, FinishType) {
-    FinishTypeUnfinished,
-    FinishTypeFinished
+    FinishTypeUnfinished = 0,
+    FinishTypeJinxingzhong = 1,
+    FinishTypeFinished = 2
 };
 
 @interface RecordListViewController : BaseViewController

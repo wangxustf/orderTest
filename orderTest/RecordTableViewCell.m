@@ -55,7 +55,72 @@
         [self.passengerLabel setWithTip:@"乘车人" value:order.userName];
         [self.addressLabel setWithTip:@"接车地点" value:order.jiecheAddress];
         [self.timeLabel setWithTip:@"用车时间" value:[NSString stringWithFormat:@"%@ 至 %@", order.startTime, order.endTime]];
-        self.statusLabel.text = self.finished ? @"已审批" : @"未审批";
+        //0	//:订车
+        //1	//:审核通过
+        //11	//:审核驳回
+        //2	//:派车人确认
+        //22	//:派车人驳回
+        //3       //:司机确认通过
+        //33      //:司机确认驳回
+        //4       //:派车人发车
+        //5	//:司机开始
+        //6	//:司机结束
+        //7	//客户确认
+        //8       //:派车流程终了
+        NSString *status = @"";
+        switch ([order.orderState integerValue]) {
+            case 0:
+                status = @"订车";
+                break;
+                
+            case 1:
+                status = @"审核通过";
+                break;
+                
+            case 11:
+                status = @"审核驳回";
+                break;
+                
+            case 2:
+                status = @"派车人派车";
+                break;
+                
+            case 22:
+                status = @"派车人驳回";
+                break;
+                
+            case 3:
+                status = @"司机确认";
+                break;
+                
+            case 33:
+                status = @"司机驳回";
+                break;
+                
+            case 4:
+                status = @"派车人确认发车";
+                break;
+                
+            case 5:
+                status = @"司机开始";
+                break;
+                
+            case 6:
+                status = @"司机结束";
+                break;
+                
+            case 7:
+                status = @"客户确认评价";
+                break;
+                
+            case 8:
+                status = @"流程终了";
+                break;
+                
+            default:
+                break;
+        }
+        self.statusLabel.text = status;
         self.lineView.top = 59.5;
     }
 }

@@ -29,20 +29,6 @@
 //6	//:司机结束
 //7	//客户确认
 //8       //:派车流程终了
-typedef NS_ENUM(NSInteger, OrderState) {
-    OrderStateDingche = 0,
-    OrderStateShenhetongguo = 1,
-    OrderStateShenhebohui = 11,
-    OrderStatePaichequeren = 2,
-    OrderStatePaichebohui = 22,
-    OrderStateSijiqueren = 3,
-    OrderStateSijibohui = 33,
-    OrderStatePaichefache = 4,
-    OrderStateSijikaishi = 5,
-    OrderStateSijijieshu = 6,
-    OrderStateKehuqueren = 7,
-    OrderStatePaichezhongliao = 8
-};
 
 @interface OrderViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate, CWStarRateViewDelegate>
 
@@ -187,7 +173,7 @@ static MFMessageComposeViewController *controller;
                 self.orderPersonView.top = self.passengerView.bottom;
                 if (!_finished) {
                     self.orderButton.top = self.orderPersonView.bottom + 10;
-                    [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
+                    [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
                     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
                 } else {
                     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderPersonView.bottom + 10, self.scrollView.height));
@@ -212,7 +198,7 @@ static MFMessageComposeViewController *controller;
                 self.starRateView.top = self.orderPersonView.bottom;
                 if (!_finished) {
                     self.orderButton.top = self.starRateView.bottom + 10;
-                    [self.orderButton setTitle:@"订车" forState:UIControlStateNormal];
+                    [self.orderButton setTitle:@"确认" forState:UIControlStateNormal];
                     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
                 } else {
                     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.starRateView.bottom + 10, self.scrollView.height));
@@ -361,7 +347,7 @@ static MFMessageComposeViewController *controller;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
                 self.shenherenTextField.text = self.order.shenpirenName;
                 self.shenheyijianTextField.text = self.order.shenheYiJian;
-            } else if ([self.order.orderState integerValue] == OrderStateSijiqueren) {
+            } else if ([self.order.orderState integerValue] == OrderStateSijiqueren || [self.order.orderState integerValue] == OrderStatePaichefache) {
                 self.passPosition.top = self.startPosition.bottom;
                 self.orderTime.top = self.passPosition.bottom;
                 self.timeView.top = self.orderTime.bottom;
@@ -375,6 +361,7 @@ static MFMessageComposeViewController *controller;
                 self.orderPersonView.top = self.shenherenTextField.bottom;
                 if (!_finished) {
                     self.rejectButton.top = self.checkButton.top = self.orderPersonView.bottom + 10;
+                    self.orderButton.top = self.rejectButton.top;
                     [self.orderButton setTitle:@"发车" forState:UIControlStateNormal];
                     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, MAX(self.orderButton.bottom + 10, self.scrollView.height));
                 } else {
@@ -512,7 +499,8 @@ static MFMessageComposeViewController *controller;
                 self.endTimeButton.text = self.order.endTime;
                 [self.publicButton setImage:[UIImage imageNamed:([self.order.isPublic integerValue] == 0) ? @"icon_selected.png" : @"icon_unselected.png"] forState:UIControlStateNormal];
                 self.carNotes.text = self.order.yongcheshiyi;
-                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
+//                [self.carButton setTitle:self.order.carType forState:UIControlStateNormal];
+                self.carNameLabel.text = self.order.startMetre;
                 self.driverNameLabel.text = self.order.driverName;
                 self.driverPhoneLabel.text = self.order.driverPhone;
                 self.passengerNameTextField.text = self.order.userName;
@@ -591,10 +579,10 @@ static MFMessageComposeViewController *controller;
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"接车地点不能为空"];
         return;
     }
-    if (self.passPosition.text.length <= 0) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"经过地点不能为空"];
-        return;
-    }
+//    if (self.passPosition.text.length <= 0) {
+//        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"经过地点不能为空"];
+//        return;
+//    }
     if (self.startTimeButton.text.length <= 0) {
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"起始时间不能为空"];
         return;
@@ -603,14 +591,16 @@ static MFMessageComposeViewController *controller;
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"结束时间不能为空"];
         return;
     }
-    if (self.carTypeButton.text.length <= 0) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆类型不能为空"];
-        return;
+    if (self.user.userType == UserTypeDingche && ([self.order.orderState integerValue] == OrderStateDingche)) {
+        if (self.carTypeButton.text.length <= 0) {
+            [[TKAlertCenter defaultCenter] postAlertWithMessage:@"车辆类型不能为空"];
+            return;
+        }
     }
-    if (self.carNotes.text.length <= 0) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"用车事宜不能为空"];
-        return;
-    }
+//    if (self.carNotes.text.length <= 0) {
+//        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"用车事宜不能为空"];
+//        return;
+//    }
     YLYUser *user = [NSUserDefaults user];
     if (_order.orderID.length <= 0) {
         _order.orderState = [@(OrderStateDingche) stringValue];
@@ -815,7 +805,7 @@ static MFMessageComposeViewController *controller;
         if (success) {
             [self sendMsg];
             [self.navigationController popViewControllerAnimated:YES];
-            if ([self.order.orderState integerValue] == OrderStateShenhetongguo || [self.order.orderState integerValue] == OrderStateKehuqueren || [self.order.orderState integerValue] == OrderStatePaichezhongliao || [self.order.orderState integerValue] == OrderStateSijijieshu) {
+            if ([self.order.orderState integerValue] == OrderStateShenhetongguo || [self.order.orderState integerValue] == OrderStateKehuqueren || [self.order.orderState integerValue] == OrderStatePaichezhongliao || [self.order.orderState integerValue] == OrderStateSijijieshu || [self.order.orderState integerValue] == OrderStateSijikaishi) {
                 if (_tongguoBlock) {
                     _tongguoBlock();
                 }
@@ -877,7 +867,7 @@ static MFMessageComposeViewController *controller;
     CarListViewController *carListViewController = [[CarListViewController alloc] init];
     carListViewController.selectBlock = ^(Car *car) {
         self.car = car;
-        self.carNameLabel.text = car.carName;
+        self.carNameLabel.text = [NSString stringWithFormat:@"%@ %@", car.carName, car.carColor];
     };
     carListViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:carListViewController animated:YES];
@@ -1464,6 +1454,7 @@ static MFMessageComposeViewController *controller;
 {
     if (!_shenherenTextField) {
         _shenherenTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(_gap, 0, self.startPosition.width, _cellHeight)];
+        [_shenherenTextField tipsTextFieldWithTips:@"审核人" placeholder:@"" isPassword:NO];
         [self.scrollView addSubview:_shenherenTextField];
         [_shenherenTextField addSubview:[UIView lineViewWithFrame:CGRectMake(_gap, _cellHeight - 0.5, _startPosition.width, 0.5)]];
     }

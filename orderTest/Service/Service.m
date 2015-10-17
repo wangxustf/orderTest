@@ -225,17 +225,33 @@
           }];
 }
 
-- (void)loadOrderListWithUserID:(NSString *)userID isFinish:(BOOL)isFinish isDriver:(BOOL)isDriver completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
+- (void)loadOrderListWithUserID:(NSString *)userID finishType:(int)finishType isDriver:(BOOL)isDriver completion:(void(^)(BOOL success, NSArray *ordersArray, NSString *msg))completion
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *subURL = nil;
+    switch (finishType) {
+        case 0:
+            subURL = @"mobileDingCheHisWeiWanCheng.html";
+            break;
+            
+        case 1:
+            subURL = @"mobileDingCheHisSijiJinxingzhong.html";
+            break;
+            
+        case 2:
+            subURL = isDriver ?  @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisYiWanCheng.html";
+            break;
+            
+        default:
+            break;
+    }
     if (!isDriver) {
-        subURL = isFinish ? @"mobileDingCheHisYiWanCheng.html" : @"mobileDingCheHisWeiWanCheng.html";
+//        subURL = isFinish ? @"mobileDingCheHisYiWanCheng.html" : @"mobileDingCheHisWeiWanCheng.html";
     } else {
-        userID = @"4driver";// [NSString stringWithFormat:@"%@driver", userID];
-        subURL = isFinish ? @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisSijiJinxingzhong.html";
+        userID = [NSString stringWithFormat:@"%@driver", userID];
+//        subURL = isFinish ? @"mobileDingCheHisSijiYiJieShu.html" : @"mobileDingCheHisSijiJinxingzhong.html";
     }
     NSDictionary *parameters = @{@"userId":userID,
                                  @"page":[@(_page) stringValue]};

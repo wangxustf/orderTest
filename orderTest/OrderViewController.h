@@ -9,6 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "Order.h"
 
+typedef NS_ENUM(NSInteger, OrderState) {
+    OrderStateDingche = 0,
+    OrderStateShenhetongguo = 1,
+    OrderStateShenhebohui = 11,
+    OrderStatePaichequeren = 2,
+    OrderStatePaichebohui = 22,
+    OrderStateSijiqueren = 3,
+    OrderStateSijibohui = 33,
+    OrderStatePaichefache = 4,
+    OrderStateSijikaishi = 5,
+    OrderStateSijijieshu = 6,
+    OrderStateKehuqueren = 7,
+    OrderStatePaichezhongliao = 8
+};
+
 @interface OrderViewController : BaseViewController
 
 @property (nonatomic, copy) Order *order;

@@ -43,9 +43,14 @@
     //dingche A004
     //driver A003
     //paiche A002
-    [self.service loginWithLoginName:@"18966834015" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//    [self.service loginWithLoginName:@"1" password:@"1111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//司机
+//    [self.service loginWithLoginName:@"18161959861" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//审核人
+//    [self.service loginWithLoginName:@"18710889507" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//订车人
+    [self.service loginWithLoginName:@"15332491658" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//派车人
         if (success) {
             [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [[TKAlertCenter defaultCenter] postAlertWithMessage:@"用户名或密码错误"];
         }
     }];
 }
