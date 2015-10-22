@@ -84,6 +84,7 @@
     [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_loginButton setTitle:@"登  录" forState:UIControlStateNormal];
     _loginButton.backgroundColor = RGB(kMainColor);
+    _loginButton.layer.cornerRadius = 2.5;
     [_loginButton addTarget:self action:@selector(didClickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginButton];
     
