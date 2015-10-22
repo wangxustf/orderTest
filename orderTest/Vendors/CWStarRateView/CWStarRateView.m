@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) UIView *foregroundStarView;
 @property (nonatomic, strong) UIView *backgroundStarView;
-
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, assign) NSInteger numberOfStars;
 
 @end
@@ -63,10 +63,17 @@
     [self addSubview:self.backgroundStarView];
     [self addSubview:self.foregroundStarView];
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapRateView:)];
-    tapGesture.numberOfTapsRequired = 1;
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapRateView:)];
+    self.tapGesture.numberOfTapsRequired = 1;
     if (!self.disEnable) {
-        [self addGestureRecognizer:tapGesture];
+        [self addGestureRecognizer:self.tapGesture];
+    }
+}
+
+- (void)setDisEnable:(BOOL)disEnable
+{
+    if (disEnable) {
+        [self removeGestureRecognizer:self.tapGesture];
     }
 }
 

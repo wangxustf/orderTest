@@ -83,6 +83,7 @@
 {
     [NSUserDefaults saveUser:nil];
     
+    self.tabBarController.selectedIndex = 0;
     UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
     loginViewController.navigationBar.barTintColor = RGB(kMainColor);
     loginViewController.navigationBar.tintColor = [UIColor blueColor];

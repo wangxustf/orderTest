@@ -45,6 +45,12 @@
     self.user = [NSUserDefaults user];
     self.view.height = self.view.height - 64 - 44 - (self.isTab ? 49 : 0);
     self.tableView.hidden = NO;
+//    [self refreshTableView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self refreshTableView];
 }
 
@@ -151,8 +157,6 @@
     orderViewController.finished = (_finishType == FinishTypeFinished);
     orderViewController.order = order;
     orderViewController.tongguoBlock = ^ {
-        [self.orderList removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         if (_tongguoBlock) {
             _tongguoBlock(order);
         }

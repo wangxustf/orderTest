@@ -397,7 +397,7 @@ static MFMessageComposeViewController *controller;
                 self.orderDepNameLabel.text = self.order.dingcherenDep;
                 self.orderPersonNameLabel.text = self.order.dingcherenName;
                 self.orderPersonPhoneLabel.text = self.order.dingcherenPhone;
-            } else if ([self.order.orderState integerValue] == OrderStateKehuqueren) {
+            } else  {
                 self.passPosition.top = self.startPosition.bottom;
                 self.realPassPosition.top = self.passPosition.bottom;
                 self.orderTime.top = self.realPassPosition.bottom;
