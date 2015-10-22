@@ -74,16 +74,16 @@
         [DejalBezelActivityView removeView];
         self.tableView.pullTableIsRefreshing = NO;
         if (success) {
-            if (_firstIn) {
-                _firstIn = NO;
-                if (self.orderList.count > 0) {
-                    [self.orderList addObjectsFromArray:ordersArray];
-                } else {
-                    self.orderList = [NSMutableArray arrayWithArray:ordersArray];
-                }
-            } else {
+//            if (_firstIn) {
+//                _firstIn = NO;
+//                if (self.orderList.count > 0) {
+//                    [self.orderList addObjectsFromArray:ordersArray];
+//                } else {
+//                    self.orderList = [NSMutableArray arrayWithArray:ordersArray];
+//                }
+//            } else {
                 self.orderList = [NSMutableArray arrayWithArray:ordersArray];
-            }
+//            }
             [self.tableView reloadData];
         }
     }];

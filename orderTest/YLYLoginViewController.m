@@ -17,6 +17,7 @@
 @property (nonatomic, strong) YLYTipsTextField *accountTextField;
 @property (nonatomic, strong) YLYTipsTextField *passwordTextField;
 @property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, strong) YLYTipsTextField *IPTextField;
 @property (nonatomic, strong) Service *service;
 
 @end
@@ -40,13 +41,14 @@
 
 - (void)didClickLoginButton:(id)sender
 {
+    YLYBaseURL = self.IPTextField.text.length > 0 ? self.IPTextField.text : YLYBaseURL;
     //dingche A004
     //driver A003
     //paiche A002
-//    [self.service loginWithLoginName:@"1" password:@"1111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//司机
-    [self.service loginWithLoginName:@"18161959861" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//审核人
-//    [self.service loginWithLoginName:@"18710889507" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//订车人
-//    [self.service loginWithLoginName:@"15332491658" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//派车人
+//    [self.service loginWithLoginName:@"18966834015" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//司机
+//    [self.service loginWithLoginName:@"13991355119" password:@"123456" completion:^(BOOL success, YLYUser *user, NSString *msg) {//审核人
+//    [self.service loginWithLoginName:@"15029060400" password:@"123456" completion:^(BOOL success, YLYUser *user, NSString *msg) {//订车人
+    [self.service loginWithLoginName:@"18710889507" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//派车人
         if (success) {
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
@@ -75,6 +77,10 @@
     _loginButton.backgroundColor = RGB(kMainColor);
     [_loginButton addTarget:self action:@selector(didClickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginButton];
+    
+    self.IPTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(0, _loginButton.bottom + gap, self.view.width, 44)];
+    [self.IPTextField tipsTextFieldWithTips:@"IP地址" placeholder:@"http://117.34.115.26:8080/sys" isPassword:NO];
+    [self.view addSubview:self.IPTextField];
 }
 
 /*

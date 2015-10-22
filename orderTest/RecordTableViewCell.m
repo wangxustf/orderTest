@@ -165,7 +165,7 @@
 - (TipsLabel *)timeLabel
 {
     if (!_timeLabel) {
-        _timeLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.left, self.addressLabel.bottom, self.width - 40, _subHeight)];
+        _timeLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(self.orderNameLabel.left, self.addressLabel.bottom, self.width, _subHeight)];
         [self.contentView addSubview:_timeLabel];
     }
     return _timeLabel;
@@ -174,7 +174,7 @@
 - (UILabel *)statusLabel
 {
     if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 80, 0, 60, 60)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 110, 0, 100, 60)];
         _statusLabel.font = Font(14);
         _statusLabel.textColor = [UIColor redColor];
         _statusLabel.textAlignment = NSTextAlignmentRight;

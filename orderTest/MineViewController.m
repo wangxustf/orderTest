@@ -11,6 +11,7 @@
 #import "RecordViewController.h"
 #import "MilViewController.h"
 #import "ArrowButton.h"
+#import "YLYLoginViewController.h"
 
 @interface MineViewController ()
 
@@ -41,6 +42,15 @@
     [milButton addTarget:self action:@selector(didClickMilButton:) forControlEvents:UIControlEventTouchUpInside];
     milButton.text = @"我的订车里程";
     [self.view addSubview:milButton];
+    
+    UIButton *logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    logoutButton.frame = CGRectMake(40, milButton.bottom + 10, self.view.width - 80, 44);
+    [logoutButton addTarget:self action:@selector(didClickLogoutButton:) forControlEvents:UIControlEventTouchUpInside];
+    logoutButton.layer.cornerRadius = 2.5;
+    logoutButton.backgroundColor = RGB(kMainColor);
+    [logoutButton setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
+    [logoutButton setTitle:@"退出" forState:UIControlStateNormal];
+    [self.view addSubview:logoutButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,6 +77,17 @@
     MilViewController *milViewController = [[MilViewController alloc] init];
     milViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:milViewController animated:YES];
+}
+
+- (void)didClickLogoutButton:(id)sender
+{
+    [NSUserDefaults saveUser:nil];
+    
+    UINavigationController *loginViewController = [[UINavigationController alloc] initWithRootViewController:[[YLYLoginViewController alloc] init]];
+    loginViewController.navigationBar.barTintColor = RGB(kMainColor);
+    loginViewController.navigationBar.tintColor = [UIColor blueColor];
+    [loginViewController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self presentViewController:loginViewController animated:YES completion:nil];
 }
 
 /*

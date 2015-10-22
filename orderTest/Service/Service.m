@@ -13,6 +13,8 @@
 #import "Car.h"
 #import "Driver.h"
 
+NSString *YLYBaseURL = @"http://117.34.115.26:8080/sys";
+
 @implementation Service
 {
     NSInteger _page;

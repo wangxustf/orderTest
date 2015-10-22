@@ -10,6 +10,8 @@
 #import "YLYUser.h"
 #import "Order.h"
 
+extern NSString *YLYBaseURL;
+
 @interface Service : NSObject
 
 - (void)resetPage;
