@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIViewController *currentViewController;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *buttonsArray;
+@property (nonatomic, strong) UIButton *firstButton;
 
 @end
 
@@ -51,22 +52,26 @@
     [self.view addSubview:_scrollView];
     NSArray *imageArray = @[@"icon_jingji.png", @"icon_shushi.png", @"icon_haohua.png", @"icon_shangwu.png", @"icon_16zuo.png", @"icon_32zuo.png"];
     NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
+    NSArray *titleArray = @[@"经济🚗", @"舒适🚕", @"豪华🚙", @"商务🚘", @"16座🚐", @"32座🚌"];
     self.buttonsArray = [NSMutableArray array];
     CGFloat width = 60;
     CGFloat gap = 20;
     NSInteger count = [imageArray count];
     for(int i = 0; i < count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setBackgroundImage:[UIImage imageNamed:imageArray[i]] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:imageSelectedArray[i]] forState:UIControlStateSelected];
+//        [button setImage:[UIImage imageNamed:imageArray[i]] forState:UIControlStateNormal];
+//        [button setImage:[UIImage imageNamed:imageSelectedArray[i]] forState:UIControlStateSelected];
+        [button setTitle:titleArray[i] forState:UIControlStateNormal];
+        [button setTitleColor:RGB(0x222222) forState:UIControlStateNormal];
+        button.titleLabel.font = Font(12);
         button.frame = CGRectMake((width + gap) * i + gap/2.0, 0, 60, 44);
         button.tag = i;
-        if (i == 0) {
-            button.selected = YES;
-        }
         [button addTarget:self action:@selector(didClickChoiceSegmentView:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:button];
         [self.buttonsArray addObject:button];
+        if (i == 0) {
+            self.firstButton = button;
+        }
     }
     _scrollView.contentSize = CGSizeMake(MAX(_scrollView.width, (width + gap) * count), 44);
     
@@ -81,6 +86,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.firstButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
 - (void)setSelectBlock:(void (^)(Car *))selectBlock
 {
     _jingjiCarListViewController.selectBlock = _shushiCarListViewController.selectBlock = _haohuaJingjiCarListViewController.selectBlock = _shangWuJingjiCarListViewController.selectBlock = _zuo16JingjiCarListViewController.selectBlock = _zuo32JingjiCarListViewController.selectBlock = selectBlock;
@@ -90,6 +101,7 @@
 {
     for (UIButton *button in self.buttonsArray) {
         button.selected = (button == sender) ? YES : NO;
+        button.backgroundColor = (button == sender) ? RGB(0xf0f0f0) : RGB(0xffffff);
     }
     NSInteger index = sender.tag + 1;
     if ((self.currentViewController == self.jingjiCarListViewController && index == 1) ||

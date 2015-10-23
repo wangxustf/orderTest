@@ -12,6 +12,7 @@
 @interface CarTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *portraitImageView;
+@property (nonatomic, strong) UILabel *carTypeLabel;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
 @property (nonatomic, strong) UILabel *colorLabel;
@@ -49,8 +50,10 @@
 {
     if (_car != car) {
         _car = car;
-        NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
-        [self.portraitImageView setImageWithURL:[NSURL URLWithString:car.carImage] placeholderImage:[UIImage imageNamed:imageSelectedArray[self.carType - 1]]];
+//        NSArray *imageSelectedArray = @[@"icon_jingji_selected.png", @"icon_shushi_selected.png", @"icon_haohua_selected.png", @"icon_shangwu_selected.png", @"icon_16zuo_selected.png", @"icon_32zuo_selected.png"];
+//        [self.portraitImageView setImageWithURL:[NSURL URLWithString:car.carImage] placeholderImage:[UIImage imageNamed:imageSelectedArray[self.carType - 1]]];
+        NSArray *titleArray = @[@"🚗", @"🚕", @"🚙", @"🚘", @"🚐", @"🚌"];
+        self.carTypeLabel.text = titleArray[self.carType - 1];
         self.nameLabel.text = car.carName;
         self.nameLabel.width = [self.nameLabel.text sizeWithFont:self.nameLabel.font].width;
         self.colorLabel.left = self.nameLabel.right;
@@ -74,10 +77,20 @@
     return _portraitImageView;
 }
 
+- (UILabel *)carTypeLabel
+{
+    if (!_carTypeLabel) {
+        _carTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 45, 45)];
+        _carTypeLabel.font = Font(15);
+        [self.contentView addSubview:_carTypeLabel];
+    }
+    return _carTypeLabel;
+}
+
 - (UILabel *)nameLabel
 {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.portraitImageView.right, 0, 60, _subHeight)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.carTypeLabel.right, 0, 60, _subHeight)];
         _nameLabel.font = Font(15);
         [self.contentView addSubview:_nameLabel];
     }
