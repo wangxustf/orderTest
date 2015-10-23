@@ -138,6 +138,7 @@
     if (recordTableViewCell == nil) {
         recordTableViewCell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRecordTableViewCell];
         recordTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        recordTableViewCell.width = tableView.width;
     }
     recordTableViewCell.finished = (_finishType == FinishTypeFinished);
     recordTableViewCell.order = self.orderList[indexPath.row];

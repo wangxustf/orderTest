@@ -38,7 +38,7 @@
     _subHeight = (_height - _gap / 2.0) / 2.0;
     
     self.user = [NSUserDefaults user];
-    [self setupUI];
+//    [self setupUI];
 }
 
 - (void)didReceiveMemoryWarning {

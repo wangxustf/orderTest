@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "addDriver.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "addDriver.png",
       "scale" : "2x"
     },
     {

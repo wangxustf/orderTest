@@ -63,6 +63,7 @@
         carTableViewCell = [[CarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCarTableViewCell];
         carTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
         carTableViewCell.carType = self.carType;
+        carTableViewCell.width = tableView.width;
     }
     carTableViewCell.car = self.carList[indexPath.row];
     return carTableViewCell;

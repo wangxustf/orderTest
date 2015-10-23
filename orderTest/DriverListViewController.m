@@ -67,6 +67,7 @@
     if (driverTableViewCell == nil) {
         driverTableViewCell = [[DriverTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDriverTableViewCell];
         driverTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        driverTableViewCell.width = tableView.width;
     }
     driverTableViewCell.driver = self.driverList[indexPath.row];
     return driverTableViewCell;

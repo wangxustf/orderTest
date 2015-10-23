@@ -24,7 +24,7 @@
     
     _telImageButton = [ImageButton buttonWithType:UIButtonTypeCustom];
     _telImageButton.frame = CGRectMake(0, 0, self.view.width, 44);
-    [_telImageButton setWithText:@"13096917736" imageName:@"phone.png"];
+    [_telImageButton setWithText:@"13096917736" imageName:@"phone.jpg"];
     [_telImageButton addTarget:self action:@selector(didClickTelImageButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_telImageButton];
 }

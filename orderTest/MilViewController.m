@@ -102,6 +102,7 @@
     if (milTableViewCell == nil) {
         milTableViewCell = [[MilTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMilTableViewCell];
         milTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        milTableViewCell.width = tableView.width;
     }
     milTableViewCell.order = self.orderList[indexPath.row];
     return milTableViewCell;

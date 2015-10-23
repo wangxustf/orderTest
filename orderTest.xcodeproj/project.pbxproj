@@ -55,6 +55,7 @@
 		788C9E811BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E801BB257BC00D8D2B2 /* NSDictionary+NSDictionary_Addition.m */; settings = {ASSET_TAGS = (); }; };
 		788C9E841BB25A0400D8D2B2 /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E831BB25A0400D8D2B2 /* Car.m */; settings = {ASSET_TAGS = (); }; };
 		788C9E871BB25A1100D8D2B2 /* Driver.m in Sources */ = {isa = PBXBuildFile; fileRef = 788C9E861BB25A1100D8D2B2 /* Driver.m */; settings = {ASSET_TAGS = (); }; };
+		78A4465B1BD9C81600D24E1E /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78A4465A1BD9C81600D24E1E /* Images-2.xcassets */; settings = {ASSET_TAGS = (); }; };
 		78EA6E0A1BA5052E007A5580 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E091BA5052E007A5580 /* ServiceViewController.m */; };
 		78EA6E0D1BA5081A007A5580 /* ArrowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0C1BA5081A007A5580 /* ArrowButton.m */; };
 		78EA6E101BA50D9F007A5580 /* ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EA6E0F1BA50D9F007A5580 /* ImageButton.m */; };
@@ -187,6 +188,7 @@
 		788C9E831BB25A0400D8D2B2 /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
 		788C9E851BB25A1100D8D2B2 /* Driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driver.h; sourceTree = "<group>"; };
 		788C9E861BB25A1100D8D2B2 /* Driver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Driver.m; sourceTree = "<group>"; };
+		78A4465A1BD9C81600D24E1E /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		78EA6E081BA5052E007A5580 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
 		78EA6E091BA5052E007A5580 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
 		78EA6E0B1BA5081A007A5580 /* ArrowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowButton.h; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				78226D661BB8268C00C8598D /* BaseInfoViewController.m */,
 				780BEF361BB8340500938069 /* MilTableViewCell.h */,
 				780BEF371BB8340500938069 /* MilTableViewCell.m */,
+				78A4465A1BD9C81600D24E1E /* Images-2.xcassets */,
 			);
 			path = orderTest;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				78226D571BB7911600C8598D /* grayArrow.png in Resources */,
 				78226D561BB7911600C8598D /* blueArrow@2x.png in Resources */,
 				78EA6E641BA58C06007A5580 /* LICENSE in Resources */,
+				78A4465B1BD9C81600D24E1E /* Images-2.xcassets in Resources */,
 				78226D591BB7911600C8598D /* whiteArrow.png in Resources */,
 				781566271BBD72470003CC1B /* b27_icon_star_gray@2x.png in Resources */,
 				78226D581BB7911600C8598D /* grayArrow@2x.png in Resources */,
@@ -878,7 +882,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "070a55ef-1105-447a-a516-81d0bbafa5e8";
+				PROVISIONING_PROFILE = "5ce7b6d4-7d98-475c-af65-631bb84cf6db";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -915,7 +919,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "070a55ef-1105-447a-a516-81d0bbafa5e8";
+				PROVISIONING_PROFILE = "5ce7b6d4-7d98-475c-af65-631bb84cf6db";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -925,17 +929,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orderTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matao.ordercar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5ce7b6d4-7d98-475c-af65-631bb84cf6db";
 			};
 			name = Debug;
 		};
@@ -943,17 +948,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/orderTest/PrefixHeader.pch";
 				INFOPLIST_FILE = orderTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orderTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matao.ordercar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5ce7b6d4-7d98-475c-af65-631bb84cf6db";
 			};
 			name = Release;
 		};
