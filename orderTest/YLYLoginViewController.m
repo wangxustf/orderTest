@@ -53,8 +53,8 @@
 //    [self.service loginWithLoginName:@"18966834015" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//司机
 //    [self.service loginWithLoginName:@"13991355119" password:@"123456" completion:^(BOOL success, YLYUser *user, NSString *msg) {//审核人
 //  [self.service loginWithLoginName:@"15029060400" password:@"123456" completion:^(BOOL success, YLYUser *user, NSString *msg) {//订车人
-    [self.service loginWithLoginName:@"18710889507" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//派车人
-//    [self.service loginWithLoginName:self.accountTextField.text password:self.passwordTextField.text completion:^(BOOL success, YLYUser *user, NSString *msg) {
+//    [self.service loginWithLoginName:@"18710889507" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//派车人
+    [self.service loginWithLoginName:self.accountTextField.text password:self.passwordTextField.text completion:^(BOOL success, YLYUser *user, NSString *msg) {
         if (success) {
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
