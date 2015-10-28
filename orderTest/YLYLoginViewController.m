@@ -41,14 +41,14 @@
 
 - (void)didClickLoginButton:(id)sender
 {
-//    if (self.accountTextField.text.length <= 0) {
-//        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"账号不能为空"];
-//        return;
-//    }
-//    if (self.passwordTextField.text.length <= 0) {
-//        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"密码不能为空"];
-//        return;
-//    }
+    if (self.accountTextField.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"账号不能为空"];
+        return;
+    }
+    if (self.passwordTextField.text.length <= 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"密码不能为空"];
+        return;
+    }
     YLYBaseURL = self.IPTextField.text.length > 0 ? [NSString stringWithFormat:@"http://%@:8080/sys", self.IPTextField.text] : YLYBaseURL;
 //    [self.service loginWithLoginName:@"18966834015" password:@"111111" completion:^(BOOL success, YLYUser *user, NSString *msg) {//司机
 //    [self.service loginWithLoginName:@"13991355119" password:@"123456" completion:^(BOOL success, YLYUser *user, NSString *msg) {//审核人

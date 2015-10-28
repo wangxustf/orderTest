@@ -877,7 +877,7 @@ static MFMessageComposeViewController *controller;
 {
     if( [MFMessageComposeViewController canSendText] )
     {
-        //        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
         controller.recipients = phones;
         controller.navigationBar.tintColor = [UIColor redColor];
         controller.body = body;
