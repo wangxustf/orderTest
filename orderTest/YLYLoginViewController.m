@@ -87,7 +87,7 @@
     
     self.IPTextField = [[YLYTipsTextField alloc] initWithFrame:CGRectMake(0, _loginButton.bottom + gap, self.view.width, 44)];
     [self.IPTextField tipsTextFieldWithTips:@"IP地址" placeholder:@"192.168.1.4" isPassword:NO];
-    [self.view addSubview:self.IPTextField];
+//    [self.view addSubview:self.IPTextField];
 }
 
 /*
