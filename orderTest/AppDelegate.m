@@ -19,13 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-#warning todo wangxu 11-20号之前可用
-    if ([[NSDate date] compare:[NSDate convertDateFromString:@"2015-11-20 00:00"]] == NSOrderedAscending) {
-        TabbarViewController *tabBarViewController = [[TabbarViewController alloc] init];
-        self.window.rootViewController = tabBarViewController;
-    } else {
-        self.window.rootViewController = [[UIViewController alloc] init];
-    }
+    TabbarViewController *tabBarViewController = [[TabbarViewController alloc] init];
+    self.window.rootViewController = tabBarViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }
